@@ -1,6 +1,6 @@
 # CSSD Project
 
-Customer Service Manager for Semester 5 CSSD Project
+Computer Science System Design Semester 5 Project: Customer Service Manager (Cusem)
 
 ## Getting Started with Create React App
 
