@@ -1,0 +1,52 @@
+.agen_login_page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    background-color: #DBD6D6;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 123px;
+    font-family: 'Prata';
+}
+
+.login_form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foot_tainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.error_txt{
+    color: #721c24;
+    background-color: #f8d7da;
+    font-size: 50px;
+    padding: 8px 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #f5c6cb;
+    
+}
+
+.email_details {
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+}
+
+.password_details {
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+}
