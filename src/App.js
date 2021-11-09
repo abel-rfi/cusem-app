@@ -7,11 +7,10 @@ function App() {
       <div className='Header'> 
         <header>BANK LOGO</header>
       </div>
-
+      
       <div className='login_form'>
         <form action="#">
           <div className='error_txt'>Agent not found</div>
-
           <div className='email_details'>
             <label>Email</label>
             <input type='text' placeholder='Email'></input>
