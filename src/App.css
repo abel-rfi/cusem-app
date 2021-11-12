@@ -65,6 +65,22 @@ header {
     font-size: 35px;
 }
 
+.form form .tag select {
+    height: 60px;
+    width: 30%;
+    border-radius: 18px;
+    padding: 5px;
+    font-size: 35px;
+}
+
+.Role option {
+    height: 60px;
+    width: 40%;
+    padding: 5px;
+    font-size: 35px;
+}
+
+
 .form form .button {
     padding-top: 20px;
     padding-bottom: 20px;

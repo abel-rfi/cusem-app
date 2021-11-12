@@ -16,9 +16,16 @@ function App() {
             <label>Password</label>
             <input type='password'></input>
           </div>
+          <div className='field tag'>
+            <label>Role</label>
+            <select className="Role" id="Role">
+              <option value="admin">Admin</option>
+              <option value="agent">Agent</option>
+            </select>
+          </div>
           <div className='field button'>
               <input type='submit' value='Login'></input>
-            </div>
+          </div>
         </form>
       </section>
     </div>
