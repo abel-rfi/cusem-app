@@ -1,36 +1,19 @@
-import './App.css';
+import Login from './pages/login'
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+
 
 function App() {
   return (
-  <body>
-    <header>BANK NAME</header>
-    <div className='warper'>
-      <section className='form signup'>
-        <form action='#'>
-          <div className='error-txt'>Agent not found!</div>
-          <div className='field input'>
-            <label>Email</label>
-            <input type='text'></input>
-          </div>
-          <div className='field input'>
-            <label>Password</label>
-            <input type='password'></input>
-          </div>
-          <div className='field tag'>
-            <label>Role</label>
-            <select className="Role" id="Role">
-              <option value="admin">Admin</option>
-              <option value="agent">Agent</option>
-            </select>
-          </div>
-          <div className='field button'>
-              <input type='submit' value='Login'></input>
-          </div>
-        </form>
-      </section>
-    </div>
-    <footer> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet maximus.</footer>
-  </body>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </div>
+  </Router>
   );
 }
 
