@@ -1,20 +1,22 @@
 import Login from './pages/login'
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import Dashboard from './pages/dashboard'
 
-
-
-function App() {
-  return (
-    <Router>
-      <div className="App">
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Link,
+    Outlet
+  } from 'react-router-dom';
+  
+  function App() {
+    return (
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-      </div>
-  </Router>
-  );
-}
-
+      </BrowserRouter>
+    );
+  }
 export default App;
