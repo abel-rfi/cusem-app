@@ -36,6 +36,7 @@ header {
 
 .form form .error-txt {
     margin: 10px;
+	width: 40%;
     color: #721c24;
     background: #f8d7da;
     text-align: center;
@@ -49,6 +50,7 @@ header {
     flex-direction: column;
     margin-bottom: 10px;
     font-family: Arial Bold;
+	width: 50%;
 }
 
 .form form .input input{
