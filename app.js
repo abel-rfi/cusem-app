@@ -7,6 +7,6 @@ const app = express();
 const cwRoute = require('./routes/customerWebsite');
 
 // App use
-app.use('/customer-website', cwRoute);
+app.use('/', cwRoute);
 
 module.exports = app

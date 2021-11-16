@@ -1,6 +1,6 @@
 const test = (req, res) => {
 	try {
-		res.send("Hello World");
+		res.send("Send Login");
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
