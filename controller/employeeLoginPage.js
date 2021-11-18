@@ -10,7 +10,7 @@ const test = (req, res) => {
 
 const render = (req, res) => {
 	try {
-		res.render('customerWebsite', {layout: 'main'})
+		res.render('employeeLoginPage', {layout: 'normal'})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);

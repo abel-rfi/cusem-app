@@ -1,12 +1,30 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const { engine } = require('express-handlebars');
 
-// IDK part
 const app = express();
+
+// Handlebars -> utk nyambungin website
+app.engine('handlebars',engine({
+	layoutsDir: path.join(__dirname, 'views/layouts')
+}));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'))
+
+// Body parser
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
 const cwRoute = require('./routes/customerWebsite');
+const elpRoute = require('./routes/employeeLoginPage');
 
-// App use
-app.use('/', cwRoute);
+// set Routes
+app.use('/customer-website', cwRoute);
+app.use('/employee-login-page', elpRoute);
 
 module.exports = app
