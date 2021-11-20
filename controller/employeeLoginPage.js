@@ -1,3 +1,4 @@
+const e = require('method-override');
 const models = require('../models');
 const employees = models.Employee;
 
@@ -10,6 +11,7 @@ const test = (req, res) => {
 		return res.status(500).json({ msg: err.message });
 	}
 }
+
 
 const render = (req, res) => {
 	try {
@@ -30,6 +32,16 @@ const dat = (req, res) => {
 			res.redirect('/employee-login-page');
 		})
 		.catch(err => console.log(err))
+}
+
+const data = (req, res) => {
+	email = req.body.email;
+	password =req.body.password;
+	role = req.body.roles;
+	// res.redirect('/customer-website')
+	// console.log("email: ", email, "password: ", password, "role: ", role );
+	const x = employees.sequelize.query('SELECT * FROM `employees`')
+	console.log(x)
 }
 
 const add = (req, res) => {
@@ -63,5 +75,6 @@ module.exports = {
 	test,
 	render,
 	dat,
-	add
+	add,
+	data
 }
