@@ -1,19 +1,19 @@
 <header>BANK NAME</header>
 <div class='warper'>
 	<section class='form signup'>
-		<form action='#'>
+		<form method="post">
 			<div class='error-txt'>Agent not found!</div>
 			<div class='field input'>
 				<label>Email</label>
-				<input type='text'></input>
+				<input type='text' name="email"></input>
 			</div>
 			<div class='field input'>
 				<label>Password</label>
-				<input type='password'></input>
+				<input type='password' name="password"></input>
 			</div>
 			<div class='field tag'>
 				<label>Role</label>
-				<select class="Role" id="Role">
+				<select class="Role" id="Role" name="role">
 					<option value="admin">Admin</option>
 					<option value="agent">Agent</option>
 				</select>

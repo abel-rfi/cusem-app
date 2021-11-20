@@ -7,4 +7,7 @@ router.get('/', elpController.render);
 
 router.get('/t', elpController.test);
 
+router.get('/d', elpController.dat);
+router.get('/add', elpController.add);
+
 module.exports = router
