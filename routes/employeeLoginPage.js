@@ -4,10 +4,14 @@ const elpController = require('../controller/employeeLoginPage');
 const router = express.Router();
 
 router.get('/', elpController.render);
-router.post('/', elpController.data);
+router.post('/', elpController.checkData);
+router.post('/c', elpController.createProduct);
+router.get('/d', elpController.getProducts);
+router.get('/:id', elpController.getProductById);
+router.delete('/:id', elpController.deleteProduct);
+router.patch('/p', elpController.updateProduct);
 router.get('/t', elpController.test);
 
-router.get('/d', elpController.dat);
-router.get('/add', elpController.add);
+
 
 module.exports = router

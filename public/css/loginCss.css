@@ -70,6 +70,10 @@ header {
     font-size: 35px;
 }
 
+.Role {
+    cursor: pointer;
+}
+
 .Role option {
     height: 60px;
     width: 40%;
@@ -77,6 +81,9 @@ header {
     font-size: 35px;
 }
 
+.button {
+    cursor: pointer;
+}
 
 .form form .button {
     padding-top: 20px;
