@@ -38,6 +38,33 @@
 	box-sizing: border-box;
 }
 
+/*start styling form*/
+.form-content {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.form-content div {
+	display: flex;
+	flex: 1 auto;
+	margin: 20px;
+	flex-flow: column;
+}
+
+.form-content div form{
+	display: flex;
+	flex-flow: column;
+	margin: 20px;
+}
+
+input[name="message"]{
+	height: 200px;
+}
+/*end of form*/
+
+
 .content h1 {
 	font-size: 3em;
 }
