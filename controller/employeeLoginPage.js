@@ -34,7 +34,7 @@ const render = (req, res) => {
 
 
 // Get semua product
-const getProducts = async (req, res) => {
+const getEmployees = async (req, res) => {
 	try {
 		const emplo = await employees.findAll();
 		res.send(emplo);
@@ -44,7 +44,7 @@ const getProducts = async (req, res) => {
 }
 
 // Get product berdasarkan id
-const getProductById = async (req, res) => {
+const getEmployeeById = async (req, res) => {
 	try {
 		const emplo = await employees.findAll({
 			where: {
@@ -58,7 +58,7 @@ const getProductById = async (req, res) => {
 }
 
 // Create product baru
-const createProduct = async (req, res) => {
+const createEmployee = async (req, res) => {
 	try {
 		await employees.create(req.body);
 		res.json({
@@ -70,7 +70,7 @@ const createProduct = async (req, res) => {
 }
 
 // Update agent
-const updateProduct = async (req, res) => {
+const updateEmployee = async (req, res) => {
 	try {
 		await Product.update(req.body, {
 			where: {
@@ -86,7 +86,7 @@ const updateProduct = async (req, res) => {
 }
 
 // Delete product berdasarkan id
-const printProduct = (req, res) => {
+const printEmployee = (req, res) => {
 	try {
 		var email = req.body.email;
 		var password = req.body.password;
@@ -99,7 +99,7 @@ const printProduct = (req, res) => {
 	}
 }
 
-const deleteProduct = async (req, res) => {
+const deleteEmployee = async (req, res) => {
 	try {
 		await employees.destroy({
 			where: {
@@ -114,7 +114,7 @@ const deleteProduct = async (req, res) => {
 	}
 }
 
-const checkData = (req, res) => {
+const loginEmployee = (req, res) => {
 	try {
 		con.connect(function (err) {
 			if (err) throw err;
@@ -131,7 +131,7 @@ const checkData = (req, res) => {
 					})
 				} else {
 					res.json ({
-						"404": 'periksa kembali data anda' + email + password + role
+						"404": 'periksa kembali data anda' + email+' ' + password +' '+ role
 					})
 				}
 			});
@@ -146,11 +146,11 @@ const checkData = (req, res) => {
 module.exports = {
 	test,
 	render,
-	updateProduct,
-	getProducts,
-	getProductById,
-	createProduct,
-	deleteProduct,
-	printProduct,
-	checkData
+	updateEmployee,
+	getEmployees,
+	getEmployeeById,
+	createEmployee,
+	deleteEmployee,
+	printEmployee,
+	loginEmployee
 }
