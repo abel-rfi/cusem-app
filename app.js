@@ -14,7 +14,6 @@ app.set('views', path.join(__dirname, 'views'))
 
 // Body parser
 app.use(bodyParser.urlencoded({extended:false}))
-app.use(bodyParser.json());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')))
@@ -23,6 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 const cwRoute = require('./routes/customerWebsite');
 const elpRoute = require('./routes/employeeLoginPage');
 const adRoute = require('./routes/agentDashboard');
+
+app.use(bodyParser.json());
 
 // set Routes
 app.use('/customer-website', cwRoute);
