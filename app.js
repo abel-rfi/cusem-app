@@ -22,9 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Routes
 const cwRoute = require('./routes/customerWebsite');
 const elpRoute = require('./routes/employeeLoginPage');
+const agLsRote = require('./routes/agentListPage')
 
 // set Routes
 app.use('/customer-website', cwRoute);
 app.use('/employee-login-page', elpRoute);
+app.use('/agent-list-page', agLsRote)
 
 module.exports = app

@@ -1,0 +1,36 @@
+<div class="top-first">
+    <div class="search-bar">
+        <input type="text" placeholder="Search agents">
+    </div>
+    <div class="agent-status">
+        <div class="active-agent active">
+            <div class="number">341</div>
+            <label class="title">active agent</label>
+        </div>
+        <div class="offline-agent">
+            <div class="number">227</div>
+            <label class="title">offline agent</label>
+        </div>
+    </div>
+</div>
+
+
+<div class="bottom-second">
+    <div class="row">
+        {{#each emplo}}
+            <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"> {{name}}</div>
+                </div>
+                <div class="last-login">
+                    <div class="date">{{updateAt}}</div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+            <p>No agent available</p>
+        {{/each}}
+    </div>
+
+</div>

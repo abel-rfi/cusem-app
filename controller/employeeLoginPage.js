@@ -33,7 +33,7 @@ const render = (req, res) => {
 }
 
 
-// Get semua product
+// Get semua Agent
 const getEmployees = async (req, res) => {
 	try {
 		const emplo = await employees.findAll();
@@ -43,7 +43,7 @@ const getEmployees = async (req, res) => {
 	}
 }
 
-// Get product berdasarkan id
+// Get Agent berdasarkan id
 const getEmployeeById = async (req, res) => {
 	try {
 		const emplo = await employees.findAll({
@@ -57,12 +57,12 @@ const getEmployeeById = async (req, res) => {
 	}
 }
 
-// Create product baru
+// Create Agent baru
 const createEmployee = async (req, res) => {
 	try {
 		await employees.create(req.body);
 		res.json({
-			"message": "Product Created"
+			"message": "Agent Created"
 		});
 	} catch (err) {
 		console.log(err);
@@ -72,20 +72,20 @@ const createEmployee = async (req, res) => {
 // Update agent
 const updateEmployee = async (req, res) => {
 	try {
-		await Product.update(req.body, {
+		await employees.update(req.body, {
 			where: {
 				id: req.params.id
 			}
 		});
 		res.json({
-			"message": "Product Updated"
+			"message": "Agent Updated"
 		});
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-// Delete product berdasarkan id
+// Delete Agent berdasarkan id
 const printEmployee = (req, res) => {
 	try {
 		var email = req.body.email;
@@ -107,7 +107,7 @@ const deleteEmployee = async (req, res) => {
 			}
 		});
 		res.json({
-			"message": "Product Deleted"
+			"message": "Agent Deleted"
 		});
 	} catch (err) {
 		console.log(err);
