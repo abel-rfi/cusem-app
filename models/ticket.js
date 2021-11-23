@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     emplId: DataTypes.INTEGER,
     custId: DataTypes.INTEGER,
     complaintStatus: DataTypes.STRING,
-    complaintCategory: DataTypes.STRING
+    complaintCategory: DataTypes.STRING,
+    passedFor: DataTypes.INTEGER,
+    passedFrom: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Ticket',
