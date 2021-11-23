@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "Admin",
+    "username": "root",
     "password": null,
     "database": "cusem_database",
     "host": "127.0.0.1",

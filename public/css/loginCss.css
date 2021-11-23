@@ -33,6 +33,7 @@ header {
 }
 
 .form form .error-txt {
+    display: none;
     margin: 10px;
     color: #721c24;
     background: #f8d7da;
@@ -69,6 +70,10 @@ header {
     font-size: 35px;
 }
 
+.Role {
+    cursor: pointer;
+}
+
 .Role option {
     height: 60px;
     width: 40%;
@@ -76,6 +81,9 @@ header {
     font-size: 35px;
 }
 
+.button {
+    cursor: pointer;
+}
 
 .form form .button {
     padding-top: 20px;
