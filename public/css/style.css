@@ -59,7 +59,7 @@
 	margin: 20px;
 }
 
-input[name="message"]{
+textarea[name="message"]{
 	height: 200px;
 }
 /*end of form*/
