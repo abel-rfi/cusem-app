@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Routes
 const cwRoute = require('./routes/customerWebsite');
 const elpRoute = require('./routes/employeeLoginPage');
+const agLsRote = require('./routes/agentListPage')
 const adRoute = require('./routes/agentDashboard');
 
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 // set Routes
 app.use('/customer-website', cwRoute);
 app.use('/employee-login-page', elpRoute);
+app.use('/agent-list-page', agLsRote)
 app.use('/agent-dashboard', adRoute);
 
 module.exports = app
