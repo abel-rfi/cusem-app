@@ -51,7 +51,7 @@ body {
     background: #5A5050;
 }
 
-.active-agent:hover {
+.active-agent .active {
     background: #817474;
 }
 

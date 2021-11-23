@@ -21,7 +21,7 @@ const test = (req, res) => {
 }
 
 const render = (req, res) => {
-	employees.findAll()
+	employees.findAll({ raw: true })
     .then(emplo => res.render('agentListPage', {
         emplo, layout: 'agentLsPg'
       }))
