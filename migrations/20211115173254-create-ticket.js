@@ -20,6 +20,12 @@ module.exports = {
       complaintCategory: {
         type: Sequelize.STRING
       },
+      passedFor: {
+        type: Sequelize.INTEGER
+      },
+      passedFrom: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
