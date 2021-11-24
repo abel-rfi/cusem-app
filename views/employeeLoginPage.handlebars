@@ -2,7 +2,11 @@
 <div class='warper'>
 	<section class='form login'>
 		<form method="post">
-			<div class='error-txt'name='notF' >Agent not found!</div>
+			{{#each errT}}
+				<div class='error-txt'>
+					{{text}}
+				</div>
+			{{/each}}
 			<div class='field input'>
 				<label>Email</label>
 				<input type='text' name="email"></input>

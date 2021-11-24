@@ -33,7 +33,6 @@ header {
 }
 
 .form form .error-txt {
-    display: none;
     margin: 10px;
     color: #721c24;
     background: #f8d7da;
