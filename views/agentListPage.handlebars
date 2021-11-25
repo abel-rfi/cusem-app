@@ -1,7 +1,10 @@
 <div class="top-first">
-    <div class="search-bar">
-        <input type="text" placeholder="Search agents">
-    </div>
+    <form action="/agent-list-page/search">
+        <div class="search-bar">
+            <input class="input-sear" name="term" type="search" placeholder="Search agents">
+            <input class="button-sear" type="submit" value="Search">
+        </div>
+    </form>
     <div class="agent-status">
         <div class="active-agent active">
             <div class="number">{{emplo.length}}</div>
@@ -14,7 +17,7 @@
 <div class="bottom-second">
     <div class="row">
         {{#each emplo}}
-            <div class="col-md-6">
+        <div class="col-md-6">
             <div class="agent-pls">
                 <div class="agent-name">
                     <div class="name"> {{name}}</div>
@@ -25,7 +28,16 @@
             </div>
         </div>
         {{else}}
-            <p>No agent available</p>
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"> Agennt not Found!</div>
+                </div>
+                <div class="role">
+                    <div class="role">-------</div>
+                </div>
+            </div>
+        </div>
         {{/each}}
     </div>
 

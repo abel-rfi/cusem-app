@@ -10,7 +10,11 @@ body {
     justify-content: center;
     flex-direction: column;
 }
-
+form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
 .search-bar {
     display: flex;
     width: 100%;
@@ -19,11 +23,11 @@ body {
     margin: 40px 0px;
 }
 
-.search-bar input {
+.input-sear {
     outline: none;
 }
 
-.search-bar input {
+.input-sear {
     width: 70%;
     height: 40px;
     font-size: 20px;
@@ -35,6 +39,22 @@ body {
     border-radius: 156px;
 }
 
+.button-sear{
+    width: 10%;
+    height: 40px;
+    font-size: 20px;
+    font-family: Tw Cen MT;
+    color: #E7E3E3;
+    padding: 0 20px;
+    background: #5e5e5e;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    border-radius: 156px;
+}
+.button-sear:hover{
+    background: #E7E3E3;
+    color:#5e5e5e  ;
+}
 .agent-status {
     display: flex;
     width: 100%;

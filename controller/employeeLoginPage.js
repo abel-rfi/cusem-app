@@ -120,16 +120,17 @@ const loginEmployee = async (req, res) => {
 		    text:"Agnet Not Found!"
 		}
 	]
+	var rol = req.body.roles;
 	try {
 		const emplo = await employees.findAll({
 			where: {email: req.body.email, 
 				password:req.body.password, 
 				roles:req.body.roles} 
 		});
-		if (!emplo.length == true) {
-			res.render('employeeLoginPage', { errT,layout: 'normal'});
-		} else {
+		if (!emplo.length == false  && rol == 'agent') {
 			res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
+		} else {
+			res.render('employeeLoginPage', { errT,layout: 'normal'});
 		}
 	} catch (err) {
 		console.log(err);

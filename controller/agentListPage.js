@@ -2,6 +2,8 @@ const db = require('../config/config.json')
 const models = require('../models');
 const employees = models.Employee;
 const mysql = require('mysql2')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 var con = mysql.createConnection({
 	host: "localhost",
@@ -25,10 +27,26 @@ const render = (req, res) => {
     .then(emplo => res.render('agentListPage', {
         emplo, layout: 'agentLsPg'
       }))
-    .catch(err => res.render('error', {error: err}));
+    .catch(err => res.json({
+		"message": err
+	}));
 }
+
+const search = (req, res) => {
+	let { term } = req.query;
+  
+	// Make lowercase
+	term = term.toLowerCase();
+  
+	employees.findAll({raw:true,  where: { name: { [Op.like]: '%' + term + '%' }, roles:"agent" } })
+	  .then(emplo => res.render('agentListPage', { emplo, layout: 'agentLsPg' }))
+	  .catch(err => res.json({
+		"message": err
+	}));
+  };
 
 module.exports = {
 	test,
-	render
+	render,
+	search
 }
