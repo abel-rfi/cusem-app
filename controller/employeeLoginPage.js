@@ -1,14 +1,5 @@
-const db = require('../config/config.json')
 const models = require('../models');
 const employees = models.Employee;
-const mysql = require('mysql2')
-
-var con = mysql.createConnection({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "cusem_database"
-});
 
 
 const test = (req, res) => {
@@ -51,7 +42,7 @@ const getEmployeeById = async (req, res) => {
 				id: req.params.id
 			}
 		});
-		res.send(emplo[0]);
+		res.send(emplo);
 	} catch (err) {
 		console.log(err);
 	}
@@ -74,7 +65,7 @@ const updateEmployee = async (req, res) => {
 	try {
 		await employees.update(req.body, {
 			where: {
-				id: req.params.id
+				id: req.body.id
 			}
 		});
 		res.json({

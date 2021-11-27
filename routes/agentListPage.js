@@ -6,5 +6,7 @@ const router = express.Router();
 router.get('/', agLsController.render);
 router.get('/search', agLsController.search)
 router.get('/t', agLsController.test);
+router.get('/open-agent/:id', agLsController.open)
+router.post('/open-agent/:id', agLsController.update)
 
 module.exports = router

@@ -1,0 +1,67 @@
+{{#each doneT}}
+<div class='done-txt'>
+    {{text}}
+</div>
+{{/each}}
+{{#each emplo}}
+<div class="top-place">
+    <div class="name-pls">
+        <div class="agent-name" name="agentName">
+            {{name}}
+        </div>
+        <div class="agent-id" name="id">
+            Agent Id: {{id}}
+        </div>
+        <div class="bank-name">
+            BANK NAME
+        </div>
+    </div>
+    <div class="form-header">
+        <div class="borrder-info">
+            Agent Information
+        </div>
+    </div>
+</div>
+
+<form class="data-agent" method="post">
+    <div class="info-side">
+        <div class='field input'>
+            <label>name</label>
+            <input type='text' name="name" value="{{name}}"></input>
+        </div>
+        <div class='field input'>
+            <label>email</label>
+            <input type="email" name="email" value="{{email}}"></input>
+        </div>
+        <div class='field input'>
+            <label>password</label>
+            <input type='text' name="password" value="{{password}}"></input>
+        </div>
+    </div>
+
+    <div class="info-side">
+        <div class='field input'>
+            <label>phone</label>
+            <input type='text' name="phone" value="{{phone}}"></input>
+        </div>
+        <div class='field input'>
+            <label>address</label>
+            <input type='text' name="address" value="{{address}}"></input>
+        </div>
+    </div>
+
+    <div class="btn-pls">
+        <button type="submit"> update </button>
+        <a href="/agent-list-page"> exit </a>
+    </div>
+</form>
+
+
+
+{{else}}
+
+<div class="agent-name">
+    tidak ada agent dengan id
+</div>
+
+{{/each}}
