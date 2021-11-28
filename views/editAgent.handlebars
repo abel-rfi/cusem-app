@@ -52,11 +52,30 @@
 
     <div class="btn-pls">
         <button type="submit"> update </button>
-        <a href="/agent-list-page"> exit </a>
+        <a class="delete" data-id="{{id}}"> delete </a>
+        <script type="text/javascript">
+            const hapus = document.querySelector('a.delete');
+
+            hapus.addEventListener('click', (e) => {
+                const endpoint = '/agent-list-page//open-agent/'+{{id}};
+                fetch(endpoint, {
+                    method: 'DELETE'
+
+                })
+                .then ((response) => response.json())
+                .then ((data) => window.location.href = data.redirect)
+                .catch(err => console.log(err));
+            })
+        </script>
+
+        <a class="exit" href="/agent-list-page"> exit </a>
     </div>
 </form>
 
-
+<div class="footer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet
+    maximus.
+</div>
 
 {{else}}
 

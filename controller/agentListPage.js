@@ -67,10 +67,25 @@ const update = async (req, res) => {
 				id: req.params.id
 			}
 		});
-		res.render('editAgent', { emplo,doneT, layout: 'editAgentLayout' });
+		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
 	} catch (err) {
 		console.log(err);
 	}
+}
+
+const deleteAgent = async (req, res) => {
+
+	await employees.destroy({
+		where: {
+			id: req.params.id
+		}
+	})
+	.then(result => {
+		res.json({ redirect: '/agent-list-page'})
+	})
+	.catch(err => {
+		console.log(err)
+	});
 }
 
 module.exports = {
@@ -78,5 +93,6 @@ module.exports = {
 	render,
 	search,
 	open,
-	update
+	update,
+	deleteAgent
 }
