@@ -88,11 +88,29 @@ const deleteAgent = async (req, res) => {
 	});
 }
 
+const create = async (req, res) => {
+	try {
+		res.render('createAgent', { layout: 'editAgentLayout' });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const createAgent = async (req, res) => {
+	try {
+		await employees.create(req.body);
+		res.redirect('/agent-list-page');
+	} catch (err) {
+		console.log(err);
+	}
+}
 module.exports = {
 	test,
 	render,
 	search,
 	open,
 	update,
-	deleteAgent
+	deleteAgent,
+	create,
+	createAgent
 }

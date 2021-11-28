@@ -173,3 +173,21 @@ a {
 .agent-name .name a:hover {
     color: #5A5050;
 }
+
+.add-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 10px 10px 0;
+}
+
+.add-btn a {
+    border: 1px solid black;
+    background-color: lightgreen;
+    padding: 0 9px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.add-btn a:hover {
+    color: #5A5050;
+}
