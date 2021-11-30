@@ -1,14 +1,5 @@
-const db = require('../config/config.json')
 const models = require('../models');
 const employees = models.Employee;
-const mysql = require('mysql2')
-
-var con = mysql.createConnection({
-	host: "127.0.0.1",
-	user: "root",
-	password: "",
-	database: "cusem_database"
-});
 
 
 const test = (req, res) => {
@@ -51,7 +42,7 @@ const getEmployeeById = async (req, res) => {
 				id: req.params.id
 			}
 		});
-		res.send(emplo[0]);
+		res.send(emplo);
 	} catch (err) {
 		console.log(err);
 	}
@@ -74,7 +65,7 @@ const updateEmployee = async (req, res) => {
 	try {
 		await employees.update(req.body, {
 			where: {
-				id: req.params.id
+				id: req.body.id
 			}
 		});
 		res.json({
@@ -120,16 +111,19 @@ const loginEmployee = async (req, res) => {
 		    text:"Agnet Not Found!"
 		}
 	]
+
+	var rol = req.body.roles;
 	try {
 		const emplo = await employees.findAll({
 			where: {email: req.body.email, 
 				password:req.body.password, 
 				roles:req.body.roles} 
 		});
-		if (!emplo.length == true) {
-			res.render('employeeLoginPage', { errT,layout: 'normal'});
-		} else {
+
+		if (!emplo.length == false  && rol == 'agent') {
 			res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
+		} else {
+			res.render('employeeLoginPage', { errT,layout: 'normal'});
 		}
 	} catch (err) {
 		console.log(err);

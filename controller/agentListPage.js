@@ -1,14 +1,7 @@
-const db = require('../config/config.json')
 const models = require('../models');
 const employees = models.Employee;
-const mysql = require('mysql2')
-
-var con = mysql.createConnection({
-	host: "127.0.0.1",
-	user: "root",
-	password: "",
-	database: "cusem_database"
-});
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const test = (req, res) => {
 	try {
@@ -16,19 +9,107 @@ const test = (req, res) => {
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.status(500).json({ msg: err.message });
 	}
 }
 
 const render = (req, res) => {
-	employees.findAll({ raw: true,  where: { roles: "agent" } })
-    .then(emplo => res.render('agentListPage', {
-        emplo, layout: 'agentLsPg'
-      }))
-    .catch(err => res.render('error', {error: err}));
+	employees.findAll({ raw: true, where: { roles: "agent" } })
+		.then(emplo => res.render('agentListPage', {
+			emplo, layout: 'agentLsPg'
+		}))
+		.catch(err => res.json({
+			"message": err
+		}));
 }
 
+const search = (req, res) => {
+	let { term } = req.query;
+
+	// Make lowercase
+	term = term.toLowerCase();
+
+	employees.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' }, roles: "agent" } })
+		.then(emplo => res.render('agentListPage', { emplo, layout: 'agentLsPg' }))
+		.catch(err => res.json({
+			"message": err
+		}));
+};
+
+const open = async (req, res) => {
+	try {
+		const emplo = await employees.findAll({
+			raw: true,
+			where: {
+				id: req.params.id
+			}
+		});
+		res.render('editAgent', { emplo, layout: 'editAgentLayout' });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const update = async (req, res) => {
+	try {
+		let doneT = [{
+			text: "Agent Updated"
+		}]
+		await employees.update(req.body, {
+			where: {
+				id: req.params.id
+			}
+		});
+		const emplo = await employees.findAll({
+			raw: true,
+			where: {
+				id: req.params.id
+			}
+		});
+		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const deleteAgent = async (req, res) => {
+
+	await employees.destroy({
+		where: {
+			id: req.params.id
+		}
+	})
+	.then(result => {
+		res.json({ redirect: '/agent-list-page'})
+	})
+	.catch(err => {
+		console.log(err)
+	});
+}
+
+const create = async (req, res) => {
+	try {
+		res.render('createAgent', { layout: 'editAgentLayout' });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const createAgent = async (req, res) => {
+	try {
+		await employees.create(req.body);
+		res.redirect('/agent-list-page');
+	} catch (err) {
+		console.log(err);
+	}
+}
 module.exports = {
 	test,
-	render
+	render,
+	search,
+	open,
+	update,
+	deleteAgent,
+	create,
+	createAgent
 }

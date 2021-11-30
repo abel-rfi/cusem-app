@@ -1,0 +1,62 @@
+<div class="top-place">
+    <div class="name-pls">
+        <div class="agent-name" name="agentName">
+            Name
+        </div>
+        <div class="agent-id" name="id">
+        </div>
+        <div class="bank-name">
+            BANK NAME
+        </div>
+    </div>
+    <div class="form-header">
+        <div class="borrder-info">
+            Agent Information
+        </div>
+    </div>
+</div>
+
+<form class="data-agent" method="post">
+    <div class="info-side">
+        <div class='field input'>
+            <label>name</label>
+            <input type='text' name="name" placeholder="Name" required></input>
+        </div>
+        <div class='field input'>
+            <label>email</label>
+            <input type="email" name="email" placeholder="Email" required></input>
+        </div>
+        <div class='field input'>
+            <label>password</label>
+            <input type='text' name="password" placeholder="password" required></input>
+        </div>
+    </div>
+
+    <div class="info-side">
+        <div class='field input'>
+            <label>phone</label>
+            <input type='text' name="phone" placeholder="phone" required></input>
+        </div>
+        <div class='field input'>
+            <label>address</label>
+            <input type='text' name="address" placeholder="address" required></input>
+        </div>
+        <div class="role input">
+            <select class="Role" id="Role" name="roles">
+                <option value="admin">Admin</option>
+                <option value="agent">Agent</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="btn-pls">
+        <button type="submit"> Create </button>
+
+        <a class="exit" href="/agent-list-page"> exit </a>
+    </div>
+</form>
+
+<div class="footer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet
+    maximus.
+</div>
