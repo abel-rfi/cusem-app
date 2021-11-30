@@ -144,22 +144,30 @@
 		</div>
 
 		<!--Website Form-->
-		<section class="web-content">
-			<div class="content">
+		<section class="form-content">
+			<div>
+				<form action="#">
+					<label for="name">Name:</label>
+					<input type="text" name="name" required>
+					<label for="name">E-Mail:</label>
+					<input type="email" name="email" required>
+					<br><br>
+					<label for="message">Message:</label>
+					<textarea type="text" name="message"></textarea>
+					<br><br>
+					<label for="category">Category:</label>
+					<select name="complaintCategory" id="category">
+						<option value="complain">Complain</option>
+						<option value="question">Question</option>
+						<option value="other">Other</option>
+					</select>
+					<br><br>
+					<button type="submit">Submit</button>
+				</form>
+			</div>
+			<div>
 				<h1>Form</h1>
-				<p>Name:</p>
-				<input type="text">
-				<p>Email:</p>
-				<input type="text"> 
-				<p>Message:</p>
-				<input type="text">
-				
-				<label for="category">Category:</label>
-				<select name="category" id="category">
-					<option value="complain">Complain</option>
-					<option value="question">Question</option>
-					<option value="other">Other</option>
-				</select>
+				<p>We'll reply back to you ASAP!</p>
 			</div>
 		</section>
 
