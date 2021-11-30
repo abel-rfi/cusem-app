@@ -4,7 +4,7 @@ const employees = models.Employee;
 const mysql = require('mysql2')
 
 var con = mysql.createConnection({
-	host: "localhost",
+	host: "127.0.0.1",
 	user: "root",
 	password: "",
 	database: "cusem_database"
@@ -114,31 +114,25 @@ const deleteEmployee = async (req, res) => {
 	}
 }
 
-const loginEmployee = (req, res) => {
+const loginEmployee = async (req, res) => {
+	let errT = [
+		{
+		    text:"Agnet Not Found!"
+		}
+	]
 	try {
-		con.connect(function (err) {
-			if (err) throw err;
-			var email = req.body.email;
-			var password = req.body.password;
-			var role = req.body.roles;
-			var sql = 'SELECT * FROM employees WHERE email = ? AND password = ? AND roles = ?';
-			//Send an array with value(s) to replace the escaped values:
-			con.query(sql, [email, password, role], function (err, result) {
-				console.log(result);
-				if (result.length >= 1) {
-					res.json({
-						"dashboard": "selamat datang di " + role + ' dashboard' 
-					})
-				} else {
-					res.json ({
-						"404": 'periksa kembali data anda' + email+' ' + password +' '+ role
-					})
-				}
-			});
+		const emplo = await employees.findAll({
+			where: {email: req.body.email, 
+				password:req.body.password, 
+				roles:req.body.roles} 
 		});
-
+		if (!emplo.length == true) {
+			res.render('employeeLoginPage', { errT,layout: 'normal'});
+		} else {
+			res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
+		}
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 	}
 
 }

@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     complaintStatus: DataTypes.STRING,
     complaintCategory: DataTypes.STRING,
     passedFor: DataTypes.INTEGER,
-    passedFrom: DataTypes.STRING
+    passedFrom: DataTypes.STRING,
+    roomName: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Ticket',

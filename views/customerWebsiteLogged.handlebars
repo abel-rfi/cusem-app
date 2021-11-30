@@ -1,23 +1,7 @@
 <!-- Live Chat Button -->
-<a class="live-chat position-fixed bg-primary border border-2 border-info rounded-circle" href="#cust-live-chat-log">
+<a class="live-chat position-fixed bg-primary border border-2 border-info rounded-circle" href="#cust-live-chat-log" onclick="createTicket()">
 	<i class='bx bxs-chat'></i>
 </a>
-
-<!-- Live Chat Section - no login -->
-<div id="cust-live-chat-no-log" class="cust-live-chat-no-log position-fixed">
-	<div class="cust-live-chat-header position-relative">
-		<h3 class="h-tittle-no-log fw-bold fs-1">Hi!</h3>
-		<i class="h-text-no-log">Our agents are ready for your queries!</i>
-		<a href="#" class="cust-close-button fw-normal">x</a>
-	</div>
-	<div class="log-form-lc">
-		<form action="#">
-			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" required>
-			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Chat with us">
-		</form>
-	</div>
-</div>
 
 <!-- Live Chat Section - logged in -->
 <div id="cust-live-chat-log" class="cust-live-chat-log position-fixed">
@@ -28,21 +12,35 @@
 	<div class="cust-live-chat-header-log">
 		<i class='agent-photo bx bx-user-circle'></i>
 		<div class="cust-live-chat-header-log-text-section px-2">
-			<p class="cust-live-chat-header-log-text m-0 fw-bold">Agent-X</p>
+			<p class="cust-live-chat-agent-name cust-live-chat-header-log-text m-0 fw-bold">Waiting for agent</p>
 			<p class="cust-live-chat-header-log-text m-0">agent</p>
 		</div>
 	</div>
-	<div class="cust-live-chat-chat-section">
-		<div class="cust-live-chat-chat">Hi! How can i help you?</div>
-		<div class="cust-live-chat-chat agent-chat">Finish my CSSD task please.</div>
-		<div class="cust-live-chat-chat">Lorem ipsum, dolor sit.</div>
-		<div class="cust-live-chat-chat agent-chat">Lorem ipsum dolor sit amet consectetur adipisicing elit. In, quia.</div>
-	</div>
-	<div class="cust-live-chat-input-section">
-		<input class="cust-live-chat-input" type="text" placeholder="Your Message">
-		<a href="#" class="cust-live-chat-send-button bg-primary text-light fs-2">
+	<div class="cust-live-chat-chat-section"></div>
+	<form class="cust-live-chat-input-section">
+		<input id="msg" class="cust-live-chat-input" type="text" name="chat" placeholder="Your Message" required>
+		<button type="submit" class="cust-live-chat-send-button bg-primary text-light fs-2">
 			<i class='bx bx-send'></i>
-		</a>
+		</button>
+		<!--  onclick="this.parentNode.submit(); return false;" -->
+	</form>
+</div>
+
+<!-- Live Chat Section - category section -->
+<div id="cust-live-chat-category-section" class="cust-live-chat-category-section position-fixed">
+	<div class="cust-live-chat-header position-relative">
+		<h3 class="h-tittle-no-log fw-bold fs-1">Hold On!</h3>
+		<i class="h-text-no-log">Please select your chat category first.</i>
+		<a href="#" class="cust-close-button fw-normal">x</a>
+	</div>
+	<div class="log-form-lc">
+		<form action="#">
+			<select name="category" id="category" class="log-input" required>
+				<option value="complaint">complaint</option>
+				<option value="complaint">question</option>
+			</select>
+			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Chat with us">
+		</form>
 	</div>
 </div>
 
