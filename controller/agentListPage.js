@@ -4,7 +4,7 @@ const employees = models.Employee;
 const mysql = require('mysql2')
 
 var con = mysql.createConnection({
-	host: "localhost",
+	host: "127.0.0.1",
 	user: "root",
 	password: "",
 	database: "cusem_database"

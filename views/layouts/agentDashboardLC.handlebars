@@ -20,7 +20,7 @@
     <!-- Navbar -->
     <nav class="live-chat-nav">
       <div class="left-nav">
-        <a href="/agent-dashboard" class="live-chat-logo">
+        <a href="/agent-dashboard/live-chat" class="live-chat-logo">
           Live Chat
         </a>
       </div>
@@ -38,16 +38,36 @@
     <!-- Content -->
     <div class="live-chat-content">
       <div class="live-chat-side-bar">
-        <div class="live-chat-customer-list">
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>        
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>
-          <a href="#" class="live-chat-customer-button"><i class='bx bxs-user'></i></a>
-
+        <div class="live-chat-sidebar-header">
+          Customer List
         </div>
-        <a href="/agent-dashboard/customer-selector" class="live-chat-customer-add-button"><i class='bx bxs-user-plus' ></i></a>
+        <div class="live-chat-customer-list">
+          <a href="#" class="live-chat-customer-button live-chat-customer-selected">
+            <div class="customer-profile-pict">
+              <i class='bx bxs-user'></i>
+            </div>
+            <p class="live-chat-customer-name">Mas.User 1</p>
+          </a>
+          <a href="#" class="live-chat-customer-button">
+            <div class="customer-profile-pict">
+              <i class='bx bxs-user'></i>
+            </div>
+            <p class="live-chat-customer-name">Mas.User 2</p>
+          </a>
+          <a href="#" class="live-chat-customer-button">
+            <div class="customer-profile-pict">
+              <i class='bx bxs-user'></i>
+            </div>
+            <p class="live-chat-customer-name">Mas.User 3</p>
+          </a>
+          <a href="#" class="live-chat-customer-button">
+            <div class="customer-profile-pict">
+              <i class='bx bxs-user'></i>
+            </div>
+            <p class="live-chat-customer-name">Mas.User 4</p>
+          </a>
+        </div>
+        <a href="/agent-dashboard/live-chat/customer-selector" class="live-chat-customer-add-button"><i class='bx bxs-user-plus' ></i></a>
       </div>
 
       {{{body}}}
@@ -56,5 +76,7 @@
 
     <!-- Bootstrap Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/alc.js"></script>
   </body>
 </html>
