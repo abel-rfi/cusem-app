@@ -3,6 +3,12 @@ const employees = models.Employee;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+var con = mysql.createConnection({
+	host: "127.0.0.1",
+	user: "root",
+	password: "",
+	database: "cusem_database"
+});
 
 const test = (req, res) => {
 	try {

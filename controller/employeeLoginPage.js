@@ -1,6 +1,14 @@
 const models = require('../models');
 const employees = models.Employee;
 
+const mysql = require('mysql2')
+
+var con = mysql.createConnection({
+	host: "127.0.0.1",
+	user: "root",
+	password: "",
+	database: "cusem_database"
+});
 
 const test = (req, res) => {
 	try {
@@ -111,6 +119,7 @@ const loginEmployee = async (req, res) => {
 		    text:"Agnet Not Found!"
 		}
 	]
+
 	var rol = req.body.roles;
 	try {
 		const emplo = await employees.findAll({
@@ -118,6 +127,7 @@ const loginEmployee = async (req, res) => {
 				password:req.body.password, 
 				roles:req.body.roles} 
 		});
+
 		if (!emplo.length == false  && rol == 'agent') {
 			res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
 		} else {
