@@ -1,6 +1,14 @@
+const Op = require('sequelize').Op;
+
+const models = require('../models');
+
+// Middlewares
+const { fetchAll } = require('../middlewares/CRUD');
+
 const test = (req, res) => {
 	try {
 		res.send("Test");
+		console.log('test')
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -8,7 +16,7 @@ const test = (req, res) => {
 	}
 }
 
-const renderMain = (req, res) => {
+const renderLc = (req, res) => {
 	try {
 		res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
 	}
@@ -20,7 +28,34 @@ const renderMain = (req, res) => {
 
 const renderCS = (req, res) => {
 	try {
-		res.render('agentDashboardLCCS', {layout: 'agentDashboardLC'});
+		fetchAll(models.Ticket, {complaintStatus: {
+			[Op.or]: ['open', 'on Hold', 'on Progress']
+		}})
+		.then(tickets => {
+			fetchAll(models.User)
+			.then(users => {
+				const data = [];
+				tickets.map(tckt => {
+					users.map(usr => {
+						if (tckt.custId === usr.id) {
+							data.push({
+								day: tckt.createdAt.getDate(),
+								month: tckt.createdAt.getMonth(),
+								year: tckt.createdAt.getFullYear(),
+								hours: tckt.createdAt.getHours(),
+								minutes: tckt.createdAt.getMinutes(),
+								name: usr.name,
+								complaintStatus: tckt.complaintStatus,
+								complaintCategory: tckt.complaintCategory,
+								roomName: tckt.roomName
+							})
+						}
+					})
+				})
+				// console.log(data);
+				return res.render('agentDashboardLCCS', {tckts: data, layout: 'agentDashboardLC'});
+			})			
+		});
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -50,7 +85,7 @@ const renderFS2 = (req, res) => {
 
 module.exports = {
 	test,
-	renderMain,
+	renderLc,
 	renderCS,
 	renderFS1,
 	renderFS2

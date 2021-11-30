@@ -11,6 +11,9 @@ module.exports = {
       ticketId: {
         type: Sequelize.INTEGER
       },
+      sender: {
+        type: Sequelize.STRING
+      },
       message: {
         type: Sequelize.STRING
       },

@@ -26,6 +26,9 @@ module.exports = {
       passedFrom: {
         type: Sequelize.STRING
       },
+      roomName: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
