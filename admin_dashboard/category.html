@@ -15,26 +15,30 @@
         height: 100px;
         background: grey;
         margin-left: auto;
-        margin-right: auto;
-        border: 10px solid purple;}
+        margin-right: auto;}
 
         #banner li a{
         display: block;
         color:black;
-        padding: 40px 20px;
+        padding: 20px 50px;
+        padding-bottom: 0%;
         font-weight: bold;
+        font-size: 30;
         }
 
         #banner ul{
         list-style-type:none;
-        margin:0;
+        margin-left: 600px;
+        margin-right: auto;
         padding:0;
         overflow: hidden;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        border-top: 40px solid transparent;}
 
         #banner li{
         float:left;
         vertical-align: middle;
+        border-left: 20px solid transparent;
         }
 
         #banner li a:hover{
@@ -50,33 +54,37 @@
         background: red;
         margin-left: auto;
         margin-right: auto;
-        border: 10px solid burlywood;}
+        border-top: 10px solid white;}
 
         #sidebarMenu{
-        width: 200px;
-        height: 980px;
-        background: grey;
+        width: 180px;
+        height: 1000px;
+        background: white;
         margin-left: auto;
-        border: 10px solid white;
         float:left;}
 
         #upperLinkNav2{
         background: grey;
         height: 100px;
-        border: 10px solid yellowgreen;
+        border-left: 50px solid gray;
+        font-family: 'Courier New', Courier, monospace;
         float:top;}
 
         #Maincontent{
         height: 840px;
         background: grey;
-        border: 10px solid black;
         float:bottom;}
+
+        #Maincontent h1{
+            font-size: 50;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
 
         #linkAndContent{
         background: grey;
-        height: 980px;
-        width: 2000px;
-        border: 10px solid yellow;
+        height: 1000px;
+        width: 2060px;
         float:left;
         }
 
@@ -91,28 +99,22 @@
 
         #sidebarMenu li a{
         display: block;
-        color:white;
+        color:black;
         padding: 0px 30px;
         font-weight: bold;
-        border-top: 40px solid gray;
-        border-bottom: 40px solid gray;}
+        border-top: 40px solid white;
+        border-bottom: 40px solid white;}
 
 
         #sidebarMenu li a:hover{
             background-color: paleturquoise;
-            color: black;
+            color: black;}
+
+        #accountSettings{
+        float:right;
         }
 
-        table{
-        width: 80%;
-        background-color: burlywood;}
-
-        table, th, td{
-        border: 100px solid;
-        padding: 20px;
-        border-color: brown;}
         
-
 
     </style>
 
@@ -132,13 +134,11 @@
 
 <body>
 
-
     <div id="banner">
         <ul>
             <li><a href="admin.html">Dashboard</a></li>
             <li><a href="">Settings</a></li>
             <li><a href="">Daily Notifications</a></li>
-            <li><a href="">Account settings</a></li>
         </ul>
     </div>
 
@@ -151,10 +151,11 @@
 
         <div id="sidebarMenu">
             <ul>
-                <li> <a href="agentManager.html"><img src="image file/circle.png" height="100px" width ="100px">Agent Manager</a></li>
-                <li> <a href="customerManager.html"><img src="image file/circle.png" height="100px" width ="100px">Customer Manager</a></li>
-                <li> <a href=""><img src="image file/circle.png" height="100px" width ="100px"><br/>Site<br/>Configuration</a></li>
-                <li> <a href="reportList.html"><img src="image file/circle.png" height="100px" width ="100px">Report List</a></li>
+                <ul>
+                    <li> <a href="agentManager.html"><img src="image file/agentcircle.png" height="100px" width ="100px">Agent Manager</a></li>
+                    <li> <a href="customerManager.html"><img src="image file/customercircle.png" height="100px" width ="100px">Customer Manager</a></li>
+                    <li> <a href=""><img src="image file/siteconfig.png" height="100px" width ="100px"><br/>Site<br/>Configuration</a></li>
+                    <li> <a href="reportList.html"><img src="image file/report.png" height="100px" width ="100px">Report List</a></li>
             </ul>
         </div>
 
@@ -164,22 +165,19 @@
 
         <div id="linkAndContent">
         
-        <div id="upperLinkNav2"><a href="reportList.html">Report list</a> > <a href="">Category 1</a></div>
+            <div id="upperLinkNav2"><h2><a href="reportList.html">Report List</a> > Category 1</h2></div>
 
         
         <div id="Maincontent">
-            <h1 align="center"><b>Insert dates</h1>
+            <h1 align="center"><b>Select dates</b></h1>
 
-                <table width="100%" align="center" border="1">
-                    <tr>
-                        <td align="center">From: <input type="date" name="cal" value=""></td>
-                        <td align="center">To: <input type="date" name="cal" value=""></td>
-                    </tr>
-                </table>
-
+            <table width="400px" align="center">
+                <tr>
+                    <td align="center">From: <input type="date" name="cal" value=""></td>
+                    <td align="center">To: <input type="date" name="cal" value=""></td>
+                </tr>
+            </table>
         </div>
-
-
 
         </div>
         
