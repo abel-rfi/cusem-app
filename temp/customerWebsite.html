@@ -127,24 +127,23 @@
 		<!--Website Form-->
 		<section class="form-content">
 			<div>
-				<!--action will have the js handling input to DB-->
-				<form action="">
+				<form action="#">
 					<label for="name">Name:</label>
-					<input type="text" name="name">
+					<input type="text" name="name" required>
 					<label for="name">E-Mail:</label>
-					<input type="text" name="email">
+					<input type="email" name="email" required>
 					<br><br>
 					<label for="message">Message:</label>
 					<textarea type="text" name="message"></textarea>
 					<br><br>
 					<label for="category">Category:</label>
-					<select name="category" id="category">
+					<select name="complaintCategory" id="category">
 						<option value="complain">Complain</option>
 						<option value="question">Question</option>
 						<option value="other">Other</option>
 					</select>
 					<br><br>
-					<button>Submit</button>
+					<button type="submit">Submit</button>
 				</form>
 			</div>
 			<div>
