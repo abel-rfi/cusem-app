@@ -886,6 +886,17 @@ textarea[name="message"]{
 	margin-bottom: 20px;
 }
 
+.customer-box-email {
+	box-sizing: border-box;
+	height: 125px;
+	width: 100%;
+	background-color: rgb(211,211,211);
+	border-radius: 15px;
+	overflow: hidden;
+	box-shadow: 0 0 5px #000;
+	margin-bottom: 20px;
+}
+
 .current-date {
 	box-sizing: border-box;
 	height: 35px;
