@@ -20,7 +20,7 @@ const render = (req, res) => {
 
 const renderAgent = (req, res) => {
 	try {
-		res.render('FAQAgent', {layout: 'FAQAgentLayout'})
+		res.render('FAQagent', {layout: 'FAQAgentLayout'})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -30,7 +30,7 @@ const renderAgent = (req, res) => {
 
 const renderAdmin = (req, res) => {
 	try {
-		res.render('FAQAdmin', {layout: 'FAQAdminLayout'})
+		res.render('FAQadmin', {layout: 'FAQAdminLayout'})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
