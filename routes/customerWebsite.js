@@ -13,6 +13,8 @@ router.post('/sign-in', cwController.login);
 
 router.get('/logged', cwController.renderLOG);
 
+router.post('/logged/chat-submit', cwController.test);
+
 router.get('/t', cwController.test);
 
 module.exports = router

@@ -3,33 +3,14 @@
     <div class="customer-name">
       Mas. User
     </div>
-    <div class="chat-section">
-      <div class="chat">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </div>
-      <div class="chat chat-b">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus, esse.
-      </div>
-      <div class="chat">
-        Lorem ipsum dolor sit amet.
-      </div>
-      <div class="chat">
-        Lorem ipsum dolor sit amet.
-      </div>
-      <div class="chat">
-        Lorem ipsum dolor sit amet.
-      </div>
-      <div class="chat chat-b">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta!
-      </div>
-    </div>
+    <div class="chat-section"></div>
   </div>
-  <div class="live-chat-input">
-    <input type="text" placeholder="Write here ...">
+  <form id="chat-form" class="live-chat-input">
+    <input id="msg" type="text" placeholder="Write here ..." required>
     <button class="send-button">
       <i class='bx bx-send'></i>
     </button>
-  </div>
+  </form>
 </div>
 
 <div class="live-chat-section-b">
@@ -38,10 +19,10 @@
       <i class='bx bxs-user' ></i>
     </a>
     <div class="forward-section">
-      <a href="/agent-dashboard/forward-selector" class="forward-button">
+      <a href="/agent-dashboard/live-chat/forward-selector" class="forward-button">
         Pass From <i class="forward-from">0</i>
       </a>
-      <a href="/agent-dashboard/forward-sender" class="forward-button">
+      <a href="/agent-dashboard/live-chat/forward-sender" class="forward-button">
         Pass To <i class='bx bx-right-arrow-alt' ></i>
       </a>
     </div>
