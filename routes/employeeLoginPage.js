@@ -9,7 +9,7 @@ router.post('/add', elpController.createEmployee);
 router.get('/get', elpController.getEmployees);
 router.get('/get/:id', elpController.getEmployeeById);
 router.delete('/delete/:id', elpController.deleteEmployee);
-router.patch('/update', elpController.updateEmployee);
+router.post('/update/:id', elpController.updateEmployee);
 router.get('/test', elpController.test);
 
 

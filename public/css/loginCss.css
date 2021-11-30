@@ -32,7 +32,7 @@ header {
     background: #C4C4C4;
 }
 
-.error-txt {
+.form form .error-txt {
     margin: 10px;
     color: #721c24;
     background: #f8d7da;

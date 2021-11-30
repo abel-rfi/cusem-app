@@ -1,0 +1,114 @@
+body {
+    background-color: #C4C4C4;
+}
+
+.top-first {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E5E5;
+}
+
+.kategory {
+    font-size: 60px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 40px;
+}
+
+.status {
+    font-size: 40px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #5A5050;
+    color: white;
+    padding: 20px;
+}
+
+.last-second {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.pertanyaan {
+    resize: none;
+    width: 70%;
+    margin: 10px;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    border: 6px solid;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    font-size: 20px;
+    font-weight: 600;
+}
+label {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.jawaban {
+    resize: none;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 500;
+}
+.btn-pls {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 1px solid;
+    padding-bottom: 15px;
+    /* width: 100%; */
+}
+
+input {
+    width: 40%;
+    margin-top: 20px;
+    font-size: 25px;
+    border-radius: 12px;
+    background-color: white;
+}
+
+input:hover {
+    background-color: #5A5050;
+    color: white;
+}
+
+.decline {
+    text-decoration: none;
+    color: #232b33;
+    cursor: pointer;
+    border: 1px solid black;
+    margin-top: 20px;
+    padding: 2px 200px;
+    border-radius: 12px;
+    background: white;
+    font-size: 25px;
+}
+
+.decline:hover {
+    background-color: #5A5050;
+    color: white;
+}
