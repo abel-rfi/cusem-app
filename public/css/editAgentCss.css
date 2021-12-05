@@ -189,3 +189,14 @@ body {
     padding: 5px;
     font-size: 35px;
 }
+
+.show {
+    position: absolute;
+    margin: 47px 0 0 300px;
+    color: gray;
+    cursor: pointer;
+}
+
+.show:hover {
+    color: rgb(75, 75, 75);
+}

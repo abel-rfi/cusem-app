@@ -79,12 +79,12 @@ const deleteAgent = async (req, res) => {
 			id: req.params.id
 		}
 	})
-	.then(result => {
-		res.json({ redirect: '/agent-list-page'})
-	})
-	.catch(err => {
-		console.log(err)
-	});
+		.then(result => {
+			res.json({ redirect: '/agent-list-page' })
+		})
+		.catch(err => {
+			console.log(err)
+		});
 }
 
 const create = async (req, res) => {
@@ -96,9 +96,32 @@ const create = async (req, res) => {
 }
 
 const createAgent = async (req, res) => {
+
 	try {
-		await employees.create(req.body);
-		res.redirect('/agent-list-page');
+		let errorT = [{
+			text: "the agent with the email already exists"
+		}]
+		const emplo = await employees.findAll({
+			raw: true,
+			where: {
+				email: req.body.email,
+				roles: "agent"
+			}
+		});
+		if (emplo.length == true) {
+			res.render('createAgent', { errorT, layout: 'editAgentLayout' });
+			
+		} else {
+			await employees.create({
+				name: req.body.name,
+				email: req.body.email, 
+				password:req.body.password, 
+				roles: 'agent',
+				phone:req.body.phone,
+				address:req.body.address
+			});
+			res.redirect('/agent-list-page');
+		}
 	} catch (err) {
 		console.log(err);
 	}
