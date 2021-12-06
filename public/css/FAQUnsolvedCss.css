@@ -113,3 +113,11 @@ a:hover {
 .add-btn a:hover {
     color: #5A5050;
 }
+
+.optionCat {
+    border-radius: 12px;
+    font-size: 25px;
+    padding: 5px 0 5px 5px;
+    background-color: #efefef;
+    cursor: pointer;
+}

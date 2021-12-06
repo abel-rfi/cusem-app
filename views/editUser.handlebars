@@ -1,0 +1,89 @@
+{{#each doneT}}
+<div class='done-txt'>
+    {{text}}
+</div>
+{{/each}}
+{{#each usere}}
+<div class="top-place">
+    <div class="name-pls">
+        <div class="agent-name" name="agentName">
+            {{name}}
+        </div>
+        <div class="agent-id" name="id">
+            User Id: {{id}}
+        </div>
+        <div class="bank-name">
+            BANK NAME
+        </div>
+    </div>
+    <div class="form-header">
+        <div class="borrder-info">
+            User Information
+        </div>
+    </div>
+</div>
+
+<form class="data-agent" method="post">
+    <div class="info-side">
+        <div class='field input'>
+            <label>name</label>
+            <input type='text' name="name" value="{{name}}"></input>
+        </div>
+        <div class='field input'>
+            <label>email</label>
+            <input type="email" name="email" value="{{email}}"></input>
+        </div>
+        <div class='field input'>
+            <label>password</label>
+            <input type='password' id="password" name="password" value="{{password}}"></input>
+            <div class="show" id="show" onclick="show()">hide</div>
+        </div>
+    </div>
+
+    <div class="info-side">
+        <div class='field input'>
+            <label>phone</label>
+            <input type='text' name="phone" value="{{phone}}"></input>
+        </div>
+        <div class='field input'>
+            <label>address</label>
+            <input type='text' name="address" value="{{address}}"></input>
+        </div>
+    </div>
+
+    <div class="btn-pls">
+        <button type="submit"> update </button>
+        <a class="delete" data-id="{{id}}"> delete </a>
+        <script type="text/javascript">
+            const hapus = document.querySelector('a.delete');
+
+            hapus.addEventListener('click', (e) => {
+                const endpoint = '/user-list-page//open-user/'+{{id}};
+                fetch(endpoint, {
+                    method: 'DELETE'
+
+                })
+                .then ((response) => response.json())
+                .then ((data) => window.location.href = data.redirect)
+                .catch(err => console.log(err));
+            })
+        </script>
+
+        <a class="exit" href="/user-list-page"> exit </a>
+    </div>
+</form>
+
+<div class="footer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet
+    maximus.
+</div>
+
+{{else}}
+
+<div class="agent-name">
+    tidak ada user dengan id {{usere.id}}
+</div>
+
+<a class="exit" href="/user-list-page"> exit </a>
+
+{{/each}}

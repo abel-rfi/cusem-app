@@ -1,0 +1,48 @@
+<div class="top-first">
+    <form action="/agent-list-page/search">
+        <div class="search-bar">
+            <input class="input-sear" name="term" type="search" placeholder="Search agents">
+            <input class="button-sear" type="submit" value="Search">
+        </div>
+    </form>
+    <div class="agent-status">
+        <div class="active-agent active">
+            <div class="number">{{usere.length}}</div>
+            <label class="title">User List</label>
+        </div>
+    </div>
+</div>
+
+
+<div class="bottom-second">
+    <div class="row">
+        {{#each usere}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"><a href="/user-list-page/open-user/{{id}}">{{name}}</a></div>
+                </div>
+                <div class="role">
+                    <div class="role">{{email}}</div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"> User not Found!</div>
+                </div>
+                <div class="role">
+                    <div class="role">-------</div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+
+    <div class="add-btn">
+        <a href="/user-list-page/create-user">Create</a>
+    </div>
+</div>
