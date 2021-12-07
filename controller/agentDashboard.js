@@ -74,7 +74,7 @@ const renderTA = (req, res) => {
 const renderLc = (req, res) => {
 	try {
 		const condition = {emplId: 1, complaintStatus: {
-			[Op.or]: ['open', 'on Hold', 'on Progress']
+			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
 			{
@@ -120,7 +120,7 @@ const renderLc = (req, res) => {
 const renderCS = (req, res) => {
 	try {
 		const condition = {emplId: 1, complaintStatus: {
-			[Op.or]: ['open', 'on Hold', 'on Progress']
+			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
 			{
@@ -155,7 +155,7 @@ const renderFS1 = (req, res) => {
 	try {
 		const {id} = req.query;
 		const condition = {emplId: id, complaintStatus: {
-			[Op.or]: ['open', 'on Hold', 'on Progress']
+			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
 			{
@@ -190,7 +190,7 @@ const renderFS2 = (req, res) => {
 	try {
 		const {ticket} = req.query;
 		const condition = {emplId: 1, complaintStatus: {
-			[Op.or]: ['open', 'on Hold', 'on Progress']
+			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
 			{
