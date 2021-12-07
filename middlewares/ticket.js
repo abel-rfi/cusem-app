@@ -4,11 +4,11 @@ const Op = require('sequelize').Op;
 let tickets = [{
     custId: 5,
     emplId: 1,
-    complaintStatus: 'on Progress',
+    complaintStatus: 'open',
     complaintCategory: 'complaint',
     passedFor: 0,
     passedFrom: null,
-    roomName: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SWQiOjUsImlhdCI6MTYzODIwMzA2MSwiZXhwIjoxNjM4MjA2NjYxfQ.6NBkXl75yU4G5fn7iEjivefaPMX9dMw34fMpnYcLkLQ'
+    roomName: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SWQiOjUsImlhdCI6MTYzODY5MzYxOCwiZXhwIjoxNjQxMjg1NjE4fQ.6xGCA_z4TSGGSUDx91rIEU3V-7LRlWdd6_3m5lIW0g0'
   }];
 
 const models = require('../models');
@@ -22,7 +22,6 @@ function createTicket ({token, category}) {
 	const data = {
 		custId,
 		emplId: null,
-		complaintStatus: "open",
 		complaintCategory: category,
 		passedFor: 0,
 		passedFrom: null,
@@ -51,7 +50,10 @@ function joinTicket(socket, {id, ticket, role}) {
 		tickets.map((tckt, i) => {
 			if (tckt.roomName === ticket) {
 				tickets[i].emplId = parseInt(id);
-				tickets[i].complaintStatus= "on Progress";
+				if (tickets[i].complaintStatus === "open"){
+					// console.log(tickets[i].complaintStatus)
+					tickets[i].complaintStatus= "on Progress";
+				}
 			}
 		});
 		// console.log(tickets);
@@ -70,25 +72,23 @@ function joinTicket(socket, {id, ticket, role}) {
 	}
 }
 
-async function fetchTicket(){
-	try{
-		fetchTickets = await fetchAll(models.Ticket, { complaintStatus: {
+function fetchTicket() {
+	try {
+		fetchAll(models.Ticket, { complaintStatus: {
 			[Op.or]: ["open", "on Hold", "on Progress"]
-		}});
-		
-		tickets.map((tckt, i) => {
-			fetchTickets.map((tkt, j) => {
-				if (tckt.custId === tkt.custId && tckt.complaintStatus === tkt.complaintStatus && tckt.roomName === tkt.roomName) {
-					tickets[i] = tkt
-				} else {
-					tickets.push(tkt);
-					delete fetchTickets[j]
-				}
+		}}).then(result => {
+			tickets.map((tckt, i) => {
+				result.map((tkt, i) => {
+					if (tckt.custId === tkt.custId && tckt.roomName === tkt.roomName) {
+						tickets[i] = tkt;
+					} else {
+						tickets.push(tkt);
+						delete result[i]
+					}
+				})
 			})
 		})
-
 		// console.log(tickets);
-		// return tickets;
 	} catch(err) {
 		console.log(err)
 	}
@@ -98,8 +98,8 @@ function sendAgentName(socket, id) {
 	try{
 		fetchOne(models.Employee, {id, roles:'agent'})
 		.then(result => {
-			console.log(result.name);
-			socket.emit('agent-accept', {name: result.name});
+			// console.log(result.name);
+			socket.broadcast.emit('agent-accept', {name: result.name});
 		})
 	} catch(err) {
 		console.log("tickets.js ~ sendAgentName", err);

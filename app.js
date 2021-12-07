@@ -5,9 +5,10 @@ const { engine } = require('express-handlebars');
 
 const app = express();
 
-// Handlebars -> utk nyambungin website
+// Handlebars
 app.engine('handlebars',engine({
-	layoutsDir: path.join(__dirname, 'views/layouts')
+	layoutsDir: path.join(__dirname, 'views/layouts'),
+	helpers: require('./config/handlebars-helpers')
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'))

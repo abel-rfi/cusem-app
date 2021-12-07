@@ -25,5 +25,16 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Ticket',
   });
+  Ticket.associate = function(models) {
+    Ticket.belongsTo(models.User, {
+      foreignKey: 'custId',
+      as: 'user'
+    })
+
+    Ticket.belongsTo(models.Employee, {
+      foreignKey: 'emplId',
+      as: 'employee'
+    })
+  }
   return Ticket;
 };

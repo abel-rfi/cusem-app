@@ -6,14 +6,20 @@
         <i class='bx bxs-user' ></i>
       </div>
       <div class="box-showed-data-fs">
-        <p class="box-text-cs">Mas, mas</p>
-        <p class="box-text-cs box-text-cat-cs">Category: Complaint</p>
+        {{#each selected}}
+        <p class="box-text-cs">{{'user.name'}}</p>
+        <p class="box-text-cs box-text-cat-cs">Category: {{complaintCategory}}</p>
+        {{else}}
+        <p class="box-text-cs">Ticket unknown</p>
+        <p class="box-text-cs box-text-cat-cs">Category: -</p>
+        {{/each}}
       </div>
       <div class="agent-dropdown-box">
         <select name="agent-dropdown" id="agent-dropdown" class="agent-dropdown">
-          <option value="Agent_11" class="dropdown-option"><i class='bx bx-user'></i> Agent 11</option>
-          <option value="Agent_5" class="dropdown-option"><i class='bx bx-user'></i> Agent 5</option>
-          <option value="Agent_7" class="dropdown-option"><i class='bx bx-user'></i> Agent 7</option>
+          <option value="-" class="dropdown-option"><i class='bx bx-user'></i> ---</option>
+          {{#each result}}
+          <option value="{{name}}" class="dropdown-option"><i class='bx bx-user'></i> {{name}}</option>
+          {{/each}}
         </select>
       </div>
     </div>
