@@ -11,7 +11,7 @@ body {
 }
 
 .kategory {
-    font-size: 60px;
+    font-size: 45px;
     font-weight: 500;
     border-bottom: 1px solid;
     display: flex;
@@ -85,4 +85,39 @@ input {
 input:hover {
     background-color: #5A5050;
     color: white;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #5A5050;
+}
+
+.add-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 10px 10px 0;
+}
+
+.add-btn a {
+    border: 1px solid black;
+    background-color: rgb(230, 126, 86);
+    padding: 0 9px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.add-btn a:hover {
+    color: #5A5050;
+}
+
+.optionCat {
+    border-radius: 12px;
+    font-size: 25px;
+    padding: 5px 0 5px 5px;
+    background-color: #efefef;
+    cursor: pointer;
 }

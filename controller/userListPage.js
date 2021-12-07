@@ -1,5 +1,5 @@
 const models = require('../models');
-const employees = models.Employee;
+const users = models.User;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -14,9 +14,9 @@ const test = (req, res) => {
 }
 
 const render = (req, res) => {
-	employees.findAll({ raw: true, where: { roles: "agent" } })
-		.then(emplo => res.render('agentListPage', {
-			emplo, layout: 'agentLsPg'
+	users.findAll({ raw: true })
+		.then(usere => res.render('userListPage', {
+			usere, layout: 'userLsPg'
 		}))
 		.catch(err => res.json({
 			"message": err
@@ -29,8 +29,8 @@ const search = (req, res) => {
 	// Make lowercase
 	term = term.toLowerCase();
 
-	employees.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' }, roles: "agent" } })
-		.then(emplo => res.render('agentListPage', { emplo, layout: 'agentLsPg' }))
+	users.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' } } })
+		.then(usere => res.render('userListPage', { usere, layout: 'userLsPg' }))
 		.catch(err => res.json({
 			"message": err
 		}));
@@ -38,13 +38,13 @@ const search = (req, res) => {
 
 const open = async (req, res) => {
 	try {
-		const emplo = await employees.findAll({
+		const usere = await users.findAll({
 			raw: true,
 			where: {
 				id: req.params.id
 			}
 		});
-		res.render('editAgent', { emplo, layout: 'editAgentLayout' });
+		res.render('editUser', { usere, layout: 'editUserLayout' });
 	} catch (err) {
 		console.log(err);
 	}
@@ -53,34 +53,34 @@ const open = async (req, res) => {
 const update = async (req, res) => {
 	try {
 		let doneT = [{
-			text: "Agent Updated"
+			text: "User Updated"
 		}]
-		await employees.update(req.body, {
+		await users.update(req.body, {
 			where: {
 				id: req.params.id
 			}
 		});
-		const emplo = await employees.findAll({
+		const usere = await users.findAll({
 			raw: true,
 			where: {
 				id: req.params.id
 			}
 		});
-		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
+		res.render('editUser', { usere, doneT, layout: 'editUserLayout' });
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-const deleteAgent = async (req, res) => {
+const deleteUser = async (req, res) => {
 
-	await employees.destroy({
+	await users.destroy({
 		where: {
 			id: req.params.id
 		}
 	})
 		.then(result => {
-			res.json({ redirect: '/agent-list-page' })
+			res.json({ redirect: '/user-list-page' })
 		})
 		.catch(err => {
 			console.log(err)
@@ -89,38 +89,36 @@ const deleteAgent = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		res.render('createAgent', { layout: 'editAgentLayout' });
+		res.render('createUser', { layout: 'editUserLayout' });
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-const createAgent = async (req, res) => {
+const createUser = async (req, res) => {
 
 	try {
 		let errorT = [{
-			text: "the agent with the email already exists"
+			text: "the user with the email already exists"
 		}]
-		const emplo = await employees.findAll({
+		const usere = await users.findAll({
 			raw: true,
 			where: {
 				email: req.body.email,
-				roles: "agent"
 			}
 		});
-		if (emplo.length == true) {
-			res.render('createAgent', { errorT, layout: 'editAgentLayout' });
+		if (usere.length == true) {
+			res.render('createuser', { errorT, layout: 'editUserLayout' });
 			
 		} else {
-			await employees.create({
+			await users.create({
 				name: req.body.name,
 				email: req.body.email, 
 				password:req.body.password, 
-				roles: 'agent',
 				phone:req.body.phone,
 				address:req.body.address
 			});
-			res.redirect('/agent-list-page');
+			res.redirect('/user-list-page');
 		}
 	} catch (err) {
 		console.log(err);
@@ -132,7 +130,7 @@ module.exports = {
 	search,
 	open,
 	update,
-	deleteAgent,
+	deleteUser,
 	create,
-	createAgent
+	createUser
 }
