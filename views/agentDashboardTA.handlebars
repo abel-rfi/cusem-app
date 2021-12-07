@@ -1,0 +1,62 @@
+<!-- Content -->
+<div class="ticket-content">
+  {{#each result}}
+  <div class="customer-box-tkt">
+    <div class="current-date-tkt">{{createdAt}}</div>
+    <div class="ticket">
+      <div class="customer-image-tkt">
+        <i class='bx bxs-user' ></i>
+      </div>
+      <div class="customer-info">
+        <p class="customer-info-i customer-info-name">{{'user.name'}}</p>
+        <p class="customer-info-i box-text-cat-cs">Category: {{complaintCategory}}</p>
+      </div>
+      <div class="ticket-type">
+        <p class="type-info">Live Chat</p>
+      </div>
+
+      {{#ifEquals complaintStatus 'open'}}
+      <div class="indcator-color indicator-open"></div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'on Progress'}}
+      <div class="indcator-color indicator-progress"></div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'on Hold'}}
+      <div class="indcator-color indicator-hold"></div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'closed'}}
+      <div class="indcator-color indicator-closed"></div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'Expired'}}
+      <div class="indcator-color indicator-expired"></div>
+      {{/ifEquals}}
+
+    </div>
+    <div class="bottom-box-ta">
+      {{#ifEquals complaintStatus 'open'}}
+      Not Taken
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'on Progress'}}
+      Taken by <div class="agent-focused-name text-dark">{{'employee.name'}}</div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'on Hold'}}
+      Taken by <div class="agent-focused-name text-dark">{{'employee.name'}}</div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'closed'}}
+      Solved by <div class="agent-focused-name text-dark">{{'employee.name'}}</div>
+      {{/ifEquals}}
+
+      {{#ifEquals complaintStatus 'Expired'}}
+      Session expired / unknown reason
+      {{/ifEquals}}
+    </div>
+  </div>
+  {{/each}}
+</div>

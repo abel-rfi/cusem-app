@@ -1,17 +1,21 @@
 const chatForm = document.querySelector('.cust-live-chat-input-section');
 const chatSection = document.querySelector('.cust-live-chat-chat-section');
+const ratingForm = document.querySelector('.rating-form');
+
+var i;
+var starVal = 1;
 
 // get query
 const queryString = location.search;
 const query = new URLSearchParams(queryString);
 const token = query.get('token');
+localStorage.setItem('token', token);
+
 let ticketSession = localStorage.getItem('ticketSession');
 // experimental
 // let currentUserId = localStorage.getItem('currentUserId');
 // example
 const category = "complaint"
-
-localStorage.setItem('token', token);
 
 function logOut() {
 	localStorage.clear();
@@ -49,12 +53,16 @@ socket.on('ticket-session', ticketSession => {
 });
 
 // Listen msg from server
-socket.on('agent-accept', name => {
-	const agentName = document.querySelector('.cust-live-chat-agent-name');
-	console.log("name=", name)
-	agentName.innerHTML = name;
-	// localStorage.setItem('ticketSession', ticketSession);
+socket.on('agent-accept', ({name}) => {
+	changeAgentName(name);
 });
+
+// socket.on('agent-accept', name => {
+// 	// const agentName = document.getElementById('live-chat-agent-name');
+// 	// console.log("name=", name)
+// 	// agentName.innerHTML = name;
+// 	// localStorage.setItem('ticketSession', ticketSession);
+// });
 
 // Listen msg from server (Experimental)
 // socket.on('message', id => {
@@ -83,7 +91,27 @@ chatForm.addEventListener('submit', (e) => {
 	e.target.elements.msg.focus();
 });
 
-// ini gmn ngirim pesan masa harus create ticket trus, klo kita create socket = io() lagi nanti id socket beda lagi
+ratingForm.addEventListener('submit', e => {
+	e.preventDefault();
+	// console.log(e.target.elements);
+	for ( i = 0; i < 5; i++ ) {
+		if (e.target.elements[i].value * e.target.elements[i].checked > starVal) {
+			starVal = e.target.elements[i].value;
+		}
+		if (e.target.elements[i].value == 1) {
+			e.target.elements[i].checked = true;
+		}
+	}
+	const data = {
+		rating: starVal,
+		comment: e.target.elements[5].value
+	}
+	e.target.elements[5].value = ""
+	
+	console.log(data);
+	location.replace('');
+});
+
 function createTicket() {
 	ticketSession = localStorage.getItem('ticketSession');
 	if (ticketSession == null){
@@ -108,6 +136,10 @@ function outputMessageA(message) {
 	div.innerHTML = `${message}`;
 
 	document.querySelector('.cust-live-chat-chat-section').appendChild(div);
+}
+
+function changeAgentName(name) {
+	document.getElementById('live-chat-agent-name').innerHTML = name;
 }
 
 function finishTicketSession() {

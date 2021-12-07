@@ -35,6 +35,10 @@ socket.on('message', id => {
 	// localStorage.setItem('currentAgentId', id);
 });
 
+// socket.on('agent-accept', name => {
+// 	localStorage.setItem('agent_name', name);
+// });
+
 // Message Submit
 chatForm.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -66,4 +70,40 @@ function outputMessageU (message) {
 	div.innerHTML = `${message}`;
 
 	document.querySelector('.chat-section').appendChild(div);
+}
+
+function changeTicketStatus() {
+	const currentStatus = document.querySelector('.current-status');
+	if (currentStatus.innerHTML == "on Progress") {
+		currentStatus.innerHTML = "on Hold";
+	} else if (currentStatus.innerHTML == "on Hold") {
+		currentStatus.innerHTML = "on Progress";
+	}
+	const body = JSON.stringify({
+		emplId: id,
+		roomName: ticket,
+		complaintStatus: currentStatus.innerHTML
+	});
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/agent-dashboard/live-chat/change-status");
+	xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
+}
+
+function closedTicketSession() {
+	// console.log('tes', ticket, id);
+	const body = JSON.stringify({
+		emplId: id,
+		roomName: ticket,
+		complaintStatus: 'closed'
+	});
+
+	document.querySelector('.current-status').innerHTML = 'closed';
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/agent-dashboard/live-chat/change-status");
+	xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
+    // location.replace('/agent-dashboard/live-chat');
 }
