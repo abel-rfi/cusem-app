@@ -106,13 +106,13 @@ const deleteEmployee = async (req, res) => {
 }
 
 const loginEmployee = async (req, res) => {
+	var rol = req.body.roles;
 	let errT = [
 		{
-		    text:"Agnet Not Found!"
+		    text: rol+" not found!"
 		}
 	]
 
-	var rol = req.body.roles;
 	try {
 		const emplo = await employees.findAll({
 			where: {email: req.body.email, 
@@ -120,10 +120,18 @@ const loginEmployee = async (req, res) => {
 				roles:req.body.roles} 
 		});
 
-		if (!emplo.length == false  && rol == 'agent') {
-			res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
-		} else {
+		if (!emplo.length == true ) {
 			res.render('employeeLoginPage', { errT,layout: 'normal'});
+			
+		} else {
+			if (rol == 'agent') {
+				res.redirect('/agent-dashboard');
+			} else {
+				res.json({
+					"Dashboard" : "Admin dashboard"
+				})
+			}
+			
 		}
 	} catch (err) {
 		console.log(err);

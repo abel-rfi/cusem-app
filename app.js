@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const cwRoute = require('./routes/customerWebsite');
 const elpRoute = require('./routes/employeeLoginPage');
 const agLsRote = require('./routes/agentListPage')
+const usLsRote = require('./routes/userListPage')
 const adRoute = require('./routes/agentDashboard');
 const FAQlRoute = require('./routes/FAQlist')
 
@@ -32,6 +33,7 @@ app.use(bodyParser.json());
 app.use('/customer-website', cwRoute);
 app.use('/employee-login-page', elpRoute);
 app.use('/agent-list-page', agLsRote)
+app.use('/user-list-page', usLsRote)
 app.use('/agent-dashboard', adRoute);
 app.use('/faq-list-page', FAQlRoute)
 
