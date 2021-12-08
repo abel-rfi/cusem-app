@@ -23,13 +23,13 @@ const render = (req, res) => {
 		}));
 }
 
-const search = (req, res) => {
+const search = async (req, res) => {
 	let { term } = req.query;
 
 	// Make lowercase
 	term = term.toLowerCase();
 
-	users.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' } } })
+	await users.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' } } })
 		.then(usere => res.render('userListPage', { usere, layout: 'userLsPg' }))
 		.catch(err => res.json({
 			"message": err
