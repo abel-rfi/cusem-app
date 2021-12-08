@@ -23,9 +23,10 @@ function createTicket ({token, category}) {
 		custId,
 		emplId: null,
 		complaintCategory: category,
+		complaintStatus: 'open',
 		passedFor: 0,
 		passedFrom: null,
-		roomName: CreateToken({custId}, '1h')
+		roomName: CreateToken({custId}, '50d')
 	}
 	tickets.push(data);
 	console.log(data, "create");

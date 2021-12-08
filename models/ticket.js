@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     custId: DataTypes.INTEGER,
     complaintStatus: DataTypes.STRING,
     complaintCategory: DataTypes.STRING,
+    ticketType: DataTypes.STRING,
     passedFor: DataTypes.INTEGER,
     passedFrom: DataTypes.STRING,
     roomName: DataTypes.STRING
