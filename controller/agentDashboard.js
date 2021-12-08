@@ -63,7 +63,7 @@ const renderTA = (req, res) => {
 		]})
 		.then(result => {
 			// console.log(result);
-			return res.render('agentDashboardTA', {layout: 'agentDashboard', result});
+			return res.render('agentDashboardTA', {layout: 'agentDashboard', query: {query: req.query}, result});
 		})
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
@@ -95,7 +95,7 @@ const renderLc = (req, res) => {
 							as: 'user'
 						}
 					]}).then(result => {
-						return res.render('agentDashboardLC', {result:{result}, accepted: allTickets, layout: 'agentDashboardLC'});
+						return res.render('agentDashboardLC', {result:{result}, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
 					});
 				} catch(err) {
 					const {id:emplId, ticket:roomName} = req.query;
@@ -108,7 +108,7 @@ const renderLc = (req, res) => {
 					})
 				}
 			} else {
-				return res.render('agentDashboardLC', {layout: 'agentDashboardLC', accepted: allTickets});
+				return res.render('agentDashboardLC', {layout: 'agentDashboardLC', query: {query: req.query}, accepted: allTickets});
 			}
 		})
 	} catch (err) {
@@ -138,7 +138,8 @@ const renderCS = (req, res) => {
 						as: 'user'
 					}
 				]}).then(result => {
-					return res.render('agentDashboardLCCS', {result, accepted: allTickets, layout: 'agentDashboardLC'});
+					console.log(req.query);
+					return res.render('agentDashboardLCCS', {result, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
 				})
 			} catch(err) {
 				console.log(`msg: ${err.message} ~LCCS`);
@@ -176,7 +177,7 @@ const renderFS1 = (req, res) => {
 				}
 			]}).then(result => {
 				console.log(result);
-				res.render('agentDashboardLCFS1', {accepted: allTickets, result, layout: 'agentDashboardLC'});
+				res.render('agentDashboardLCFS1', {accepted: allTickets, query: {query: req.query}, result, layout: 'agentDashboardLC'});
 			});
 		})
 	}
@@ -208,7 +209,7 @@ const renderFS2 = (req, res) => {
 					}
 				})
 				// console.log(selected);
-				res.render('agentDashboardLCFS2', {layout: 'agentDashboardLC', accepted: allTickets, result, selected:selected});
+				res.render('agentDashboardLCFS2', {layout: 'agentDashboardLC', query: {query: req.query}, accepted: allTickets, result, selected:selected});
 			})
 	})} catch (err) {
 		console.log(`msg: ${err.message}`);
