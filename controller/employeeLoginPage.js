@@ -125,7 +125,7 @@ const loginEmployee = async (req, res) => {
 			
 		} else {
 			if (rol == 'agent') {
-				res.render('agentDashboardLC', {layout: 'agentDashboardLC'});
+				res.redirect('/agent-dashboard');
 			} else {
 				res.json({
 					"Dashboard" : "Admin dashboard"
