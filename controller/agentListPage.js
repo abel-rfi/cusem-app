@@ -62,8 +62,8 @@ const update = async (req, res) => {
 		}]
 		const encryptedString = cryptr.encrypt(req.body.password);
 		await employees.update({
-			id: req.body.id,
 			name: req.body.name,
+			email:req.body.email,
 			password: encryptedString,
 			phone: req.body.phone,
 			address: req.body.address

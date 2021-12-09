@@ -53,9 +53,18 @@ const getEmployeeById = async (req, res) => {
 // Create Agent baru
 const createEmployee = async (req, res) => {
 	try {
-		await employees.create(req.body);
+		const encryptedString = cryptr.encrypt(req.body.password);
+		await employees.create({
+			name: req.body.name,
+			email: req.body.email,
+			password: encryptedString,
+			roles: req.body.roles,
+			phone: req.body.phone,
+			address: req.body.address
+		}
+		);
 		res.json({
-			"message": "Agent Created"
+			"message": "Admin Created"
 		});
 	} catch (err) {
 		console.log(err);
