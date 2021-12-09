@@ -1,5 +1,7 @@
 const models = require('../models');
 const employees = models.Employee;
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
 
 
 const test = (req, res) => {
@@ -106,32 +108,34 @@ const deleteEmployee = async (req, res) => {
 }
 
 const loginEmployee = async (req, res) => {
-	var rol = req.body.roles;
-	let errT = [
-		{
-		    text: rol+" not found!"
-		}
-	]
+	let rol = req.body.roles;
+	let errT = []
 
 	try {
 		const emplo = await employees.findAll({
-			where: {email: req.body.email, 
-				password:req.body.password, 
+			where: {email: req.body.email,
 				roles:req.body.roles} 
 		});
 
+		 
+		
 		if (!emplo.length == true ) {
+			errT.push({text: rol+" not found!"})
 			res.render('employeeLoginPage', { errT,layout: 'normal'});
 			
 		} else {
-			if (rol == 'agent') {
-				res.redirect('/agent-dashboard');
+			if (cryptr.decrypt(emplo[0].password) == req.body.password) {
+				if (rol == 'agent') {
+					res.redirect('/agent-dashboard');
+				} else {
+					res.json({
+						"Dashboard" : "Admin dashboard"
+					})
+				}
 			} else {
-				res.json({
-					"Dashboard" : "Admin dashboard"
-				})
-			}
-			
+				errT.push({text: 'password wrong!'})
+				res.render('employeeLoginPage', { errT,layout: 'normal'});
+			}	
 		}
 	} catch (err) {
 		console.log(err);
