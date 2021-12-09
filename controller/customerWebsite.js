@@ -112,10 +112,14 @@ const form = async (req, res) => {
 
 		const result = await models.Form.create(body);
 
+		/*
 		return res.status(201).json({
 			message: "Form created successfullyy",
 			result 
 		});
+		*/
+		return res.status(201).redirect(`/customer-website`);
+
 	}
 	// .redirect(`/customer-website`) --> source of problem
 	// so how to redirect after send? IDK
