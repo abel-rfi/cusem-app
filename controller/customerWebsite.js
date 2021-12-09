@@ -76,7 +76,7 @@ const form = async (req, res) => {
 		
 		/*
 		even after nodemailer part is commented out, the Unhandled promise rejection persist,
-		so at least it's not nodemailer's fault. IDK what then
+		so at least it's not nodemailer's fault.
 		*/
 		
 		async function main() {
