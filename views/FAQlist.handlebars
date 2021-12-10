@@ -1,67 +1,51 @@
-<div class="first-top">
-    <form action="/faq-list-page/search">
-        <div class="search-bar">
-            <input class="input-sear" name="term" type="search" placeholder="Search FAQ">
-        </div>
-        <div class="kategory-pls">
-            <select class="kategory" id="kategory" name="kategory">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-4"><strong>BANK LOGO</strong></h2>
+    </div>
+    <div class="container">
+        <h3 class="display-4">How can we help you?</h3>
+    </div>
+</div>
+<!--Section: FAQ-->
+<section>
+    <h3 class="text-center mb-4 pb-2 text-primary fw-bold">FAQ</h3>
+    <p class="text-center mb-5">
+        Find the answers for the most frequently asked questions below
+    </p>
+    {{!-- seacrh form --}}
+    <form class="scr-pls" action="/faq-list-page/search">
+        <div class="form-group">
+            <label for="exampleInputQuestion">Search Question</label>
+            <input type="text" class="form-control" id="exampleInputQuestion" aria-describedby="questionHelp"
+                placeholder="Enter Question" name="term">
+            <label for="exampleInputCategory">Select Category</label>
+            <select class="form-control" name="kategory">
                 <option value="">All</option>
                 <option value="question">Question</option>
                 <option value="complain">Complain</option>
                 <option value="other">Other</option>
             </select>
-            <input class="button-sear" type="submit" value="Search">
+            <small id="questionHelp" class="form-text text-muted">We'll list all the related questions</small>
         </div>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
-</div>
-
-<div class="second-end">
-    <div class="lable">
-        <div class="FAQ">
-            FAQ
-        </div>
-    </div>
-    {{#each faqss}}
-    <div class="question-pls">
-        {{#if solution}}
-        <div class='question'>
-            <a href='/faq-list-page/solved-faq-page/{{id}}' class="qsn">{{question}}</a>
-            <div class="status-qsn">
-                <div class="kategory-status">
-                    Type: {{probCategory}}
-                </div>
-                <div name='faq-stat' class="kategory-status">
-                    <span>Status: Solved</span>
-                </div>
-            </div>
+    {{!-- seacrh form --}}
+    <div class="row">
+        {{#each faqss}}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <h3 class="mb-3 text-primary"><i class="far fa-paper-plane text-primary pe-2"></i> {{question}}</h3>
+            <p>
+                <strong>Type: {{probCategory}}</strong> , {{solution}}
         </div>
         {{else}}
-        <div class='question'>
-            <a href='/faq-list-page/unsolved-faq-page/{{id}}' class="qsn">{{question}}</a>
-            <div class="status-qsn">
-                <div class="kategory-status">
-                    Type: {{probCategory}}
-                </div>
-                <div name='faq-stat' class="kategory-status">
-                    <span>Status: Un-Solved</span>
-                </div>
-            </div>
+        <div class="col-md-6 col-lg-4 mb-4">
+            <h3 class="mb-3 text-primary"><i class="far fa-paper-plane text-primary pe-2"></i> NO FAQ YET!</h3>
+            <p>
+                '---------------'
+            </p>
         </div>
-        {{/if}}
-    </div>
-    {{else}}
-    <div class="question-pls">
-        <div class='question'>
-            <a href='#' class="qsn">NO FAQS YET!</a>
-            <div class="status-qsn">
-                <div class="kategory-status">
+        {{/each}}
 
-                </div>
-            </div>
-        </div>
+
     </div>
-    {{/each}}
-    <div class="add-btn">
-        <a href="/faq-list-page/create-faq">Create</a>
-    </div>
-</div>
+</section>
