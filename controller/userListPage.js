@@ -2,6 +2,8 @@ const models = require('../models');
 const users = models.User;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
 
 const test = (req, res) => {
 	try {
@@ -44,6 +46,8 @@ const open = async (req, res) => {
 				id: req.params.id
 			}
 		});
+		usere[0].password = cryptr.decrypt(usere[0].password);
+
 		res.render('editUser', { usere, layout: 'editUserLayout' });
 	} catch (err) {
 		console.log(err);
@@ -55,17 +59,27 @@ const update = async (req, res) => {
 		let doneT = [{
 			text: "User Updated"
 		}]
-		await users.update(req.body, {
+		const encryptedString = cryptr.encrypt(req.body.password);
+		await users.update({
+			name: req.body.name,
+			email:req.body.email,
+			password: encryptedString,
+			phone: req.body.phone,
+			address: req.body.address
+		}
+			, {
 			where: {
 				id: req.params.id
 			}
 		});
+		
 		const usere = await users.findAll({
 			raw: true,
 			where: {
 				id: req.params.id
 			}
 		});
+		usere[0].password = cryptr.decrypt(usere[0].password);
 		res.render('editUser', { usere, doneT, layout: 'editUserLayout' });
 	} catch (err) {
 		console.log(err);
@@ -107,14 +121,16 @@ const createUser = async (req, res) => {
 				email: req.body.email,
 			}
 		});
+		
 		if (usere.length == true) {
 			res.render('createuser', { errorT, layout: 'editUserLayout' });
 			
 		} else {
+			const encryptedString = cryptr.encrypt(req.body.password);
 			await users.create({
 				name: req.body.name,
 				email: req.body.email, 
-				password:req.body.password, 
+				password:encryptedString, 
 				phone:req.body.phone,
 				address:req.body.address
 			});

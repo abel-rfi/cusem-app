@@ -99,7 +99,8 @@ const createFAQ = async (req, res) => {
 	try {
 		await faqs.create({
 			question: req.body.question,
-			probCategory: req.body.probCategory
+			probCategory: req.body.probCategory,
+			solution: req.body.solution
 		});
 		res.redirect('/faq-list-page');
 	} catch (err) {
