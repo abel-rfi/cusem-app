@@ -13,7 +13,7 @@ function saveChat(roomName, msg, role) {
 				sender: role,
 				message: msg
 			}
-			console.log(data);
+			// console.log(data);
 			create(models.Chat, data);
 		});
 	} catch(err) {

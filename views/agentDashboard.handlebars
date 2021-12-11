@@ -1,0 +1,88 @@
+<!-- Content -->
+<div class="ticket-content">
+  <div class="dashboard-header">
+    <h2>Welcome to CUSEM</h2>
+  </div>
+  <div class="dashboard-sections">
+    <div class="live-chat-part">
+      <div class="live-chat-part-h">
+        Live Chat
+      </div>
+      <div class="live-chat-part-text-part">
+        {{#each sum}}
+        <p class="live-chat-part-text">Active <span class="live-chat-part-num">{{sum}}</span></p>
+        {{/each}}
+      </div>
+      <div class="live-chat-part-list">
+        {{#each result}}
+        <div class="live-chat-part-user">
+          <div class="customer-image">
+            <i class='bx bxs-user' ></i>
+          </div>
+          {{'user.name'}}
+        </div>
+        {{/each}}
+      </div>
+      .
+    </div>
+    <div class="dashboard-mini-section">
+      <div class="dashboard-mini-top-part">
+        <a class="dashboard-mini-button">
+          Ticket <i class='bx bx-right-arrow-alt'></i>
+        </a>
+        <a class="dashboard-mini-button">
+          Email
+          <span class="email-active-indicator">
+            2
+          </span>
+        </a>
+      </div>
+      <div class="dashboard-mini-bottom-part">
+        <div class="faq-title">
+              FAQ
+        </div>
+        <div class="dashboard-faq-list">
+          <div class="dashboard-faq-container">
+            <div class="faq-question-section">
+              <div class="dashboard-faq-question">
+                Example Question?
+              </div>
+              <div class="dashboard-faq-expand">
+                &#x002B;
+              </div>
+            </div>
+            <div class="faq-solution-section">
+              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
+            </div>
+          </div>
+          <div class="dashboard-faq-container">
+            <div class="faq-question-section">
+              <div class="dashboard-faq-question">
+                Example Question?
+              </div>
+              <div class="dashboard-faq-expand">
+                &#x002B;
+              </div>
+            </div>
+            <div class="faq-solution-section">
+              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
+            </div>
+          </div>
+          <div class="dashboard-faq-container">
+            <div class="faq-question-section">
+              <div class="dashboard-faq-question">
+                Example Question?
+              </div>
+              <div class="dashboard-faq-expand">
+                &#x002B;
+              </div>
+            </div>
+            <div class="faq-solution-section">
+              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

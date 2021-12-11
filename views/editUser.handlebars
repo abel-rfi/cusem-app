@@ -3,14 +3,14 @@
     {{text}}
 </div>
 {{/each}}
-{{#each emplo}}
+{{#each usere}}
 <div class="top-place">
     <div class="name-pls">
         <div class="agent-name" name="agentName">
             {{name}}
         </div>
         <div class="agent-id" name="id">
-            Agent Id: {{id}}
+            User Id: {{id}}
         </div>
         <div class="bank-name">
             BANK NAME
@@ -18,7 +18,7 @@
     </div>
     <div class="form-header">
         <div class="borrder-info">
-            Agent Information
+            User Information
         </div>
     </div>
 </div>
@@ -60,7 +60,7 @@
             const hapus = document.querySelector('a.delete');
 
             hapus.addEventListener('click', (e) => {
-                const endpoint = '/agent-list-page//open-agent/'+{{id}};
+                const endpoint = '/user-list-page//open-user/'+{{id}};
                 fetch(endpoint, {
                     method: 'DELETE'
 
@@ -71,7 +71,7 @@
             })
         </script>
 
-        <a class="exit" href="/agent-list-page"> exit </a>
+        <a class="exit" href="/user-list-page"> exit </a>
     </div>
 </form>
 
@@ -83,7 +83,9 @@
 {{else}}
 
 <div class="agent-name">
-    tidak ada agent dengan id
+    tidak ada user dengan id {{usere.id}}
 </div>
+
+<a class="exit" href="/user-list-page"> exit </a>
 
 {{/each}}

@@ -9,53 +9,39 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 // Middlewares
-const { createTicket, joinTicket, fetchTicket, sendAgentName } = require('./middlewares/ticket');
+const { createTicket, joinTicket, sendAgentName, updateTickets } = require('./middlewares/ticket');
 const { saveChat, getChat } = require('./middlewares/chat');
 
 io.on('connection', socket => {
 	console.log('New WS connection')
 
-	socket.on('joinTicket', ({id, ticket, role}) => {
-		fetchTicket();
-		try {
-			getChat(socket, io, ticket, role);
-			const data = joinTicket(socket, {id, ticket, role});
-			if ("success" in data && !data.success) {
-				// console.log()
-				socket.emit('session-expired', 'delete session');
-			} else {
-				socket.join(data.roomName);
-				console.log(data, socket.id, "join")
-		
-				// Test joinned user
-				// io.to(socket.id).emit('', socket.id);
-				
-				if (role === "agent") {
-					sendAgentName(socket, data.emplId);
-				}
+	socket.on('joinTicket', (data) => {
+		getChat(socket, io, data.ticket, data.role);
+		// const result = joinTicket(data);
+		// console.log('join2', result);
+		joinTicket(socket, io, data);
+		/*
+		if (result.success) {
+			socket.join(result.roomName);
+
+			if (data.role === "agent") {
+				sendAgentName(socket, result.emplId);
 			}
-		} catch(err) {
-			console.log(err);
-			fetchTicket();
+		} else {
+			// io.in(ticket).emit('session-expired', 'delete session');
+			console.log('session expired');
 		}
-		// fetchTicket();
+		*/
 	})
 
-	socket.on('createTicket', ({token, category}) => {
-		const data = createTicket({token, category});		
-		// console.log(data.roomName)
-		socket.join(data.roomName);
+	socket.on('createTicket', (data) => {
+		const result = createTicket(data);
+		console.log(result);
+		socket.join(result.roomName);
 
-		// Test joinned user
-		socket.emit('message', 'Welcome to live chat');
-		socket.emit('ticket-session', data.roomName);
-
-		fetchTicket()
+		// updateTickets();
+		io.in(result.roomName).emit('ticket-session', result.roomName);
 	})
-
-	socket.on('disconnect', () => {
-		io.emit('message', 'A user has left the chat');
-	});
 
 	socket.on('agent-message', ({ticket, msg}) => {
 		saveChat(ticket, msg, 'agent');
@@ -66,7 +52,7 @@ io.on('connection', socket => {
 	socket.on('user-message', ({ticketSession, msg}) => {
 		// fetchTicket();
 		saveChat(ticketSession, msg, 'user');
-		console.log("lel =", msg);
+		// console.log("lel =", msg);
 		io.to(ticketSession).emit('user-message', msg);
 	});
 });

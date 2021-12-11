@@ -13,7 +13,8 @@
 	<div class="log-form-lc">
 		<form action="/customer-website/sign-in#cust-live-chat-log" method="post">
 			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" required>
+			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" 
+            title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Chat with us">
 		</form>
 	</div>
@@ -47,7 +48,8 @@
 		<form action="/customer-website/sign-up" method="post">
 			<input class="log-input" type="text" name="name" placeholder="Username" required>
 			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" required>
+			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" 
+            title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
 			<input class="log-input" type="password" name="password2" placeholder="Re-enter Password" required>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="REGISTER">
 		</form>
