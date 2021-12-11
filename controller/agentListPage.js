@@ -2,6 +2,9 @@ const models = require('../models');
 const employees = models.Employee;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
+
 
 const test = (req, res) => {
 	try {
@@ -44,6 +47,8 @@ const open = async (req, res) => {
 				id: req.params.id
 			}
 		});
+		emplo[0].password = cryptr.decrypt(emplo[0].password);
+		
 		res.render('editAgent', { emplo, layout: 'editAgentLayout' });
 	} catch (err) {
 		console.log(err);
@@ -55,17 +60,28 @@ const update = async (req, res) => {
 		let doneT = [{
 			text: "Agent Updated"
 		}]
-		await employees.update(req.body, {
+		const encryptedString = cryptr.encrypt(req.body.password);
+		await employees.update({
+			name: req.body.name,
+			email:req.body.email,
+			password: encryptedString,
+			phone: req.body.phone,
+			address: req.body.address
+		}
+			, {
 			where: {
 				id: req.params.id
 			}
 		});
+
 		const emplo = await employees.findAll({
 			raw: true,
 			where: {
 				id: req.params.id
 			}
 		});
+		emplo[0].password = cryptr.decrypt(emplo[0].password);
+		
 		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
 	} catch (err) {
 		console.log(err);
@@ -108,14 +124,16 @@ const createAgent = async (req, res) => {
 				roles: "agent"
 			}
 		});
+		
 		if (emplo.length == true) {
 			res.render('createAgent', { errorT, layout: 'editAgentLayout' });
 			
 		} else {
+			const encryptedString = cryptr.encrypt(req.body.password);
 			await employees.create({
 				name: req.body.name,
 				email: req.body.email, 
-				password:req.body.password, 
+				password:encryptedString, 
 				roles: 'agent',
 				phone:req.body.phone,
 				address:req.body.address

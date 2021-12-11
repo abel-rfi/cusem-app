@@ -4,6 +4,8 @@ const cryptr = new Cryptr('cusem_super_key');
 const auth = require('../middlewares/auth');
 const models = require('../models');
 const employees = models.Employee;
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
 
 
 const test = (req, res) => {
@@ -65,7 +67,7 @@ const createEmployee = async (req, res) => {
 			address: req.body.address
 		});
 		res.json({
-			"message": "Agent Created"
+			"message": "Admin Created"
 		});
 	} catch (err) {
 		console.log(err);
@@ -118,7 +120,7 @@ const deleteEmployee = async (req, res) => {
 }
 
 const loginEmployee = async (req, res) => {
-	var rol = req.body.roles;
+	let rol = req.body.roles;
 	let errT = []
 
 	try {
@@ -128,6 +130,8 @@ const loginEmployee = async (req, res) => {
 				roles:req.body.roles} 
 		});
 
+		 
+		
 		if (!emplo.length == true ) {
 			errT.push({text: rol+" not found!"});
 			res.render('employeeLoginPage', { errT,layout: 'normal'});
@@ -146,7 +150,6 @@ const loginEmployee = async (req, res) => {
 				errT.push({text: 'password wrong!'});
 				res.render('employeeLoginPage', { errT,layout: 'normal'});
 			}
-			
 		}
 	} catch (err) {
 		console.log(err);

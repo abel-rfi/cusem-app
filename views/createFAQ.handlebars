@@ -2,22 +2,21 @@
     <div class="kategory">
         Create New Question
     </div>
-    <div class="status">
-        Status: Un-Solved
-    </div>
 </div>
 
 <div class="last-second">
-    <label style="font-size: 40px;">Pertanyaan</label>
-    <form method="post">
-        <textarea class="jawaban" name="question" rows="4" cols="50"></textarea>
+    <form action="/faq-list-page/create-faq" method="post">
+        <label style="font-size: 40px;">Question</label>
+        <textarea class="jawaban" name="question" rows="4" cols="50" required></textarea>
+        <label style="font-size: 40px;">Solution</label>
+        <textarea class="jawaban" name="solution" rows="4" cols="50" required></textarea>
         <div class="create-btn">
-            <input type="submit" value="send" style="margin-bottom: 20px;" />
             <select class="optionCat" name="probCategory">
                 <option value="question">Question</option>
                 <option value="complain">Complain</option>
                 <option value="other">Other</option>
             </select>
+            <input type="submit" value="send" style="margin-bottom: 20px;" />
         </div>
 
     </form>
