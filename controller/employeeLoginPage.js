@@ -1,6 +1,3 @@
-const Cryptr = require('cryptr');
-const cryptr = new Cryptr('cusem_super_key');
-
 const auth = require('../middlewares/auth');
 const models = require('../models');
 const employees = models.Employee;
