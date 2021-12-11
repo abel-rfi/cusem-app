@@ -20,7 +20,23 @@ const test = (req, res) => {
 const changeStatus = (req, res) => {
 	try {
 		const { emplId, roomName, complaintStatus } = req.body;
-		update(models.Ticket, {complaintStatus}, {emplId, roomName});
+		update(models.Ticket, {complaintStatus}, {emplId: VerifyToken(emplId).emplId, roomName});
+	} catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+const forwardTicket = (req, res) => {
+	try {
+		const {emplId} = VerifyToken(req.body.emplId);
+		const { roomName } = req.body;
+		const newData = {
+			emplId: null,
+			passedFrom: emplId
+		}
+		update(models.Ticket, newData, {emplId, roomName})
+		// res.redirect(`/agent-dashboard/live-chat?id=${req.body.emplId}`);
 	} catch (err) {
 		console.log(`msg: ${err.message}`);
 		return res.status(500).json({msg: err.message});
@@ -29,8 +45,10 @@ const changeStatus = (req, res) => {
 
 const render = (req, res) => {
 	try {
-		const condition = {complaintStatus: {
-			[Op.or]: ['open', 'on Hold', 'on Progress']
+		const {emplId} = VerifyToken(req.query.id);
+		// console.log(emplId)
+		const condition = {emplId, ticketType: 'live chat', complaintStatus: {
+			[Op.or]: ['on Hold', 'on Progress']
 		}};
 
 		models.Ticket.findAll({raw: true, where: condition, include: [
@@ -42,7 +60,7 @@ const render = (req, res) => {
 		.then(result => {
 			const sum = result.length;
 			// console.log(result, sum)
-			return res.render('agentDashboard', {layout: 'agentDashboard', sum:{sum:{sum}}, result});
+			return res.render('agentDashboard', {layout: 'agentDashboard', query: {query: req.query}, sum:{sum:{sum}}, result});
 		})		
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
@@ -73,7 +91,8 @@ const renderTA = (req, res) => {
 
 const renderLc = (req, res) => {
 	try {
-		const condition = {emplId: 1, complaintStatus: {
+		const { emplId } = VerifyToken(req.query.id);
+		const condition = {emplId, complaintStatus: {
 			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
@@ -83,7 +102,9 @@ const renderLc = (req, res) => {
 			}
 		]})
 		.then(allTickets => {
-			// console.log(allTickets)
+			allTickets.map((tkt, i) => {
+				allTickets[i].newEmplId = req.query.id;
+			})
 			const { ticket } = req.query;
 			if (ticket){
 				const ticketAll = fetchAll(models.Ticket)
@@ -95,7 +116,7 @@ const renderLc = (req, res) => {
 							as: 'user'
 						}
 					]}).then(result => {
-						return res.render('agentDashboardLC', {result:{result}, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
+						return res.render('agentDashboardLC', {result:{result: {...result, newEmplId: req.query.id}}, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
 					});
 				} catch(err) {
 					const {id:emplId, ticket:roomName} = req.query;
@@ -119,7 +140,8 @@ const renderLc = (req, res) => {
 
 const renderCS = (req, res) => {
 	try {
-		const condition = {emplId: 1, complaintStatus: {
+		const { emplId } = VerifyToken(req.query.id);
+		const condition = {emplId, complaintStatus: {
 			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
@@ -129,6 +151,9 @@ const renderCS = (req, res) => {
 			}
 		]})
 		.then(allTickets => {
+			allTickets.map((tkt, i) => {
+				allTickets[i].newEmplId = req.query.id;
+			})
 			try {
 				const condition = {complaintStatus: 'open'};
 
@@ -138,7 +163,10 @@ const renderCS = (req, res) => {
 						as: 'user'
 					}
 				]}).then(result => {
-					console.log(req.query);
+					result.map((tkt, i) => {
+						result[i].currentId = req.query.id;
+					})
+					// console.log(result);
 					return res.render('agentDashboardLCCS', {result, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
 				})
 			} catch(err) {
@@ -154,8 +182,8 @@ const renderCS = (req, res) => {
 
 const renderFS1 = (req, res) => {
 	try {
-		const {id} = req.query;
-		const condition = {emplId: id, complaintStatus: {
+		const { emplId } = VerifyToken(req.query.id);
+		const condition = {emplId, complaintStatus: {
 			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
@@ -164,7 +192,11 @@ const renderFS1 = (req, res) => {
 				as: 'user'
 			}
 		]}).then(allTickets => {
-			const condition = {passedFrom: id, complaintStatus: {
+			// console.log(allTickets)
+			allTickets.map((tkt, i) => {
+				allTickets[i].newEmplId = req.query.id;
+			})
+			const condition = {passedFrom: emplId, complaintStatus: {
 				[Op.or]: ['open', 'on Hold', 'on Progress']
 			}};
 			models.Ticket.findAll({raw: true, where: condition, include: [
@@ -176,21 +208,22 @@ const renderFS1 = (req, res) => {
 					as: 'employee'
 				}
 			]}).then(result => {
-				console.log(result);
+				// console.log(result);
 				res.render('agentDashboardLCFS1', {accepted: allTickets, query: {query: req.query}, result, layout: 'agentDashboardLC'});
 			});
 		})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.status(500).json({msg: err.message, position: 'LCFS1'});
 	}
 }
 
 const renderFS2 = (req, res) => {
 	try {
+		const { emplId } = VerifyToken(req.query.id);
 		const {ticket} = req.query;
-		const condition = {emplId: 1, complaintStatus: {
+		const condition = {emplId, complaintStatus: {
 			[Op.or]: ['on Hold', 'on Progress']
 		}};
 		models.Ticket.findAll({raw: true, where: condition, include: [
@@ -199,6 +232,9 @@ const renderFS2 = (req, res) => {
 				as: 'user'
 			}
 		]}).then(allTickets => {
+			allTickets.map((tkt, i) => {
+				allTickets[i].newEmplId = req.query.id;
+			})
 			fetchAll(models.Employee, {roles: 'agent', id: {
 				[Op.not]: 1
 			}}).then(result => {
@@ -213,13 +249,14 @@ const renderFS2 = (req, res) => {
 			})
 	})} catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.status(500).json({msg: err.message, position: 'LCFS2'});
 	}
 }
 
 module.exports = {
 	test,
 	changeStatus,
+	forwardTicket,
 	render,
 	renderTA,
 	renderLc,

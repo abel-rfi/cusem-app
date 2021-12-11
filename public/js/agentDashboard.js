@@ -1,3 +1,9 @@
+// Get query
+const queryString = location.search;
+const query = new URLSearchParams(queryString);
+const agentId = query.get('id');
+localStorage.setItem('agentId', agentId);
+
 var questions = document.getElementsByClassName("faq-question-section");
 var i;
 var icon;

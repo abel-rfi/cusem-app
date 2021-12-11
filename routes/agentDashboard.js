@@ -17,6 +17,8 @@ router.get('/live-chat/forward-sender', adController.renderFS2);
 
 router.post('/live-chat/change-status', adController.changeStatus);
 
+router.post('/live-chat/forward-ticket', adController.forwardTicket);
+
 router.post('/t', adController.test);
 
 module.exports = router
