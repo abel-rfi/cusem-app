@@ -57,13 +57,6 @@ socket.on('agent-accept', ({name}) => {
 	changeAgentName(name);
 });
 
-// socket.on('agent-accept', name => {
-// 	// const agentName = document.getElementById('live-chat-agent-name');
-// 	// console.log("name=", name)
-// 	// agentName.innerHTML = name;
-// 	// localStorage.setItem('ticketSession', ticketSession);
-// });
-
 // Listen msg from server (Experimental)
 // socket.on('message', id => {
 // 	localStorage.setItem('currentUserId', id);
@@ -115,7 +108,7 @@ ratingForm.addEventListener('submit', e => {
 function createTicket() {
 	ticketSession = localStorage.getItem('ticketSession');
 	if (ticketSession == null){
-		socket.emit('createTicket', {token, category});
+		socket.emit('createTicket', {id: token, category});
 	} else {
 		socket.emit('joinTicket', {id: token, ticket: ticketSession, role: 'user'});
 	}

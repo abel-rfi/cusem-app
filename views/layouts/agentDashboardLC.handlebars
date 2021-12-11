@@ -43,7 +43,7 @@
         </div>
         <div class="live-chat-customer-list">
           {{#each accepted}}
-          <a href="/agent-dashboard/live-chat?id=1&ticket={{roomName}}" class="live-chat-customer-button live-chat-customer-selected">
+          <a href="/agent-dashboard/live-chat?id={{newEmplId}}&ticket={{roomName}}" class="live-chat-customer-button live-chat-customer-selected">
             <div class="customer-profile-pict">
               <i class='bx bxs-user'></i>
             </div>
@@ -51,7 +51,9 @@
           </a>
           {{/each}}
         </div>
-        <a href="/agent-dashboard/live-chat/customer-selector" class="live-chat-customer-add-button"><i class='bx bxs-user-plus' ></i></a>
+        {{#each query}}
+        <a href="/agent-dashboard/live-chat/customer-selector?id={{id}}&token={{token}}" class="live-chat-customer-add-button"><i class='bx bxs-user-plus' ></i></a>
+        {{/each}}
       </div>
 
       {{{body}}}

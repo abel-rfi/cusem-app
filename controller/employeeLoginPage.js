@@ -1,3 +1,7 @@
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
+
+const auth = require('../middlewares/auth');
 const models = require('../models');
 const employees = models.Employee;
 const Cryptr = require('cryptr');
@@ -61,8 +65,7 @@ const createEmployee = async (req, res) => {
 			roles: req.body.roles,
 			phone: req.body.phone,
 			address: req.body.address
-		}
-		);
+		});
 		res.json({
 			"message": "Admin Created"
 		});
@@ -122,29 +125,31 @@ const loginEmployee = async (req, res) => {
 
 	try {
 		const emplo = await employees.findAll({
-			where: {email: req.body.email,
+			where: {
+				email: req.body.email, 
 				roles:req.body.roles} 
 		});
 
 		 
 		
 		if (!emplo.length == true ) {
-			errT.push({text: rol+" not found!"})
+			errT.push({text: rol+" not found!"});
 			res.render('employeeLoginPage', { errT,layout: 'normal'});
 			
 		} else {
-			if (cryptr.decrypt(emplo[0].password) == req.body.password) {
+			if (cryptr.decrypt(emplo[0].password) == req.body.password){
 				if (rol == 'agent') {
-					res.redirect('/agent-dashboard');
+					const token = await auth.CreateToken({ email:req.body.email, emplId: emplo[0].id }, '50d');
+					res.redirect(`/agent-dashboard?id=${token}`);
 				} else {
 					res.json({
 						"Dashboard" : "Admin dashboard"
 					})
 				}
 			} else {
-				errT.push({text: 'password wrong!'})
+				errT.push({text: 'password wrong!'});
 				res.render('employeeLoginPage', { errT,layout: 'normal'});
-			}	
+			}
 		}
 	} catch (err) {
 		console.log(err);

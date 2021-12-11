@@ -107,3 +107,19 @@ function closedTicketSession() {
     xhr.send(body);
     // location.replace('/agent-dashboard/live-chat');
 }
+
+function sendForward() {
+	var dropdown = document.getElementById("agent-dropdown");
+	if (dropdown.value != '-') {
+		const body = JSON.stringify({
+			emplId: id,
+			roomName: ticket
+		});
+		console.log(body);
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/agent-dashboard/live-chat/forward-ticket");
+		xhr.setRequestHeader("Content-Type", "application/json");
+	 	xhr.send(body);
+	 	// location.replace(`/agent-dashboard/live-chat?id=${id}`);
+	}
+}

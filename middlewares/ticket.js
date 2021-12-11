@@ -1,105 +1,89 @@
 const Op = require('sequelize').Op;
 
-// Untuk debuggin pertama create token utk roomName dlu, stlah itu baru di paste disini
-let tickets = [{
-    custId: 5,
-    emplId: 1,
-    complaintStatus: 'open',
-    complaintCategory: 'complaint',
-    passedFor: 0,
-    passedFrom: null,
-    roomName: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0SWQiOjUsImlhdCI6MTYzODY5MzYxOCwiZXhwIjoxNjQxMjg1NjE4fQ.6xGCA_z4TSGGSUDx91rIEU3V-7LRlWdd6_3m5lIW0g0'
-  }];
-
 const models = require('../models');
 
 // middlewares
 const { VerifyToken, CreateToken } = require('./auth');
 const { create, fetchOne, update, fetchAll } = require('./CRUD');
 
-function createTicket ({token, category}) {
-	custId = VerifyToken(token).userId;
+// stored variable
+let tickets;
+
+fetchAll(models.Ticket, {})
+.then(result => {
+	tickets = result;
+})
+
+function joinTicket(socket, io, {id, ticket, role}) {
+	try{
+		models.Ticket.findAll({raw: true})
+		.then(tickets => {
+			const verifiedId = VerifyToken(id);
+			const checkSession = VerifyToken(ticket);
+			if (role === 'user') {
+				const data = tickets.filter(tkt => tkt.roomName === ticket & tkt.custId === verifiedId.userId)[0];
+				enterRoom(socket, io, {...data, success: true});
+			} else if (role === 'agent') {
+				const data = tickets.filter((tkt, i) => {
+					if (tkt.roomName === ticket) {
+						tickets[i].emplId = verifiedId.emplId;
+						if (tickets[i].complaintStatus === "open") {
+							tickets[i].complaintStatus = "on Progress";
+						}
+						return tkt;
+					}
+				})[0];
+				try {
+					update(models.Ticket, data, {roomName: data.roomName, custId: data.custId});
+					enterRoom(socket, io, {...data, success: true});
+					sendAgentName(socket, data.emplId);
+				} catch(err) {
+					console.log(err, '~ ticket.js - joinTicket (Agent)');
+					enterRoom(socket, io, {success: false});
+				}
+			}
+		})
+	} catch(err) {
+		console.log(err, '~ ticket.js - joinTicket ');
+		enterRoom(socket, io, {success: false});
+	}
+}
+
+function enterRoom(socket, io, data) {
+	if (data.success) {
+		socket.join(data.roomName);
+	} else {
+		io.to(socket.id).emit('session-expired', 'delete session');
+		console.log('session expired');
+	}
+}
+
+function createTicket({id, category}) {
+	const verifiedId = VerifyToken(id);
 	const data = {
-		custId,
+		custId: verifiedId.userId,
 		emplId: null,
 		complaintCategory: category,
 		complaintStatus: 'open',
 		passedFor: 0,
 		passedFrom: null,
-		roomName: CreateToken({custId}, '50d')
-	}
-	tickets.push(data);
-	console.log(data, "create");
-	create(models.Ticket, data);
-	return data;
-}
-
-function joinTicket(socket, {id, ticket, role}) {
-	if (role == 'user') {
-		custId = VerifyToken(id).userId;
-		try {
-			// console.log(tickets);
-			// check if the ticket session is expired
-			checkExpire = VerifyToken(ticket);
-
-			return tickets.filter(tckt => tckt.roomName === ticket)[0]
-		} catch (err) {
-			console.log('session expired');
-			return {success: false}
-		}
-	} else if (role == 'agent') {
-		tickets.map((tckt, i) => {
-			if (tckt.roomName === ticket) {
-				tickets[i].emplId = parseInt(id);
-				if (tickets[i].complaintStatus === "open"){
-					// console.log(tickets[i].complaintStatus)
-					tickets[i].complaintStatus= "on Progress";
-				}
-			}
-		});
-		// console.log(tickets);
-		const data = tickets.filter(tckt => tckt.roomName === ticket)[0]
-		
-		// console.log(data, tickets)
-		// update to db
-		try{
-				update(models.Ticket, data, {custId:data.custId, roomName: data.roomName});
-				return data
-			} catch (err) {
-				console.log(err)
-			}
-	} else {
-		console.log('status 500')
-	}
-}
-
-function fetchTicket() {
-	try {
-		fetchAll(models.Ticket, { complaintStatus: {
-			[Op.or]: ["open", "on Hold", "on Progress"]
-		}}).then(result => {
-			tickets.map((tckt, i) => {
-				result.map((tkt, i) => {
-					if (tckt.custId === tkt.custId && tckt.roomName === tkt.roomName) {
-						tickets[i] = tkt;
-					} else {
-						tickets.push(tkt);
-						delete result[i]
-					}
-				})
-			})
-		})
-		// console.log(tickets);
+		roomName: CreateToken({custId: verifiedId.userId}, '50d'),
+		ticketType: 'live chat'
+	};
+	try{
+		tickets.push(data);
+		create(models.Ticket, data);
+		return {success: true, ...data};
 	} catch(err) {
-		console.log(err)
+		console.log(err, '~ ticket.js - createTicket');
+		return {success: false};
 	}
 }
 
 function sendAgentName(socket, id) {
 	try{
-		fetchOne(models.Employee, {id, roles:'agent'})
+		fetchOne(models.Employee, {id: id, roles:'agent'})
 		.then(result => {
-			// console.log(result.name);
 			socket.broadcast.emit('agent-accept', {name: result.name});
 		})
 	} catch(err) {
@@ -107,9 +91,16 @@ function sendAgentName(socket, id) {
 	}
 }
 
+function updateTickets() {
+	fetchAll(models.Ticket, {})
+	.then(result => {
+		tickets = result;
+	})
+}
+
 module.exports = {
-	createTicket,
 	joinTicket,
-	fetchTicket,
-	sendAgentName
+	createTicket,
+	sendAgentName,
+	updateTickets
 }

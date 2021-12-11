@@ -23,15 +23,11 @@
       </div>
     </div>
     <form class="bottom-box" action="/agent-dashboard/live-chat">
-      <input type="hidden" name="id" value="1">
+      <input type="hidden" name="id" value="{{currentId}}">
       <input type="hidden" name="ticket" value={{roomName}}>
       <button class="customer-accept">
         Accept
       </button>
-      <!-- bisa di hilangkan declinenya -->
-      <!-- <button class="customer-decline">
-        Decline
-      </button> -->
     </form>
   </div>
   {{/each}}

@@ -1,3 +1,6 @@
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
+
 const auth = require('../middlewares/auth');
 const {fetchAll, fetchOne, create} = require('../middlewares/CRUD');
 const models = require('../models');
@@ -38,8 +41,15 @@ const register = async (req, res) => {
 		if (check != null){
 			return res.status(409).json({ success: false, message: "email already exists" })
 		} else {
-			const result = await create(User, req.body);
-			return res.status(200).json({ success: true, result })
+			if (req.body.password == req.body.password2){
+				const encryptedString = cryptr.encrypt(req.body.password);
+				req.body['password'] = encryptedString;
+				const result = await create(User, req.body);
+				return res.redirect('/customer-website');
+				// return res.status(200).json({ success: true, result:req.body })
+			} else {
+				return res.status(500).json({ success: false, msg: 'password does not match' });
+			}
 		}
 	}
 	catch (err) {
@@ -50,13 +60,12 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		// console.log(email, password)
 		const regUser = await fetchOne( User, { email });
 		if (regUser == null) {
 			return res.redirect(`/customer-website`);
 			// return res.status(404).json({ success: false, message: "email is not registered" });
 		} else {
-			if (regUser.password == password){
+			if (cryptr.decrypt(regUser.password) == password){
 				const token = await auth.CreateToken({ email, userId: regUser.id }, '1h');
 				return res.redirect(`logged/?token=${token}`);
 			} else {
