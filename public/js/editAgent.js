@@ -1,3 +1,9 @@
+// get query
+const queryString = location.search;
+const query = new URLSearchParams(queryString);
+const id = query.get('id');
+const ticket = query.get('ticket');
+
 function show() {
     var pssw = document.getElementById("password");
     var hide = document.getElementById('show');
@@ -10,3 +16,4 @@ function show() {
         hide.innerHTML = 'hide';
     }
 }
+
