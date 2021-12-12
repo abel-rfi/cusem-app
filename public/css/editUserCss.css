@@ -48,6 +48,18 @@ body {
     padding: 20px 20px;
 }
 
+#upperLinkNav2{
+    background: #C4C4C4;
+    height: auto;
+    border: 20px solid transparent;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+    float:left;
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 20;}
+
 .bank-name {
     display: flex;
     align-items: center;

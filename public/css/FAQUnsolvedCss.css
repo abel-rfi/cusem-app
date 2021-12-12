@@ -1,0 +1,123 @@
+body {
+    background-color: #C4C4C4;
+}
+
+.top-first {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E5E5E5;
+}
+
+.kategory {
+    font-size: 45px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 40px;
+}
+
+.status {
+    font-size: 40px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #5A5050;
+    color: white;
+    padding: 20px;
+}
+
+.last-second {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.pertanyaan {
+    resize: none;
+    width: 70%;
+    margin: 10px;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    border: 6px solid;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    font-size: 20px;
+    font-weight: 600;
+}
+label {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.jawaban {
+    resize: none;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+input {
+    width: 50%;
+    margin-top: 20px;
+    font-size: 25px;
+    border-radius: 12px;
+}
+
+input:hover {
+    background-color: #5A5050;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: #5A5050;
+}
+
+.add-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 10px 10px 0;
+}
+
+.add-btn a {
+    border: 1px solid black;
+    background-color: rgb(230, 126, 86);
+    padding: 0 9px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.add-btn a:hover {
+    color: #5A5050;
+}
+
+.optionCat {
+    border-radius: 12px;
+    font-size: 25px;
+    padding: 5px 0 5px 5px;
+    background-color: #efefef;
+    cursor: pointer;
+}
