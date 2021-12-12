@@ -1,10 +1,11 @@
 <div class="first-top">
-    <form action="/agent-list-page/search">
+    <div id="upperLinkNav2">FAQ list</div>
+    <form action="/faq-list-page/search">
         <div class="search-bar">
             <input class="input-sear" name="term" type="search" placeholder="Search FAQ">
         </div>
         <div class="kategory-pls">
-            <select class="kategory" id="kategory" name="probCategory">
+            <select class="kategory" id="kategory" name="kategory">
                 <option value="">All</option>
                 <option value="question">Question</option>
                 <option value="complain">Complain</option>
@@ -20,44 +21,48 @@
         <div class="FAQ">
             FAQ
         </div>
-        <div class="agent-name">
-            Agent
-        </div>
     </div>
+    {{#each faqss}}
+    <div class="question-pls">
+        {{#if solution}}
+        <div class='question'>
+            <a href='/faq-list-page/solved-faq-page/{{id}}' class="qsn">{{question}}</a>
+            <div class="status-qsn">
+                <div class="kategory-status">
+                    Type: {{probCategory}}
+                </div>
+                <div name='faq-stat' class="kategory-status">
+                    <span>Status: Solved</span>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class='question'>
+            <a href='/faq-list-page/unsolved-faq-page/{{id}}' class="qsn">{{question}}</a>
+            <div class="status-qsn">
+                <div class="kategory-status">
+                    Type: {{probCategory}}
+                </div>
+                <div name='faq-stat' class="kategory-status">
+                    <span>Status: Un-Solved</span>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    {{else}}
     <div class="question-pls">
         <div class='question'>
-            Bagaimana membuat wesite tidak mereload saat megirim request post
-        </div>
-        <div class='agent'>
-            AgentName
-        </div>
+            <a href='#' class="qsn">NO FAQS YET!</a>
+            <div class="status-qsn">
+                <div class="kategory-status">
 
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="question-pls">
-        <div class='question'>
-            Bagaimana membuat wesite tidak mereload saat megirim request post
-        </div>
-        <div class='agent'>
-            AgentName
-        </div>
-
-    </div>
-    <div class="question-pls">
-        <div class='question'>
-            Bagaimana membuat wesite tidak mereload saat megirim request post
-        </div>
-        <div class='agent'>
-            AgentName
-        </div>
-
-    </div>
-    <div class="question-pls">
-        <div class='question'>
-            Bagaimana membuat wesite tidak mereload saat megirim request post
-        </div>
-        <div class='agent'>
-            AgentName
-        </div>
-
+    {{/each}}
+    <div class="add-btn">
+        <a href="/faq-list-page/create-faq">Create</a>
     </div>
 </div>

@@ -25,15 +25,12 @@ io.on('connection', socket => {
 				socket.emit('session-expired', 'delete session');
 			} else {
 				socket.join(data.roomName);
-				console.log(data, socket.id, "join")
-		
-				// Test joinned user
-				// io.to(socket.id).emit('', socket.id);
 				
 				if (role === "agent") {
 					sendAgentName(socket, data.emplId);
 				}
 			}
+			// fetchTicket()
 		} catch(err) {
 			console.log(err);
 			fetchTicket();
@@ -66,7 +63,7 @@ io.on('connection', socket => {
 	socket.on('user-message', ({ticketSession, msg}) => {
 		// fetchTicket();
 		saveChat(ticketSession, msg, 'user');
-		console.log("lel =", msg);
+		// console.log("lel =", msg);
 		io.to(ticketSession).emit('user-message', msg);
 	});
 });

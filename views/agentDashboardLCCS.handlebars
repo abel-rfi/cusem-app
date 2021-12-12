@@ -1,17 +1,25 @@
 <!-- Content -->
 <div class="live-chat-customer-selection-list">
-  {{#each tckts}}
+  {{#each result}}
   <div class="customer-box">
-    <div class="current-date">{{day}}/{{month}}/{{year}} at {{hours}}:{{minutes}}</div>
+    <div class="current-date">{{createdAt}}</div>
     <div class="top-box">
       <div class="customer-image">
         <i class='bx bxs-user' ></i>
       </div>
       <div class="box-showed-data">
-        <p class="box-text-cs">{{name}}</p>
+        <p class="box-text-cs">{{'user.name'}}</p>
         <p class="box-text-cs box-text-cat-cs">Category: {{complaintCategory}}</p>
       </div>
+      {{#ifEquals complaintStatus 'open'}}
       <div class="indcator-color indicator-open">
+      {{/ifEquals}}
+      {{#ifEquals complaintStatus 'on Progress'}}
+      <div class="indcator-color indicator-progress">
+      {{/ifEquals}}
+      {{#ifEquals complaintStatus 'on Hold'}}
+      <div class="indcator-color indicator-hold">
+      {{/ifEquals}}
       </div>
     </div>
     <form class="bottom-box" action="/agent-dashboard/live-chat">
@@ -20,9 +28,10 @@
       <button class="customer-accept">
         Accept
       </button>
-      <button class="customer-decline">
+      <!-- bisa di hilangkan declinenya -->
+      <!-- <button class="customer-decline">
         Decline
-      </button>
+      </button> -->
     </form>
   </div>
   {{/each}}

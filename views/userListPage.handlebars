@@ -1,4 +1,7 @@
+
 <div class="top-first">
+    <div id="upperLinkNav2">Agent manager</div>
+    <h1>Agent Manager</h1>
     <form action="/agent-list-page/search">
         <div class="search-bar">
             <input class="input-sear" name="term" type="search" placeholder="Search agents">
@@ -7,8 +10,8 @@
     </form>
     <div class="agent-status">
         <div class="active-agent active">
-            <div class="number">{{emplo.length}}</div>
-            <label class="title">Agent List</label>
+            <div class="number">{{usere.length}}</div>
+            <label class="title">User List</label>
         </div>
     </div>
 </div>
@@ -16,11 +19,11 @@
 
 <div class="bottom-second">
     <div class="row">
-        {{#each emplo}}
+        {{#each usere}}
         <div class="col-md-6">
             <div class="agent-pls">
                 <div class="agent-name">
-                    <div class="name"><a href="/agent-list-page/open-agent/{{id}}">{{name}}</a></div>
+                    <div class="name"><a href="/user-list-page/open-user/{{id}}">{{name}}</a></div>
                 </div>
                 <div class="role">
                     <div class="role">{{email}}</div>
@@ -31,7 +34,7 @@
         <div class="col-md-6">
             <div class="agent-pls">
                 <div class="agent-name">
-                    <div class="name"> Agennt not Found!</div>
+                    <div class="name"> User not Found!</div>
                 </div>
                 <div class="role">
                     <div class="role">-------</div>
@@ -43,6 +46,6 @@
 
 
     <div class="add-btn">
-        <a href="/agent-list-page/create-agent">Create</a>
+        <a href="/admin-dashboard/agent-manager/agent-editor">Create</a>
     </div>
 </div>

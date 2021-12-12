@@ -1,0 +1,27 @@
+{{#each faqss}}
+<div class="top-first">
+    <div class="kategory">
+        Category: {{probCategory}}
+    </div>
+    <div class="status">
+        Status: Solved
+    </div>
+</div>
+
+<div class="last-second">
+    <label style="font-size: 40px;">Pertanyaan</label>
+    <div class="question">
+        <textarea class="pertanyaan" name="question" rows="4" cols="50"
+            readonly>{{question}}</textarea>
+    </div>
+    <label>jawaban</label>
+    <textarea class="jawaban" name="solution" rows="3" cols="50" readonly>{{solution}}</textarea>
+</div>
+{{else}}
+<label>404</label>
+{{/each}}
+
+
+<div class="add-btn">
+    <a href="/faq-list-page">Exit</a>
+</div>

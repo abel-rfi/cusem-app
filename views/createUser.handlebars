@@ -1,9 +1,11 @@
 {{#each errorT}}
+
 <div class='done-txt' style="background-color: rgb(255, 139, 139);">
     {{text}}
 </div>
 {{/each}}
 <div class="top-place">
+    <div id="upperLinkNav2"><a href="/admin-dashboard/agent-manager">Agent manager</a> > employee1</div>
     <div class="name-pls">
         <div class="agent-name" name="agentName">
             Name
@@ -16,10 +18,11 @@
     </div>
     <div class="form-header">
         <div class="borrder-info">
-            Agent Information
+            User Information
         </div>
     </div>
 </div>
+<!--<div id="upperLinkNav2"><a href="/admin-dashboard/agent-manager">Agent manager</a> > employee1</div>-->
 
 <form class="data-agent" method="post">
     <div class="info-side">
@@ -52,7 +55,7 @@
     <div class="btn-pls">
         <button type="submit"> Create </button>
 
-        <a class="exit" href="/agent-list-page"> exit </a>
+        <a class="exit" href="/user-list-page"> exit </a>
     </div>
 </form>
 
