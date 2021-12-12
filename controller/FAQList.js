@@ -1,3 +1,8 @@
+const models = require('../models');
+const faqs = models.FAQ;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 const test = (req, res) => {
 	try {
@@ -8,9 +13,11 @@ const test = (req, res) => {
 		return res.status(500).json({msg: err.message});
 	}
 }
-const render = (req, res) => {
+const render = async (req, res) => {
 	try {
-		res.render('FAQlist', {layout: 'FAQlistLayout'})
+		const faqss = await faqs.findAll({raw: true})
+		res.render('FAQlist', { faqss, layout: "FAQlistLayout"})
+		
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -18,9 +25,15 @@ const render = (req, res) => {
 	}
 }
 
-const renderAgent = (req, res) => {
+const renderUnsolvedFAQ = async (req, res) => {
 	try {
-		res.render('FAQagent', {layout: 'FAQAgentLayout'})
+		const faqss = await faqs.findAll({
+			raw: true,
+			where: {
+				id: req.params.id
+			}
+		});
+		res.render('FAQunSolved',{faqss, layout: 'FAQunSolvedLayout'})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -28,19 +41,79 @@ const renderAgent = (req, res) => {
 	}
 }
 
-const renderAdmin = (req, res) => {
+const search =  async (req, res) => {
+	let { term, kategory } = req.query;
+
+	// Make lowercase
+	term = term.toLowerCase();
+	kategory = kategory.toLowerCase();
 	try {
-		res.render('FAQadmin', {layout: 'FAQAdminLayout'})
+		const faqss = await faqs.findAll({
+			raw: true,
+			where: { question: { [Op.like]: '%' + term + '%' }, probCategory: { [Op.like]: '%' + kategory + '%' }}
+		});
+		res.render('FAQlist', { faqss, layout: "FAQlistLayout"})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
 		return res.status(500).json({msg: err.message});
+	}
+};
+
+const jawabAgent = async (req, res) => {
+	try {
+		await faqs.update(req.body, {
+			where: {
+				id: req.params.id
+			}
+		});
+		res.redirect('/faq-list-page');
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const renderSolvedFAQ =  async (req, res) => {
+	try {
+		const faqss = await faqs.findAll({
+			raw: true, where: { id: req.params.id}
+		})
+		res.render('FAQSolved', {faqss, layout: 'FAQSolvedLayout'})
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+const create = async (req, res) => {
+	try {
+		res.render('createFAQ', { layout: 'FAQunSolvedLayout' });
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+const createFAQ = async (req, res) => {
+
+	try {
+		await faqs.create({
+			question: req.body.question,
+			probCategory: req.body.probCategory
+		});
+		res.redirect('/faq-list-page');
+	} catch (err) {
+		console.log(err);
 	}
 }
 
 module.exports = {
 	test,
 	render,
-	renderAgent,
-	renderAdmin
+	search,
+	create,
+	createFAQ,
+	renderUnsolvedFAQ,
+	jawabAgent,
+	renderSolvedFAQ
 }

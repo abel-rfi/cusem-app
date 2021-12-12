@@ -71,66 +71,75 @@ const login = async (req, res) => {
 	}
 }
 
-const form = async (req, res) => {
-	try{
-		
-		/*
-		even after nodemailer part is commented out, the Unhandled promise rejection persist,
-		so at least it's not nodemailer's fault.
-		*/
-		
-		async function main() {
-			let transporter = nodemailer.createTransport({
-				service: 'gmail',
-				auth: {
-				  user: "komputersainsteknik@gmail.com", 
-				  pass: "iuli2019", 
-				},
-			  });
-	
-			let info = {
-				from: '"Agent" <agent@example.com>',
-				to: req.body.email,
-				subject: "Thank you for your mail",
-				html: "<p>This is an automated reply mail. Our agent will reply back to you ASAP</p>"
-			}
-	
-			await transporter.sendMail(info);
-			
-			console.log("Message sent: %s", (await transporter.sendMail(info)).messageId);
-			  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-		}
-		
-		main().catch(console.error);
-		
-		const body = {
-			name: req.body.name,
-			email: req.body.email,
-			message: req.body.message,
-			complaintCategory: req.body.complaintCategory,
-		}
-
-		const result = await models.Form.create(body);
-
-		/*
-		return res.status(201).json({
+function form(req, res){
+	const post = {
+		name: req.body.name,
+		email: req.body.email,
+		message: req.body.message,
+		complaintCategory: req.body.complaintCategory,
+	}
+	models.Form.create(post).then(result => {
+		res.status(201).json({
 			message: "Form created successfullyy",
-			result 
+			post: result
 		});
-		*/
-		return res.status(201).redirect(`/customer-website`);
+	}).catch(error => {
+		res.status(500).json({
+			message: "Something went wrong",
+			error: error
+		});	
+	});
+	/*
+	async function main() {
+		let testAccount = await nodemailer.createTestAccount();
+		let transporter = nodemailer.createTransport({
+			host: "smtp.ethereal.email",
+			port: 587,
+			secure: false, // true for 465, false for other ports
+			auth: {
+			  user: testAccount.user, // generated ethereal user
+			  pass: testAccount.pass, // generated ethereal password
+			},
+		  });
 
+		let info = await transporter.sendMail({
+			from: '"Agent" <agent@example.com>',
+			to: req.body.email,
+			subject: "Thank you for your mail",
+			html: "<p>This is an automated reply mail. Our agent will reply back to you ASAP</p>"
+		})
+		console.log("Message sent: %s", info.messageId);
+  		// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  		// Preview only available when sending through an Ethereal account
+  		console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 	}
-	// .redirect(`/customer-website`) --> source of problem
-	// so how to redirect after send? IDK
-	// att 1: nodemailer commented out -> error persists
-	// att 2: remove redirect(`cw`) in success return result -> yep gone. FOCKIN
-	catch (err) {
-		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message, err});
+	main().catch(console.error);
+	*/
+	async function main() {
+		let transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+			  user: "komputersainsteknik@gmail.com", 
+			  pass: "iuli2019", 
+			},
+		  });
+
+		let info = {
+			from: '"Agent" <agent@example.com>',
+			to: req.body.email,
+			subject: "Thank you for your mail",
+			html: "<p>This is an automated reply mail. Our agent will reply back to you ASAP</p>"
+		}
+
+		await transporter.sendMail(info);
+		
+		console.log("Message sent: %s", (await transporter.sendMail(info)).messageId);
+  		// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 	}
+	main().catch(console.error);
+	return res.redirect(`/customer-website`);
 }
-
 
 const render = async (req, res) => {
 	try {
@@ -167,6 +176,7 @@ module.exports = {
 	login,
 	register,
 	form,
+	//save:save,
 	render,
 	renderLOG
 }
