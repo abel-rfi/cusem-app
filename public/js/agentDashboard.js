@@ -2,6 +2,8 @@
 const queryString = location.search;
 const query = new URLSearchParams(queryString);
 const agentId = query.get('id');
+
+// store agent session
 localStorage.setItem('agentId', agentId);
 
 var questions = document.getElementsByClassName("faq-question-section");
@@ -29,4 +31,13 @@ for (i=0; i < questions.length; i++) {
 			answer.style.maxHeight = answer.scrollHeight + "px";
 		}
 	});
+}
+
+function logOut() {
+	localStorage.removeItem('agentId');
+	location.replace('/employee-login-page');
+}
+
+function EditProfile() {
+	location.replace(`/agent-list-page/open-agent/${agentId}`)
 }

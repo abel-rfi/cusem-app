@@ -30,9 +30,13 @@
         <a href="/agent-dashboard/ticket-archieve?id={{id}}&token={{token}}" class="live-chat-button">Ticket Archieve</a>
         {{/each}}
       </div>
-      <a href="#" class="live-chat-button agent-profile">
-        <i class='bx bx-user-circle'></i>
-      </a>
+      <div href="#" class="live-chat-button agent-profile">
+        <i class='dropbtn bx bx-user-circle'></i>
+        <div class="agent-profile-dropdown">
+          <a onclick="EditProfile()">Edit Profile</a>
+          <a onclick="logOut()">Logout</a>
+        </div>
+      </div>
     </nav>
 
     {{{body}}}

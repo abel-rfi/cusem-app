@@ -1,4 +1,5 @@
 const chatForm = document.querySelector('.cust-live-chat-input-section');
+const categoryForm = document.getElementById('cust-live-chat-category-section');
 const chatSection = document.querySelector('.cust-live-chat-chat-section');
 const ratingForm = document.querySelector('.rating-form');
 
@@ -12,10 +13,7 @@ const token = query.get('token');
 localStorage.setItem('token', token);
 
 let ticketSession = localStorage.getItem('ticketSession');
-// experimental
-// let currentUserId = localStorage.getItem('currentUserId');
-// example
-const category = "complaint"
+let category;
 
 function logOut() {
 	localStorage.clear();
@@ -27,7 +25,7 @@ const socket = io();
 if (ticketSession) {
 	// console.log('test')
 	socket.emit('joinTicket', {id: token, ticket: ticketSession, role: 'user'});
-	console.log(socket.id);
+	// console.log('socket-id:', socket.id);
 }
 
 // Listen msg from server
@@ -57,6 +55,11 @@ socket.on('agent-accept', ({name}) => {
 	changeAgentName(name);
 });
 
+socket.on('close-session', currenTicket => {
+	// console.log('close session', currenTicket);
+	location.href = '#live-chat-rating'
+});
+
 // Listen msg from server (Experimental)
 // socket.on('message', id => {
 // 	localStorage.setItem('currentUserId', id);
@@ -84,6 +87,7 @@ chatForm.addEventListener('submit', (e) => {
 	e.target.elements.msg.focus();
 });
 
+// rating listener
 ratingForm.addEventListener('submit', e => {
 	e.preventDefault();
 	// console.log(e.target.elements);
@@ -95,15 +99,40 @@ ratingForm.addEventListener('submit', e => {
 			e.target.elements[i].checked = true;
 		}
 	}
-	const data = {
+
+	const body = JSON.stringify({
+		ticketSession,
 		rating: starVal,
 		comment: e.target.elements[5].value
-	}
+	});
 	e.target.elements[5].value = ""
 	
-	console.log(data);
-	location.replace('');
+	localStorage.removeItem('ticketSession');
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/customer-website/logged/store-rating");
+	xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
+	location.href = '#';
 });
+
+categoryForm.addEventListener('submit', e => {
+	e.preventDefault();
+
+	if (e.target.elements[0].value != '-'){
+		category = e.target.elements[0].value;
+		location.href = '#cust-live-chat-log';
+		createTicket();
+	}
+})
+
+function checkTicket() {
+	ticketSession = localStorage.getItem('ticketSession');
+	if (ticketSession === null) {
+		location.href = '#cust-live-chat-category-section';
+	} else {
+		location.href = '#cust-live-chat-log';
+	}
+}
 
 function createTicket() {
 	ticketSession = localStorage.getItem('ticketSession');

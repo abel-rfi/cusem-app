@@ -9,9 +9,23 @@ const query = new URLSearchParams(queryString);
 const id = query.get('id');
 const ticket = query.get('ticket');
 
+var accepted = document.getElementsByClassName("live-chat-customer-button");
+
+if (localStorage.getItem('agentId') === null & id !== null) {
+	localStorage.setItem('agentId', id);
+}
+
 // console.log(id, ticket)
 if (id !== null & ticket !== null){
 	socket.emit('joinTicket', {id, ticket, role:'agent'});
+	var i;
+	for (i=0; i < accepted.length; i++) {
+		var openedTicket = accepted[i].lastElementChild.value;
+		if (openedTicket === ticket) {
+			// live-chat-customer-selected
+			accepted[i].classList.toggle('live-chat-customer-selected');
+		}
+	}
 }
 
 // Message from server
@@ -29,15 +43,6 @@ socket.on('agent-message', message => {
 	// scroll down
 	chatSection.scrollTop = chatSection.scrollHeight;
 });
-
-// Message from server
-socket.on('message', id => {
-	// localStorage.setItem('currentAgentId', id);
-});
-
-// socket.on('agent-accept', name => {
-// 	localStorage.setItem('agent_name', name);
-// });
 
 // Message Submit
 chatForm.addEventListener('submit', (e) => {
@@ -99,27 +104,61 @@ function closedTicketSession() {
 		complaintStatus: 'closed'
 	});
 
+	socket.emit('close-session', ticket);
+
 	document.querySelector('.current-status').innerHTML = 'closed';
 
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "/agent-dashboard/live-chat/change-status");
 	xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(body);
-    // location.replace('/agent-dashboard/live-chat');
+    // location.replace(`/agent-dashboard/live-chat?id=${id}`);
 }
 
 function sendForward() {
 	var dropdown = document.getElementById("agent-dropdown");
+	var options = document.getElementsByClassName("dropdown-option");
+	var i;
+	var targetId;
 	if (dropdown.value != '-') {
+		for (i = 0; i < options.length; i++) {
+			if (options[i].value == dropdown.value) {
+				targetId = options[i].attributes.targetId.nodeValue;
+			}
+		}
 		const body = JSON.stringify({
 			emplId: id,
+			passedTo: targetId,
 			roomName: ticket
 		});
-		console.log(body);
+		// console.log(body);
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", "/agent-dashboard/live-chat/forward-ticket");
 		xhr.setRequestHeader("Content-Type", "application/json");
 	 	xhr.send(body);
 	 	// location.replace(`/agent-dashboard/live-chat?id=${id}`);
 	}
+}
+
+function acceptForward() {
+	const body = JSON.stringify({
+		emplId: id,
+		roomName: document.getElementById('forwardRoomName').value,
+		passedFrom: document.getElementById('forwardEmpl').value
+	});
+	// console.log(body);
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/agent-dashboard/live-chat/accept-forward");
+	xhr.setRequestHeader("Content-Type", "application/json");
+ 	xhr.send(body);
+ 	// location.replace(`/agent-dashboard/live-chat?id=${id}`);
+}
+
+function logOut() {
+	localStorage.removeItem('agentId');
+	location.replace('/employee-login-page');
+}
+
+function EditProfile() {
+	location.replace(`/agent-list-page/open-agent/${id}`)
 }

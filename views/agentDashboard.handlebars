@@ -42,45 +42,21 @@
               FAQ
         </div>
         <div class="dashboard-faq-list">
+          {{#each faq}}
           <div class="dashboard-faq-container">
             <div class="faq-question-section">
               <div class="dashboard-faq-question">
-                Example Question?
+                {{question}}
               </div>
               <div class="dashboard-faq-expand">
                 &#x002B;
               </div>
             </div>
             <div class="faq-solution-section">
-              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
+              {{solution}}
             </div>
           </div>
-          <div class="dashboard-faq-container">
-            <div class="faq-question-section">
-              <div class="dashboard-faq-question">
-                Example Question?
-              </div>
-              <div class="dashboard-faq-expand">
-                &#x002B;
-              </div>
-            </div>
-            <div class="faq-solution-section">
-              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
-            </div>
-          </div>
-          <div class="dashboard-faq-container">
-            <div class="faq-question-section">
-              <div class="dashboard-faq-question">
-                Example Question?
-              </div>
-              <div class="dashboard-faq-expand">
-                &#x002B;
-              </div>
-            </div>
-            <div class="faq-solution-section">
-              Lorem, ipsum dolor sit amet consectetur, adipisicing elit. Assumenda voluptate totam maiores laborum iste atque alias odio ducimus, numquam necessitatibus!
-            </div>
-          </div>
+          {{/each}}
         </div>
       </div>
     </div>
