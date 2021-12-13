@@ -1,8 +1,8 @@
 <div class="top-first">
-    <form action="/agent-list-page/search">
+    <form method="post">
         <div class="search-bar">
             <input class="input-sear" name="term" type="search" placeholder="Search Users">
-            <input class="button-sear" type="submit" value="Search">
+            <button class="button-sear" type="submit"> Search </button>
         </div>
     </form>
     <div class="agent-status">
@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <div class="agent-pls">
                 <div class="agent-name">
-                    <div class="name"><a href="/user-list-page/open-user/{{id}}">{{name}}</a></div>
+                    <div class="name"><a href="/user-list-page/open-user/{{id}}?id={{agentId}}&token={{ticket}}">{{name}}</a></div>
                 </div>
                 <div class="role">
                     <div class="role">{{email}}</div>
@@ -43,6 +43,6 @@
 
 
     <div class="add-btn">
-        <a href="/user-list-page/create-user">Create</a>
+        <a href="/user-list-page/create-user?id={{usere.[0].agentId}}&token={{usere.[0].ticket}}">Create</a>
     </div>
 </div>
