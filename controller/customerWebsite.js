@@ -133,7 +133,7 @@ const form = async (req, res) => {
 	// .redirect(`/customer-website`) --> source of problem
 	// so how to redirect after send? IDK
 	// att 1: nodemailer commented out -> error persists
-	// att 2: remove redirect(`cw`) in success return result -> yep gone. FOCKIN
+	// att 2: remove redirect(`cw`) in success return result -> yep gone. 
 	catch (err) {
 		console.log(`msg: ${err.message}`);
 		return res.status(500).json({msg: err.message, err});

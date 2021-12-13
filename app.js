@@ -26,6 +26,7 @@ const agLsRote = require('./routes/agentListPage');
 const usLsRote = require('./routes/userListPage');
 const adRoute = require('./routes/agentDashboard');
 const FAQlRoute = require('./routes/FAQlist');
+const EmailRoute = require('./routes/agentEmail');
 
 app.use(bodyParser.json());
 
@@ -36,5 +37,6 @@ app.use('/agent-list-page', agLsRote);
 app.use('/user-list-page', usLsRote);
 app.use('/agent-dashboard', adRoute);
 app.use('/faq-list-page', FAQlRoute);
+app.use('/email-page', EmailRoute);
 
 module.exports = app

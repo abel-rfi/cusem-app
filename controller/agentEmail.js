@@ -2,11 +2,14 @@ const models = require('../models');
 const emails = models.Form;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
 
 const render = (req, res) => {
 	emails.findAll({ raw: true })
-		.then(email => res.render('agentDashboardEmail'))
+		.then(email => res.render('agentDashboardEmail', {
+			email, layout: 'openEmail'
+		}))
 		.catch(err => res.json({
 			"message": err
 		}));
@@ -27,6 +30,8 @@ const open = async (req, res) => {
 	}
 }
 
+
+/*
 const update = async (req, res) => {
 	try {
 		let doneT = [{
@@ -80,12 +85,15 @@ const createAgent = async (req, res) => {
 		console.log(err);
 	}
 }
+*/
 module.exports = {
 	render,
-	search,
+	//search,
 	open,
+	/*
 	update,
 	deleteAgent,
 	create,
 	createAgent
+	*/
 }

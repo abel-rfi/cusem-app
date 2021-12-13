@@ -253,10 +253,6 @@ const renderFS2 = (req, res) => {
 	}
 }
 
-/*start of agent email side (hopefully)
-first hypo is that it'd look more intuitive for email to be under agentDashboard
-*/
-
 
 module.exports = {
 	test,
