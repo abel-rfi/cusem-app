@@ -4,6 +4,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('cusem_super_key');
+
 const { VerifyToken } = require('../middlewares/auth');
 
 const test = (req, res) => {
@@ -61,11 +62,11 @@ const search = (req, res) => {
 
 const open = async (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		const { emplId } = VerifyToken(req.params.id);
 		const emplo = await employees.findAll({
 			raw: true,
 			where: {
-				id: req.params.id
+				id: emplId
 			}
 		});
 		emplo[0].password = cryptr.decrypt(emplo[0].password);

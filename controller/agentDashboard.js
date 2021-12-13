@@ -30,15 +30,43 @@ const changeStatus = (req, res) => {
 const forwardTicket = (req, res) => {
 	try {
 		const {emplId} = VerifyToken(req.body.emplId);
-		const { roomName } = req.body;
+		const { roomName, passedTo } = req.body;
 		const newData = {
 			emplId: null,
-			passedFrom: emplId
+			passedFrom: emplId,
+			passedTo: passedTo
 		}
-		update(models.Ticket, newData, {emplId, roomName})
-		// res.redirect(`/agent-dashboard/live-chat?id=${req.body.emplId}`);
+		// console.log(newData);
+		update(models.Ticket, newData, {emplId, roomName});
+		res.redirect(`/agent-dashboard/live-chat?id=${req.body.emplId}`);
 	} catch (err) {
 		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+const acceptForward = (req, res) => {
+	try {
+		const {emplId} = VerifyToken(req.query.id);
+		const { roomName, passedFrom } = req.body;
+		// console.log({emplId, roomName, passedFrom})
+		fetchOne(models.Ticket, {passedFrom, roomName})
+		.then(result => {
+			var newData = {
+				passedFor: result.passedFor + 1,
+				passedTo: null,
+				emplId: emplId
+			};
+
+			// console.log(newData, result);
+			update(models.Ticket, newData, {passedFrom, roomName})
+			.then(result2 => {
+				return res.status(200).json({success: true});
+				// res.redirect('/agent-dashboard/live-chat');
+			})
+		})
+	} catch (err) {
+		console.log(`msg: ${err.message} ~ acceptForward`);
 		return res.status(500).json({msg: err.message});
 	}
 }
@@ -46,7 +74,6 @@ const forwardTicket = (req, res) => {
 const render = (req, res) => {
 	try {
 		const {emplId} = VerifyToken(req.query.id);
-		// console.log(emplId)
 		const condition = {emplId, ticketType: 'live chat', complaintStatus: {
 			[Op.or]: ['on Hold', 'on Progress']
 		}};
@@ -59,17 +86,21 @@ const render = (req, res) => {
 		]})
 		.then(result => {
 			const sum = result.length;
-			// console.log(result, sum)
-			return res.render('agentDashboard', {layout: 'agentDashboard', query: {query: req.query}, sum:{sum:{sum}}, result});
+			fetchAll(models.FAQ)
+			.then(result2 => {
+				return res.render('agentDashboard', {layout: 'agentDashboard', query: {query: req.query}, sum:{sum:{sum}}, result, faq:result2});
+			})
 		})		
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message});
 	}
 }
 
 const renderTA = (req, res) => {
 	try {
+		const {emplId} = VerifyToken(req.query.id);
 		models.Ticket.findAll({raw: true, include: [
 			{
 				model: models.User,
@@ -85,7 +116,8 @@ const renderTA = (req, res) => {
 		})
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message});
 	}
 }
 
@@ -134,7 +166,8 @@ const renderLc = (req, res) => {
 		})
 	} catch (err) {
 		console.log(`msg: ${err.message} ~ renderLc`);
-		return res.status(500).json({msg: err.message});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message});
 	}
 }
 
@@ -167,7 +200,7 @@ const renderCS = (req, res) => {
 						result[i].currentId = req.query.id;
 					})
 					// console.log(result);
-					return res.render('agentDashboardLCCS', {result, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC'});
+					return res.render('agentDashboardLCCS', {result, query: {query: req.query}, accepted: allTickets, layout: 'agentDashboardLC2'});
 				})
 			} catch(err) {
 				console.log(`msg: ${err.message} ~LCCS`);
@@ -176,7 +209,8 @@ const renderCS = (req, res) => {
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message});
 	}
 }
 
@@ -196,7 +230,8 @@ const renderFS1 = (req, res) => {
 			allTickets.map((tkt, i) => {
 				allTickets[i].newEmplId = req.query.id;
 			})
-			const condition = {passedFrom: emplId, complaintStatus: {
+			// console.log(emplId);
+			const condition = {passedTo: emplId, complaintStatus: {
 				[Op.or]: ['open', 'on Hold', 'on Progress']
 			}};
 			models.Ticket.findAll({raw: true, where: condition, include: [
@@ -205,17 +240,18 @@ const renderFS1 = (req, res) => {
 					as: 'user'
 				}, {
 					model: models.Employee,
-					as: 'employee'
+					as: 'employeeForward'
 				}
 			]}).then(result => {
 				// console.log(result);
-				res.render('agentDashboardLCFS1', {accepted: allTickets, query: {query: req.query}, result, layout: 'agentDashboardLC'});
+				res.render('agentDashboardLCFS1', {accepted: allTickets, query: {query: req.query}, result, layout: 'agentDashboardLC2'});
 			});
 		})
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message, position: 'LCFS1'});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message, position: 'LCFS1'});
 	}
 }
 
@@ -238,18 +274,19 @@ const renderFS2 = (req, res) => {
 			fetchAll(models.Employee, {roles: 'agent', id: {
 				[Op.not]: 1
 			}}).then(result => {
-				// console.log(result)
+				console.log(result)
 				let selected = allTickets.filter(tckt => {
 					if (tckt.roomName === ticket) {
 						return tckt;
 					}
 				})
 				// console.log(selected);
-				res.render('agentDashboardLCFS2', {layout: 'agentDashboardLC', query: {query: req.query}, accepted: allTickets, result, selected:selected});
+				res.render('agentDashboardLCFS2', {layout: 'agentDashboardLC2', query: {query: req.query}, accepted: allTickets, result, selected:selected});
 			})
 	})} catch (err) {
 		console.log(`msg: ${err.message}`);
-		return res.status(500).json({msg: err.message, position: 'LCFS2'});
+		return res.redirect('/employee-login-page');
+		// return res.status(500).json({msg: err.message, position: 'LCFS2'});
 	}
 }
 
@@ -257,6 +294,7 @@ module.exports = {
 	test,
 	changeStatus,
 	forwardTicket,
+	acceptForward,
 	render,
 	renderTA,
 	renderLc,

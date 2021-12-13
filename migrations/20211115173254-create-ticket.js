@@ -26,6 +26,9 @@ module.exports = {
       passedFor: {
         type: Sequelize.INTEGER
       },
+      passedTo: {
+        type: Sequelize.STRING
+      },
       passedFrom: {
         type: Sequelize.STRING
       },
