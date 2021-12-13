@@ -21,5 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Rating',
   });
+  Rating.associate = function(models) {
+    Rating.belongsTo(models.Ticket, {
+      foreignKey: 'ticketId',
+      as: 'ticket'
+    })
+  }
   return Rating;
 };
