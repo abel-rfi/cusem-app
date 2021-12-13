@@ -36,7 +36,7 @@ const forwardTicket = (req, res) => {
 			passedFrom: emplId,
 			passedTo: passedTo
 		}
-		console.log(newData);
+		// console.log(newData);
 		update(models.Ticket, newData, {emplId, roomName});
 		res.redirect(`/agent-dashboard/live-chat?id=${req.body.emplId}`);
 	} catch (err) {
