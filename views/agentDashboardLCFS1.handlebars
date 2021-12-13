@@ -8,8 +8,10 @@
       </div>
       <div class="box-showed-data">
         <p class="box-text">{{'user.name'}}</p>
-        <p class="box-text">Pass From: {{'employee.name'}}</p>
+        <p class="box-text">Pass From: {{'employeeForward.name'}}</p>
         <p class="box-text box-text-cat">Category: {{complaintCategory}}</p>
+        <input id="forwardRoomName" name="roomName" type="hidden" value="{{roomName}}">
+        <input id="forwardEmpl" name="emplId" type="hidden" value="{{'employeeForward.id'}}">
       </div>
 
       {{#ifEquals complaintStatus 'open'}}
@@ -24,7 +26,7 @@
 
     </div>
     <div class="bottom-box">
-      <button class="customer-accept">
+      <button class="customer-accept" onclick="acceptForward()">
         Accept
       </button>
     </div>
