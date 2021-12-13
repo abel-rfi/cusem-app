@@ -33,9 +33,12 @@
     <div class="row">
         {{#each faqss}}
         <div class="col-md-6 col-lg-4 mb-4">
-            <h3 class="mb-3 text-primary"><i class="far fa-paper-plane text-primary pe-2"></i> {{question}}</h3>
-            <p>
-                <strong>Type: {{probCategory}}</strong> , {{solution}}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #0d6efd!important;">{{question}}</h5>
+                    <p class="card-text"><strong>Type: {{probCategory}}</strong> , {{solution}}</p>
+                </div>
+            </div>
         </div>
         {{else}}
         <div class="col-md-6 col-lg-4 mb-4">
