@@ -101,9 +101,11 @@
       <i class='bx bxs-user' ></i>
     </a>
     <div class="forward-section">
-      <a href="/agent-dashboard/live-chat/forward-selector?id={{newEmplId}}&ticket={{roomName}}" class="forward-button">
+      {{#each query}}
+      <a href="/agent-dashboard/live-chat/forward-selector?id={{id}}&ticket={{roomName}}" class="forward-button">
         Pass From <i class="forward-from">0</i>
       </a>
+      {{/each}}
       <a href="#" class="forward-button">
         Pass To <i class='bx bx-right-arrow-alt' ></i>
       </a>

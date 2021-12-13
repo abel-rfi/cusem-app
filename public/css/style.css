@@ -1489,6 +1489,7 @@ textarea[name="message"]{
 }
 
 .faq-title {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -1498,6 +1499,25 @@ textarea[name="message"]{
 	background-color: rgb(120, 120, 120);
 	font-weight: bold;
 	font-size: 1.5em;
+}
+
+.faq-add-button {
+	position: absolute;
+	right: 20px;
+	box-sizing: border-box;
+	height: 30px;
+	padding: 5px 10px;
+	background-color: lightgray;
+	border: none;
+	border-radius: 8px;
+	font-size: .65em;
+	font-weight: bold;
+	text-decoration: none;
+	color: #212529;
+}
+
+.faq-add-button:hover {
+	box-shadow: 0 0 0 2px rgb(60, 60, 60);
 }
 
 .dashboard-faq-list {

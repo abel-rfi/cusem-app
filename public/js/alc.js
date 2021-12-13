@@ -10,6 +10,28 @@ const id = query.get('id');
 const ticket = query.get('ticket');
 
 var accepted = document.getElementsByClassName("live-chat-customer-button");
+var navbars = document.getElementsByClassName("live-chat-button");
+
+for (var i = 0; i < navbars.length; i++) {
+	// console.log(navbars[i].innerHTML);
+	if (navbars[i].innerHTML === 'Live Chat' && location.pathname === '/agent-dashboard/live-chat'){
+		navbars[i].classList.toggle('nav-button-active');
+	}else if (navbars[i].innerHTML === 'Live Chat' && location.pathname === '/agent-dashboard/live-chat/customer-selector'){
+		navbars[i].classList.toggle('nav-button-active');
+	}else if (navbars[i].innerHTML === 'Live Chat' && location.pathname === '/agent-dashboard/live-chat/forward-selector'){
+		navbars[i].classList.toggle('nav-button-active');
+	}else if (navbars[i].innerHTML === 'Live Chat' && location.pathname === '/agent-dashboard/live-chat/forward-sender'){
+		navbars[i].classList.toggle('nav-button-active');
+	} else if (navbars[i].innerHTML === 'Dashboard' && location.pathname === '/agent-dashboard') {
+		navbars[i].classList.toggle('nav-button-active');
+	} else if (navbars[i].innerHTML === 'Ticket Archieve' && location.pathname === '/ticket-archieve') {
+		navbars[i].classList.toggle('nav-button-active');
+	}
+}
+
+// if (location.pathname === '/agent-dashboard/live-chat') {
+// 	accepted[i].classList.toggle('nav-button-active');
+// }
 
 if (localStorage.getItem('agentId') === null & id !== null) {
 	localStorage.setItem('agentId', id);
