@@ -1,0 +1,58 @@
+
+<!--Content of showing place for agent to reply-->
+
+<div class="live-chat-customer-selection-list">          
+    
+    {{#each email}}
+    <!--this not yett-->
+    
+    <button type="button" class="reply-button" onclick="location.href='/email-page/open-email/{{id}}'">Discard</button>
+
+    <div class="customer-box-email-reply">
+        <div class="current-date">Date: {{createdAt}}</div>
+        
+        <div class="top-box">
+            <!--div class="customer-image">
+                <i class='bx bxs-user' ></i>
+            </div-->
+        
+            <div class="box-showed-data">
+                <p class="box-text-cs">From: agent@example.com</p>
+                <p class="box-text-cs">To: {{name}}, {{email}}</p>
+                <p class="box-text-cs">Category: {{complaintCategory}}</p>
+                <p class="box-text-cs">Customer's Message: </p>
+            </div>
+        
+            </div>
+                {{#ifEquals complaintStatus 'open'}}
+                <div class="indcator-color indicator-open">
+                {{/ifEquals}}
+                {{#ifEquals complaintStatus 'on Progress'}}
+                <div class="indcator-color indicator-progress">
+                {{/ifEquals}}
+                {{#ifEquals complaintStatus 'on Hold'}}
+                <div class="indcator-color indicator-hold">
+                {{/ifEquals}}
+            </div>
+            
+            <div class="customer-box-email">
+                {{message}}
+            </div>
+
+            <!--supposedly msg box-->
+            <form action="" method="post">
+                
+                <div class="reply-box">
+                    <textarea type="text" name="reply"></textarea>
+                </div>
+                <button type="button" class="reply-button" onclick="location.href='/email-page/open-email/{{id}}/send'">Send</button>
+            </form>
+        </div>
+        
+      
+    </div>
+  
+    {{/each}}
+
+</div>
+

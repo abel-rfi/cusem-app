@@ -2,90 +2,102 @@ const models = require('../models');
 const emails = models.Form;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('cusem_super_key');
 
+// Middlewares
+const { update, fetchAll, fetchOne } = require('../middlewares/CRUD');
+const { VerifyToken } = require('../middlewares/auth');
+const e = require('express');
 
+/*
+// below is effort to render nav bar. error so far: SequelizeEagerLoadingError
 const render = (req, res) => {
+
+	// trying to render nav bar by verifying first
+	const {emplId} = VerifyToken(req.query.id);
+
+	const condition = {emplId, complaintStatus: {
+		[Op.or]: ['open', 'On Progress']
+	}};
+
+	emails.findAll({ raw: true , where: condition, include: [
+		{
+			model: models.Form
+		}
+	]})
+		.then(email => res.render(
+			'agentDashboardEmail', {
+			email, 
+			layout: 'openEmail',
+			query: {query: req.query}
+		}))
+		.catch(err => res.json({
+			"message": err
+		}));
+}
+*/
+
+// render infant ver
+const render = (req, res) => {
+
 	emails.findAll({ raw: true })
-		.then(email => res.render('agentDashboardEmail'))
+		.then(email => res.render(
+			'agentDashboardEmail', {
+			email, 
+			layout: 'agentEmail'
+			//query: {query: req.query}
+		}))
 		.catch(err => res.json({
 			"message": err
 		}));
 }
 
-
-const open = async (req, res) => {
+const openEmail = async (req, res) => {
 	try {
 		const email = await emails.findAll({
-			raw: true,
-			where: {
+			raw : true,
+			where : {
 				id: req.params.id
 			}
 		});
-		res.render('showEmail', { email, layout: 'openEmail' });
+		//email[0].password = crypt.decrypt(email[0].password);
+
+		res.render('agentDashboardEmailOpen', {
+			email,
+			layout: 'agentEmail'
+		});
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-const update = async (req, res) => {
+
+const replyEmail = async (req, res) => {
+	// totally not done im tired
 	try {
-		let doneT = [{
-			text: "Agent Updated"
-		}]
-		await employees.update(req.body, {
-			where: {
+		const email = await emails.findAll({
+			raw : true,
+			where : {
 				id: req.params.id
 			}
 		});
-		const emplo = await employees.findAll({
-			raw: true,
-			where: {
-				id: req.params.id
-			}
+		//email[0].password = crypt.decrypt(email[0].password);
+
+		res.render('agentDashboardEmailReply', {
+			email,
+			layout: 'agentEmail'
 		});
-		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
 	} catch (err) {
 		console.log(err);
 	}
 }
 
-const deleteAgent = async (req, res) => {
 
-	await employees.destroy({
-		where: {
-			id: req.params.id
-		}
-	})
-	.then(result => {
-		res.json({ redirect: '/agent-list-page'})
-	})
-	.catch(err => {
-		console.log(err)
-	});
-}
 
-const create = async (req, res) => {
-	try {
-		res.render('createAgent', { layout: 'editAgentLayout' });
-	} catch (err) {
-		console.log(err);
-	}
-}
-
-const createAgent = async (req, res) => {
-	try {
-		await employees.create(req.body);
-		res.redirect('/agent-list-page');
-	} catch (err) {
-		console.log(err);
-	}
-}
 module.exports = {
 	render,
-	search,
-	open,
-	update,
-	deleteAgent,
-	create,
-	createAgent
+	openEmail,
+	replyEmail
 }
+
