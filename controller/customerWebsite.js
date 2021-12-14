@@ -1,10 +1,12 @@
+const nodemailer = require("nodemailer");
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('cusem_super_key');
 
-const auth = require('../middlewares/auth');
+// Middlewares
 const {fetchAll, fetchOne, create} = require('../middlewares/CRUD');
+const { VerifyToken, CreateToken } = require('../middlewares/auth');
+
 const models = require('../models');
-const nodemailer = require("nodemailer");
 const { getMaxListeners } = require('../app');
 
 const User = models.User;
@@ -16,6 +18,25 @@ const test = async (req, res) => {
 		return res.status(200).json(user);
 	}
 	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+const storeRating = (req, res) => {
+	try {
+		// console.log(req.body);
+		const { custId } = VerifyToken(req.body.ticketSession)
+		fetchOne(models.Ticket, {custId, roomName: req.body.ticketSession})
+		.then(result => {
+			const data = {
+				ticketId: result.id,
+				score: parseInt(req.body.rating),
+				comment: req.body.comment
+			}
+			create(models.Rating, data);
+		})
+	} catch (err) {
 		console.log(`msg: ${err.message}`);
 		return res.status(500).json({msg: err.message});
 	}
@@ -66,7 +87,7 @@ const login = async (req, res) => {
 			// return res.status(404).json({ success: false, message: "email is not registered" });
 		} else {
 			if (cryptr.decrypt(regUser.password) == password){
-				const token = await auth.CreateToken({ email, userId: regUser.id }, '1h');
+				const token = await CreateToken({ email, userId: regUser.id }, '50d');
 				return res.redirect(`logged/?token=${token}`);
 			} else {
 				return res.redirect(`/customer-website`);
@@ -155,7 +176,7 @@ const renderLOG = async (req, res) => {
 	try {
 		let {token} = req.query;
 		try{
-			const verify = await auth.VerifyToken(token);
+			const verify = await VerifyToken(token);
 			const user = await User.findOne({ raw: true, where: { email: verify.email } });
 			res.render('customerWebsiteLogged', {user:{user}, layout: 'cwl'});
 		} catch(err) {
@@ -173,6 +194,7 @@ const renderLOG = async (req, res) => {
 module.exports = {
 	test,
 	fetchCustomer,
+	storeRating,
 	login,
 	register,
 	form,

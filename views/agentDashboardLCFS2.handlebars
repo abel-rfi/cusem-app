@@ -18,7 +18,7 @@
         <select name="agent-dropdown" id="agent-dropdown" class="agent-dropdown">
           <option value="-" class="dropdown-option"><i class='bx bx-user'></i> ---</option>
           {{#each result}}
-          <option value="{{name}}" class="dropdown-option"><i class='bx bx-user'></i> {{name}}</option>
+          <option value="{{name}}" class="dropdown-option" targetId="{{id}}">{{name}}</option>
           {{/each}}
         </select>
       </div>

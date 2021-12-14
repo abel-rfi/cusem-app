@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     complaintCategory: DataTypes.STRING,
     ticketType: DataTypes.STRING,
     passedFor: DataTypes.INTEGER,
+    passedTo: DataTypes.STRING,
     passedFrom: DataTypes.STRING,
     roomName: DataTypes.STRING
   }, {
@@ -35,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     Ticket.belongsTo(models.Employee, {
       foreignKey: 'emplId',
       as: 'employee'
+    })
+
+    Ticket.belongsTo(models.Employee, {
+      foreignKey: 'passedFrom',
+      as: 'employeeForward'
     })
   }
   return Ticket;

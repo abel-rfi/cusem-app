@@ -21,7 +21,7 @@
     <nav class="live-chat-nav">
       <div class="nav-container">
         {{#each query}}
-        <a href="/agent-dashboard/live-chat?id={{id}}&token={{token}}" class="live-chat-button nav-button-active">Live Chat</a>
+        <a href="/agent-dashboard/live-chat?id={{id}}&token={{token}}" class="live-chat-button">Live Chat</a>
         <a href="/agent-dashboard/email?id={{id}}&token={{token}}" class="live-chat-button">Email</a>
         <a href="/user-list-page?id={{id}}&token={{token}}" class="live-chat-button">Customer List</a>
         <a href="/agent-list-page?id={{id}}&token={{token}}" class="live-chat-button">Agent List</a>
@@ -30,9 +30,13 @@
         <a href="/agent-dashboard/ticket-archieve?id={{id}}&token={{token}}" class="live-chat-button">Ticket Archieve</a>
         {{/each}}
       </div>
-      <a href="#" class="live-chat-button agent-profile">
-        <i class='bx bx-user-circle'></i>
-      </a>
+      <div href="#" class="live-chat-button agent-profile">
+        <i class='dropbtn bx bx-user-circle'></i>
+        <div class="agent-profile-dropdown">
+          <a onclick="EditProfile()">Edit Profile</a>
+          <a onclick="logOut()">Logout</a>
+        </div>
+      </div>
     </nav>
 
     <!-- Content -->
@@ -41,13 +45,14 @@
         <div class="live-chat-sidebar-header">
           Customer List
         </div>
-        <div class="live-chat-customer-list">
+        <div class="live-chat-customer-list" id="customer-accepted-list">
           {{#each accepted}}
-          <a href="/agent-dashboard/live-chat?id={{newEmplId}}&ticket={{roomName}}" class="live-chat-customer-button live-chat-customer-selected">
+          <a href="/agent-dashboard/live-chat?id={{newEmplId}}&ticket={{roomName}}" class="live-chat-customer-button">
             <div class="customer-profile-pict">
               <i class='bx bxs-user'></i>
             </div>
             <p class="live-chat-customer-name">{{'user.name'}}</p>
+            <input type="hidden" name="roomName" value="{{roomName}}">
           </a>
           {{/each}}
         </div>
