@@ -40,7 +40,7 @@ app.use('/user-list-page', usLsRote);
 app.use('/agent-dashboard', adRoute);
 app.use('/faq-list-page', FAQlRoute);
 app.use('/email-page', EmailRoute);
-app.use('/live-chat-history-page', LCHRoute);
+app.use('/download-page', LCHRoute);
 app.use('/admin-dashboard', admin);
 
 module.exports = app

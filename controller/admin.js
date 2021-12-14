@@ -1,7 +1,7 @@
 const models = require('../models');
 
 function render(req, res) {
-    models.Employee.findAll({raw: true, where: {roles: 'Agent'}}) //display the employee data from the Employee.init (see the employee.js from models folder)
+    models.Employee.findAll({raw: true, where: {roles: 'agent'}}) //display the employee data from the Employee.init (see the employee.js from models folder)
     .then(result => {
         //console.log(result) //display in the console
         res.render('userListPage', {layout: 'adminAgentSelector', usere: result}) //render the userlistpage.handlebars js into the adminDashboard.handlebars navigator
@@ -13,7 +13,8 @@ function renderAgent(req, res) {
 };
 
 function renderFAQ(req, res) {
-    res.render('FAQlist', {layout: 'adminAgentSelector'})
+    //res.render('FAQlist', {layout: 'adminAgentSelector'})
+    res.redirect('/faq-list-page');
 };
 
 function renderDashb(req, res) {
@@ -22,11 +23,30 @@ function renderDashb(req, res) {
 
 
 
+function renderReport(req, res) {
+    models.Ticket.findAll({raw: true}) //display the employee data from the Employee.init (see the employee.js from models folder)
+    .then(result => {
+        //console.log(result) //display in the console
+        res.render('adminReportList', {layout: 'adminAgentSelector', usere: result}) //render the userlistpage.handlebars js into the adminDashboard.handlebars navigator
+    })
+};
+
+
+function renderCustomer(req, res) {
+    models.User.findAll({raw: true}) //display the employee data from the Employee.init (see the employee.js from models folder)
+    .then(result => {
+        //console.log(result) //display in the console
+        res.render('adminCustomerList', {layout: 'adminAgentSelector', usere: result}) //render the userlistpage.handlebars js into the adminDashboard.handlebars navigator
+    })
+};
+
 
 
 module.exports = {
 	render,
     renderAgent,
     renderFAQ,
-    renderDashb
+    renderDashb,
+    renderReport,
+    renderCustomer
 };

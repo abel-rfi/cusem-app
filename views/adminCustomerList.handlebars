@@ -1,0 +1,60 @@
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<!-- Our Css -->
+	<link rel="stylesheet" href="/css/userListCss.css">
+	<!-- Boxicon -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+
+<div id="upperLinkNav2">customer manager</div>
+<div class="top-first">
+    <form action="/agent-list-page/search">
+        <div class="search-bar">
+            <input class="input-sear" name="term" type="search" placeholder="Search Customer">
+            <input class="button-sear" type="submit" value="Search">
+        </div>
+    </form>
+    <div class="agent-status">
+        <div class="active-agent active">
+            <div class="number">{{usere.length}}</div>
+            <label class="title">User List</label>
+        </div>
+    </div>
+</div>
+
+
+<div class="bottom-second">
+    <div class="row">
+        {{#each usere}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"><a href="/user-list-page/open-user/{{id}}">{{name}}</a></div>
+                </div>
+                <div class="role">
+                    <div class="role">{{email}}</div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"> User not Found!</div>
+                </div>
+                <div class="role">
+                    <div class="role">-------</div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+
+    <div class="add-btn">
+        <a href="/user-list-page/create-user">Create</a>
+    </div>
+</div>
