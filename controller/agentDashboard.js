@@ -272,7 +272,7 @@ const renderFS2 = (req, res) => {
 				allTickets[i].newEmplId = req.query.id;
 			})
 			fetchAll(models.Employee, {roles: 'agent', id: {
-				[Op.not]: 1
+				[Op.not]: emplId
 			}}).then(result => {
 				//console.log(result)
 				let selected = allTickets.filter(tckt => {
