@@ -40,7 +40,9 @@
       <div class="dashboard-mini-bottom-part">
         <div class="faq-title">
               FAQ
-              <a class="faq-add-button" href="/faq-list-page/create-faq">Add</a>
+	      {{#each query}}
+              <a class="faq-add-button" href="/faq-list-page/create-faq?id={{id}}">Add</a>
+	      {{/each}}
         </div>
         <div class="dashboard-faq-list">
           {{#each faq}}

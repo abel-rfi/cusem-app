@@ -22,7 +22,7 @@ for (var i = 0; i < navbars.length; i++) {
 		navbars[i].classList.toggle('nav-button-active');
 	} else if (navbars[i].innerHTML === 'Dashboard' && location.pathname === '/agent-dashboard') {
 		navbars[i].classList.toggle('nav-button-active');
-	} else if (navbars[i].innerHTML === 'Ticket Archieve' && location.pathname === '/ticket-archieve') {
+	} else if (navbars[i].innerHTML === 'Ticket Archieve' && location.pathname === 'agent-dashboard/ticket-archieve') {
 		navbars[i].classList.toggle('nav-button-active');
 	}
 }

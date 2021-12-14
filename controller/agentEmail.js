@@ -45,8 +45,8 @@ const render = (req, res) => {
 		.then(email => res.render(
 			'agentDashboardEmail', {
 			email, 
-			layout: 'agentEmail'
-			//query: {query: req.query}
+			layout: 'agentEmail',
+			query: {query: req.query}
 		}))
 		.catch(err => res.json({
 			"message": err

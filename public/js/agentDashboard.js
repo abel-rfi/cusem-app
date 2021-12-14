@@ -4,7 +4,9 @@ const query = new URLSearchParams(queryString);
 const agentId = query.get('id');
 
 // store agent session
-localStorage.setItem('agentId', agentId);
+if (localStorage.getItem('agentId') === null & agentId !== null) {
+	localStorage.setItem('agentId', id);
+}
 
 var navbars = document.getElementsByClassName("live-chat-button");
 

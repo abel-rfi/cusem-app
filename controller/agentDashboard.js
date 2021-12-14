@@ -274,7 +274,7 @@ const renderFS2 = (req, res) => {
 			fetchAll(models.Employee, {roles: 'agent', id: {
 				[Op.not]: 1
 			}}).then(result => {
-				console.log(result)
+				//console.log(result)
 				let selected = allTickets.filter(tckt => {
 					if (tckt.roomName === ticket) {
 						return tckt;
