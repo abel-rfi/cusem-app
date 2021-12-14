@@ -139,9 +139,7 @@ const loginEmployee = async (req, res) => {
 					const token = await auth.CreateToken({ email:req.body.email, emplId: emplo[0].id }, '50d');
 					res.redirect(`/agent-dashboard?id=${token}`);
 				} else {
-					res.json({
-						"Dashboard" : "Admin dashboard"
-					})
+					res.redirect('/admin-dashboard');
 				}
 			} else {
 				errT.push({text: 'password wrong!'});

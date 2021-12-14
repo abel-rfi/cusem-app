@@ -88,7 +88,7 @@ const renderSolvedFAQ = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		agentId = req.query.id;
 		ticket = req.query.ticket;
 		res.render('createFAQ', { agentId, ticket, layout: 'FAQunSolvedLayout', query: { query: req.query } });
@@ -100,7 +100,7 @@ const create = async (req, res) => {
 const createFAQ = async (req, res) => {
 
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		await faqs.create({
 			question: req.body.question,
 			probCategory: req.body.probCategory,
@@ -114,7 +114,7 @@ const createFAQ = async (req, res) => {
 
 const edit = async (req, res) => {
 	try {
-		// const { emplId } = VerifyToken(req.query.id);
+		// 
 		agentId = req.query.id;
 		ticket = req.query.ticket;
 		const faqss = await faqs.findAll({
@@ -145,7 +145,7 @@ const editFAQ = async (req, res) => {
 }
 
 const deleteFAQ = async (req, res) => {
-	// const { emplId } = VerifyToken(req.query.id);
+	// 
 	agentId = req.query.id;
 	ticket = req.query.ticket;
 	await faqs.destroy({
