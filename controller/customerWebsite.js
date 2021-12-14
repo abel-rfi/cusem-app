@@ -117,6 +117,7 @@ const form = async (req, res) => {
 			email: req.body.email,
 			message: req.body.message,
 			complaintCategory: req.body.complaintCategory,
+			complaintStatus: 'open'
 		}
 
 		const result = await models.Form.create(body);

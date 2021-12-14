@@ -858,9 +858,38 @@ textarea[name="message"]{
 	transition: .3s;
 }
 
-.forward-button:hover {
+/*start of agent email open*/
+.reply-button {
+	display: flex;
+	justify-content: space-between;
+	float: right;
+	box-sizing: border-box;
+	height: 45px;
+	width: 140px;
+	background-color: rgb(100, 100, 100);
+	color: white;
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 1.2em;
+	transition: .3s;
+}
+
+.reply-box {
+	display: flex;
+	flex: 1 auto;
+	font-size: 1.1em;
+	background-color: rgb(211, 211, 211);
+	width: 100%;
+	border-radius: 15px;
+	min-height: 200px;
+}
+
+textarea[name="reply"]{
+	width: 100%;
+}
+.forward-button:hover, .reply-button:hover{
 	background-color: rgb(180, 180, 180);
-	color: rgb(80, 80, 80);
+	color: rgb(150, 150, 150);
 }
 
 .forward-from {
@@ -974,6 +1003,17 @@ textarea[name="message"]{
 .customer-box-email {
 	box-sizing: border-box;
 	height: 125px;
+	width: 100%;
+	background-color: rgb(211,211,211);
+	border-radius: 15px;
+	overflow: hidden;
+	box-shadow: 0 0 5px #000;
+	margin-bottom: 20px;
+}
+
+.customer-box-email-reply {
+	box-sizing: border-box;
+	height: 150px;
 	width: 100%;
 	background-color: rgb(211,211,211);
 	border-radius: 15px;

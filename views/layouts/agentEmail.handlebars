@@ -20,9 +20,10 @@
     <!-- Navbar -->
     <nav class="live-chat-nav">
       <div class="nav-container">
+        <!--HW: why cant i query nav bar??-->
         {{#each query}}
-        <a href="/agent-dashboard/live-chat?id={{id}}&token={{token}}" class="live-chat-button nav-button-active">Live Chat</a>
-        <a href="/agent-dashboard/email?id={{id}}&token={{token}}" class="live-chat-button">Email</a>
+        <a href="/agent-dashboard/live-chat?id={{id}}&token={{token}}" class="live-chat-button">Live Chat</a>
+        <a href="/email-page?id={{id}}&token={{token}}" class="live-chat-button nav-button-active">Email</a>
         <a href="/user-list-page?id={{id}}&token={{token}}" class="live-chat-button">Customer List</a>
         <a href="/agent-list-page?id={{id}}&token={{token}}" class="live-chat-button">Agent List</a>
         <a href="/agent-dashboard?id={{id}}&token={{token}}" class="live-chat-button">Dashboard</a>
@@ -39,6 +40,6 @@
 
     <!-- Bootstrap Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="/js/agentDashboard.js"></script>
+    <!--script src="/js/agentDashboard.js"></script-->
   </body>
 </html>
