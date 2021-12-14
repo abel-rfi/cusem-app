@@ -102,6 +102,25 @@ a:hover {
     margin: 0 10px 10px 0;
 }
 
+.dlt{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 10px 10px 0;
+}
+
+.dlt a {
+    border: 1px solid black;
+    background-color: rgb(230, 126, 86);
+    padding: 0 9px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.dlt a:hover {
+    color: #5A5050;
+}
+
+
 .add-btn a {
     border: 1px solid black;
     background-color: rgb(230, 126, 86);

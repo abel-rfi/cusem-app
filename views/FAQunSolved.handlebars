@@ -16,9 +16,26 @@
     <form method="post">
         <label>Jawab</label>
         <label>Agent Name</label>
-        <textarea class="jawaban" name="solution" rows="4" cols="50"></textarea>
+        <textarea class="jawaban" name="solution" rows="4" cols="50">{{solution}}</textarea>
         <input type="submit" value="send" style="margin-bottom: 20px;" />
     </form>
+</div>
+<div class="dlt">
+    <a class="delete" data-id="{{id}}"> delete </a>
+        <script type="text/javascript">
+            const hapus = document.querySelector('a.delete');
+
+            hapus.addEventListener('click', (e) => {
+                const endpoint = '/faq-list-page/edit-faq/'+{{id}}+'?id={{agentId}}&token={{ticket}}';
+                fetch(endpoint, {
+                    method: 'DELETE'
+
+                })
+                .then ((response) => response.json())
+                .then ((data) => window.location.href = "/faq-list-page?id={{agentId}}&token={{ticket}}")
+                .catch(err => console.log(err));
+            })
+        </script>
 </div>
 <div class="add-btn">
     <a href="/faq-list-page">Exit</a>
