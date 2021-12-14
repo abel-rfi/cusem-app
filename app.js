@@ -28,6 +28,7 @@ const adRoute = require('./routes/agentDashboard');
 const FAQlRoute = require('./routes/FAQlist');
 const EmailRoute = require('./routes/agentEmail');
 const LCHRoute = require('./routes/liveChatHisto');
+const admin = require('./routes/adminDashboard');
 
 app.use(bodyParser.json());
 
@@ -39,6 +40,7 @@ app.use('/user-list-page', usLsRote);
 app.use('/agent-dashboard', adRoute);
 app.use('/faq-list-page', FAQlRoute);
 app.use('/email-page', EmailRoute);
-app.use('/live-chat-history-page', LCHRoute)
+app.use('/live-chat-history-page', LCHRoute);
+app.use('/admin-dashboard', admin);
 
 module.exports = app
