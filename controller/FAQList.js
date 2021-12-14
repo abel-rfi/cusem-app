@@ -2,7 +2,7 @@ const models = require('../models');
 const faqs = models.FAQ;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-
+const { VerifyToken } = require('../middlewares/auth');
 
 const test = (req, res) => {
 	try {
@@ -88,23 +88,27 @@ const renderSolvedFAQ =  async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		res.render('createFAQ', { layout: 'FAQunSolvedLayout' });
+		const { emplId } = VerifyToken(req.query.id);
+		agentId = req.query.id;
+		ticket = req.query.ticket;
+		res.render('createFAQ', { agentId, ticket, layout: 'FAQunSolvedLayout', query: { query: req.query } });
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 
 const createFAQ = async (req, res) => {
 
 	try {
+		const { emplId } = VerifyToken(req.query.id);
 		await faqs.create({
 			question: req.body.question,
 			probCategory: req.body.probCategory,
 			solution: req.body.solution
 		});
-		res.redirect('/faq-list-page');
+		res.redirect(`/faq-list-page?id=${agentId}&token=${ticket}`);
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 

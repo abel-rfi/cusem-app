@@ -5,6 +5,7 @@ const Op = Sequelize.Op;
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('cusem_super_key');
 
+const { VerifyToken } = require('../middlewares/auth');
 
 const test = (req, res) => {
 	try {
@@ -17,62 +18,87 @@ const test = (req, res) => {
 }
 
 const render = (req, res) => {
-	employees.findAll({ raw: true, where: { roles: "agent" } })
-		.then(emplo => res.render('agentListPage', {
-			emplo, layout: 'agentLsPg'
-		}))
-		.catch(err => res.json({
-			"message": err
-		}));
-}
+	try {
+		const { emplId } = VerifyToken(req.query.id);
+		employees.findAll({ raw: true, where: { roles: "agent" } })
+			.then(emplo => {
+				emplo.map((empl, i) => {
+					emplo[i].agentId = req.query.id;
+					emplo[i].ticket = req.query.ticket;
+				});
+				res.render('agentListPage', {
+					emplo, layout: 'agentLsPg', query: { query: req.query }
+				});
+			});
+	}
+	catch (err) {
+		res.redirect('/employee-login-page');
+	}
+
+};
 
 const search = (req, res) => {
-	let { term } = req.query;
+	let { term } = req.body;
 
 	// Make lowercase
 	term = term.toLowerCase();
-
-	employees.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' }, roles: "agent" } })
-		.then(emplo => res.render('agentListPage', { emplo, layout: 'agentLsPg' }))
-		.catch(err => res.json({
-			"message": err
-		}));
+	try {
+		const { emplId } = VerifyToken(req.query.id);
+		employees.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' }, roles: "agent" } })
+			.then(emplo => {
+				emplo.map((empl, i) => {
+					emplo[i].agentId = req.query.id;
+					emplo[i].ticket = req.query.ticket;
+				});
+				res.render('agentListPage', {
+					emplo, layout: 'agentLsPg', query: { query: req.query }
+				});
+			});
+	}
+	catch (err) {
+		res.redirect('/employee-login-page');
+	}
 };
 
 const open = async (req, res) => {
 	try {
+		const { emplId } = VerifyToken(req.params.id);
 		const emplo = await employees.findAll({
 			raw: true,
 			where: {
-				id: req.params.id
+				id: emplId
 			}
 		});
 		emplo[0].password = cryptr.decrypt(emplo[0].password);
-		
-		res.render('editAgent', { emplo, layout: 'editAgentLayout' });
+		emplo.map((empl, i) => {
+			emplo[i].agentId = req.query.id;
+			emplo[i].ticket = req.query.ticket;
+		});
+		res.render('editAgent', { emplo, layout: 'editAgentLayout', query: { query: req.query } });
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 
 const update = async (req, res) => {
 	try {
+		const { emplId } = VerifyToken(req.query.id);
 		let doneT = [{
 			text: "Agent Updated"
 		}]
 		const encryptedString = cryptr.encrypt(req.body.password);
 		await employees.update({
 			name: req.body.name,
-			email:req.body.email,
+			email: req.body.email,
 			password: encryptedString,
 			phone: req.body.phone,
 			address: req.body.address
 		}
 			, {
-			where: {
-				id: req.params.id
-			}
-		});
+				where: {
+					id: req.params.id
+				}
+			});
 
 		const emplo = await employees.findAll({
 			raw: true,
@@ -81,39 +107,48 @@ const update = async (req, res) => {
 			}
 		});
 		emplo[0].password = cryptr.decrypt(emplo[0].password);
-		
-		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout' });
+		emplo.map((empl, i) => {
+			emplo[i].agentId = req.query.id;
+			emplo[i].ticket = req.query.ticket;
+		});
+		res.render('editAgent', { emplo, doneT, layout: 'editAgentLayout', query: { query: req.query } });
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 
 const deleteAgent = async (req, res) => {
-
+	const { emplId } = VerifyToken(req.query.id);
+	agentId = req.query.id;
+	ticket = req.query.ticket;
 	await employees.destroy({
 		where: {
 			id: req.params.id
 		}
 	})
 		.then(result => {
-			res.json({ redirect: '/agent-list-page' })
+			res.json({ redirect: `/agent-list-page?id=${agentId}&token=${ticket}` })
 		})
 		.catch(err => {
-			console.log(err)
+			res.redirect('/employee-login-page');
 		});
 }
 
 const create = async (req, res) => {
 	try {
-		res.render('createAgent', { layout: 'editAgentLayout' });
+		const { emplId } = VerifyToken(req.query.id);
+		agentId = req.query.id;
+		ticket = req.query.ticket;
+		res.render('createAgent', { agentId, ticket, layout: 'editAgentLayout', query: { query: req.query } });
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 
 const createAgent = async (req, res) => {
 
 	try {
+		const { emplId } = VerifyToken(req.query.id);
 		let errorT = [{
 			text: "the agent with the email already exists"
 		}]
@@ -124,24 +159,27 @@ const createAgent = async (req, res) => {
 				roles: "agent"
 			}
 		});
-		
+		emplo.map((empl, i) => {
+			emplo[i].agentId = req.query.id;
+			emplo[i].ticket = req.query.ticket;
+		});
 		if (emplo.length == true) {
-			res.render('createAgent', { errorT, layout: 'editAgentLayout' });
-			
+			res.render('createAgent', { agentId, ticket, errorT, layout: 'editAgentLayout', query: { query: req.query } });
+
 		} else {
 			const encryptedString = cryptr.encrypt(req.body.password);
 			await employees.create({
 				name: req.body.name,
-				email: req.body.email, 
-				password:encryptedString, 
+				email: req.body.email,
+				password: encryptedString,
 				roles: 'agent',
-				phone:req.body.phone,
-				address:req.body.address
+				phone: req.body.phone,
+				address: req.body.address
 			});
-			res.redirect('/agent-list-page');
+			res.redirect(`/agent-list-page?id=${agentId}&token=${ticket}`);
 		}
 	} catch (err) {
-		console.log(err);
+		res.redirect('/employee-login-page');
 	}
 }
 module.exports = {

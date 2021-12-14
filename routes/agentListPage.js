@@ -4,7 +4,7 @@ const agLsController = require('../controller/agentListPage');
 const router = express.Router();
 
 router.get('/', agLsController.render);
-router.get('/search', agLsController.search)
+router.post('/', agLsController.search)
 router.get('/t', agLsController.test);
 router.get('/create-agent', agLsController.create)
 router.post('/create-agent', agLsController.createAgent)

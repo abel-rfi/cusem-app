@@ -18,6 +18,8 @@ router.get('/logged', cwController.renderLOG);
 
 router.post('/logged/chat-submit', cwController.test);
 
+router.post('/logged/store-rating', cwController.storeRating);
+
 router.get('/t', cwController.test);
 
 module.exports = router

@@ -1,3 +1,7 @@
+if (localStorage.getItem('agentId')) {
+    location.replace(`/agent-dashboard?id=${localStorage.getItem('agentId')}`);
+}
+
 function show() {
     var pssw = document.getElementById("password");
     var hide = document.getElementById('show');

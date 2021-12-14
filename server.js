@@ -17,26 +17,12 @@ io.on('connection', socket => {
 
 	socket.on('joinTicket', (data) => {
 		getChat(socket, io, data.ticket, data.role);
-		// const result = joinTicket(data);
-		// console.log('join2', result);
 		joinTicket(socket, io, data);
-		/*
-		if (result.success) {
-			socket.join(result.roomName);
-
-			if (data.role === "agent") {
-				sendAgentName(socket, result.emplId);
-			}
-		} else {
-			// io.in(ticket).emit('session-expired', 'delete session');
-			console.log('session expired');
-		}
-		*/
 	})
 
 	socket.on('createTicket', (data) => {
 		const result = createTicket(data);
-		console.log(result);
+		// console.log(result);
 		socket.join(result.roomName);
 
 		// updateTickets();
@@ -55,6 +41,10 @@ io.on('connection', socket => {
 		// console.log("lel =", msg);
 		io.to(ticketSession).emit('user-message', msg);
 	});
+
+	socket.on('close-session', ticket => {
+		io.in(ticket).emit('close-session', ticket);
+	})
 });
 
 server.listen(port, () => console.log(`Server start at Port ${port}`));

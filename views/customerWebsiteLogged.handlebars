@@ -1,7 +1,8 @@
 <!-- Live Chat Button -->
-<a class="live-chat position-fixed bg-primary border border-2 border-info rounded-circle" href="#cust-live-chat-log" onclick="createTicket()">
+<a class="live-chat position-fixed bg-primary border border-2 border-info rounded-circle" onclick="checkTicket()">
 	<i class='bx bxs-chat'></i>
 </a>
+<!--  onclick="createTicket()" -->
 
 <!-- Live Chat Section - logged in -->
 <div id="cust-live-chat-log" class="cust-live-chat-log position-fixed">
@@ -36,8 +37,9 @@
 	<div class="log-form-lc">
 		<form action="#">
 			<select name="category" id="category" class="log-input" required>
+				<option value="-">---</option>
 				<option value="complaint">complaint</option>
-				<option value="complaint">question</option>
+				<option value="question">question</option>
 			</select>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Chat with us">
 		</form>

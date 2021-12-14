@@ -60,18 +60,18 @@
             const hapus = document.querySelector('a.delete');
 
             hapus.addEventListener('click', (e) => {
-                const endpoint = '/agent-list-page//open-agent/'+{{id}};
+                const endpoint = '/agent-list-page//open-agent/'+{{id}}+'?id={{agentId}}&token={{ticket}}';
                 fetch(endpoint, {
                     method: 'DELETE'
 
                 })
                 .then ((response) => response.json())
-                .then ((data) => window.location.href = data.redirect)
+                .then ((data) => window.location.href = "/agent-list-page?id={{agentId}}&token={{ticket}}")
                 .catch(err => console.log(err));
             })
         </script>
 
-        <a class="exit" href="/agent-list-page"> exit </a>
+        <a class="exit" href="/agent-list-page?id={{agentId}}&token={{ticket}}"> exit </a>
     </div>
 </form>
 
