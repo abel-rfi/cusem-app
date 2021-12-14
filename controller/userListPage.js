@@ -18,7 +18,7 @@ const test = (req, res) => {
 
 const render = (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		users.findAll({ raw: true })
 			.then(usere => {
 				usere.map((empl, i) => {
@@ -42,7 +42,7 @@ const search = (req, res) => {
 	// Make lowercase
 	term = term.toLowerCase();
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		users.findAll({ raw: true, where: { name: { [Op.like]: '%' + term + '%' } } })
 			.then(usere => {
 				usere.map((empl, i) => {
@@ -61,7 +61,7 @@ const search = (req, res) => {
 
 const open = async (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		const usere = await users.findAll({
 			raw: true,
 			where: {
@@ -81,7 +81,7 @@ const open = async (req, res) => {
 
 const update = async (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		let doneT = [{
 			text: "User Updated"
 		}]
@@ -117,7 +117,7 @@ const update = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-	const { emplId } = VerifyToken(req.query.id);
+	
 	agentId = req.query.id;
 	ticket = req.query.ticket;
 	await users.destroy({
@@ -135,7 +135,7 @@ const deleteUser = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		agentId = req.query.id;
 		ticket = req.query.ticket;
 		res.render('createUser', { agentId, ticket, layout: 'editUserLayout', query: { query: req.query } });
@@ -147,7 +147,7 @@ const create = async (req, res) => {
 const createUser = async (req, res) => {
 
 	try {
-		const { emplId } = VerifyToken(req.query.id);
+		
 		let errorT = [{
 			text: "the user with the email already exists"
 		}]
