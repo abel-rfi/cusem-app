@@ -82,7 +82,7 @@ const open = async (req, res) => {
 
 const update = async (req, res) => {
 	try {
-		
+		const { emplId } = VerifyToken(req.params.id);
 		let doneT = [{
 			text: "Agent Updated"
 		}]
@@ -96,14 +96,14 @@ const update = async (req, res) => {
 		}
 			, {
 				where: {
-					id: req.params.id
+					id: emplId
 				}
 			});
 
 		const emplo = await employees.findAll({
 			raw: true,
 			where: {
-				id: req.params.id
+				id: emplId
 			}
 		});
 		emplo[0].password = cryptr.decrypt(emplo[0].password);
