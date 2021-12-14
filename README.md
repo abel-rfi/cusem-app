@@ -4,7 +4,7 @@ Computer Science System Design Semester 5 Project: Customer Service Manager (Cus
 
 ## Getting Started with the Cusem App
 1. Access the repository site or directly go to step 2.
-2. Clone site in terminal
+2. Clone site in terminal\n
   git clone -b backend https://github.com/abel-rfi/cusem-app.git
 3. Make database “cusem_database”
 4. Install dependencies
