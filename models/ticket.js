@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Ticket.init({
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
     emplId: DataTypes.INTEGER,
     custId: DataTypes.INTEGER,
     complaintStatus: DataTypes.STRING,

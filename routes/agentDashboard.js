@@ -21,6 +21,6 @@ router.post('/live-chat/forward-ticket', adController.forwardTicket);
 
 router.post('/live-chat/accept-forward', adController.acceptForward);
 
-router.post('/t', adController.test);
+router.get('/t', adController.test);
 
 module.exports = router

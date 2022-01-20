@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Form.init({
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
     ticketId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     email: DataTypes.STRING,

@@ -9,7 +9,10 @@ const { VerifyToken } = require('../middlewares/auth');
 const test = (req, res) => {
 	try {
 		res.send("Test");
-		console.log('test')
+		models.agentPermission.create({
+			"roles": "11",
+			"customerCount": 5
+		});
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
