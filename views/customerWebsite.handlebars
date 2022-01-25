@@ -1,5 +1,5 @@
 <!-- Live Chat Button -->
-<a class="live-chat position-fixed bg-primary border border-2 border-info rounded-circle" href="#cust-live-chat-no-log">
+<a class="live-chat bg-primary border border-2 border-info rounded-circle" onclick="openChat()" style="cursor: pointer;">
 	<i class='bx bxs-chat'></i>
 </a>
 
@@ -8,13 +8,12 @@
 	<div class="cust-live-chat-header position-relative">
 		<h3 class="h-tittle-no-log fw-bold fs-1">Hi!</h3>
 		<i class="h-text-no-log">Our agents are ready for your queries!</i>
-		<a href="#" class="cust-close-button fw-normal">x</a>
+		<a onclick="closeAll()" class="cust-close-button fw-normal" style="cursor: pointer;">x</a>
 	</div>
 	<div class="log-form-lc">
-		<form action="/customer-website/sign-in#cust-live-chat-log" method="post">
+		<form action="#">
 			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" 
-            title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
+			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Chat with us">
 		</form>
 	</div>
@@ -24,12 +23,12 @@
 <div id="log-section" class="log-section position-fixed">
 	<div class="log-header fw-bold bg-primary text-light">
 		Login
-		<a href="#" class="close-button fw-normal">x</a>
+		<a onclick="closeAll()" class="close-button fw-normal" style="cursor: pointer;">x</a>
 	</div>
 	<div class="log-form">
-		<form action="/customer-website/sign-in" method="post">
+		<form action="#">
 			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" required>
+			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="Login">
 		</form>
 	</div>
@@ -42,15 +41,14 @@
 <div id="log-section-r" class="log-section-r position-fixed">
 	<div class="log-header fw-bold bg-primary text-light">
 		Register
-		<a href="#" class="close-button fw-normal">x</a>
+		<a onclick="closeAll()" class="close-button fw-normal" style="cursor: pointer;">x</a>
 	</div>
 	<div class="log-form-r">
-		<form action="/customer-website/sign-up" method="post">
-			<input class="log-input" type="text" name="name" placeholder="Username" required>
+		<form action="#">
+			<input class="log-input" type="text" name="username" placeholder="Username" required>
 			<input class="log-input" type="email" name="email" placeholder="Email" required>
-			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" 
-            title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
-			<input class="log-input" type="password" name="password2" placeholder="Re-enter Password" required>
+			<input class="log-input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
+			<input class="log-input" type="password" name="password2" placeholder="Re-enter Password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Must contain at least one number and lowercase letter, and at least 6 or more characters" required>
 			<input class="log-input log-input-button bg-primary text-light" type="submit" value="REGISTER">
 		</form>
 	</div>
@@ -102,3 +100,4 @@
 		<p>We'll reply back to you ASAP!</p>
 	</div>
 </section>
+<script src="/js/cw.js"></script>

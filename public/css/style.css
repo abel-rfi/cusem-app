@@ -378,7 +378,11 @@ textarea[name="message"]{
 	/*cursor: pointer;*/
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 760px) {
+	.custom-button {
+		margin-bottom: 10px;
+	}
+
 	.live-chat {
 		width: 80px;
 		height: 80px;
@@ -1604,4 +1608,12 @@ textarea[name="reply"]{
 	text-align: justify;
 	overflow: hidden;
 	transition: max-height .2s ease-out	;
+}
+
+.active {
+	display: block;
+}
+
+.deactivate {
+	display: none;
 }

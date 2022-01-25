@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { engine } = require('express-handlebars');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -11,16 +12,20 @@ app.engine('handlebars',engine({
 	helpers: require('./config/handlebars-helpers')
 }));
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'views'));
 
 // Body parser
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:false}));
 
 // Set static folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Enable cookie parser
+app.use(cookieParser());
 
 // Routes
-const cwRoute = require('./routes/customerWebsite');
+const cwRoute2 = require('./routes/customerWebsite');
+const cwRoute = require('./routes/customerWebsiteRoutes');
 const elpRoute = require('./routes/employeeLoginPage');
 const agLsRote = require('./routes/agentListPage');
 const usLsRote = require('./routes/userListPage');
@@ -33,6 +38,7 @@ const admin = require('./routes/adminDashboard');
 app.use(bodyParser.json());
 
 // set Routes
+app.use('/customer-website2', cwRoute2);
 app.use('/customer-website', cwRoute);
 app.use('/employee-login-page', elpRoute);
 app.use('/agent-list-page', agLsRote);
@@ -43,4 +49,4 @@ app.use('/email-page', EmailRoute);
 app.use('/download-page', LCHRoute);
 app.use('/admin-dashboard', admin);
 
-module.exports = app
+module.exports = app;
