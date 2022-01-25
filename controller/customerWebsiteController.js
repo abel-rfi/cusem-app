@@ -21,8 +21,14 @@ exports.register = async (req, res) => {
 				const encryptedString = cryptr.encrypt(req.body.password);
 				req.body['password'] = encryptedString;
 				const result = await create(User, req.body);
-				// return res.redirect('/customer-website');
-				return res.status(200).json({ success: true, result:req.body })
+				const token = await CreateToken({ email: result.email, userId: result.id }, '10d');
+				res.cookie('token', token, {
+					secure: true,
+					httpOnly: true,
+					sameSite: 'strict'
+				});
+				// return res.status(200).json({ success: true, result })
+				return res.redirect(`logged`);
 			} else {
 				return res.status(500).json({ success: false, msg: 'password does not match' });
 			}
@@ -48,8 +54,8 @@ exports.login = async (req, res) => {
 					httpOnly: true,
 					sameSite: 'strict'
 				});
-				return res.status(200).json({Result: "Success"});
-				// return res.redirect(`logged/?token=${token}`);
+				// return res.status(200).json({Result: "Success"});
+				return res.redirect(`logged`);
 			} else {
 				// return res.redirect(`/customer-website`);
 				return res.status(400).json({ success: false, message: "Invalid Credentials" })
@@ -62,11 +68,34 @@ exports.login = async (req, res) => {
 	}
 }
 
+exports.logout = async (req, res) => {
+	try {
+		res.clearCookie('token');
+		return res.redirect('/customer-website');
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
 // Render Section
 
 exports.renderNoLog = async (req, res) => {
 	try {
-		res.render('customerWebsite', {layout: 'main'})
+		res.render('customerWebsite', {layout: 'main'});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+exports.renderLog = async (req, res) => {
+	try {
+		const {email, userId:id} = req.body.decoded;
+		const user = await User.findOne({raw: true, where: {id, email}});
+		res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}});
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);

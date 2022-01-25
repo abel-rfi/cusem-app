@@ -1,3 +1,83 @@
+const categoryForm = document.getElementById('cust-live-chat-category-section');
+const liveChatSection = document.getElementById('cust-live-chat-log');
+const ratingSection = document.getElementById('live-chat-rating');
+
+// Event Listener Section
+
+categoryForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    if (e.target.elements[0].value != '-'){
+        console.log(e.target.elements[0].value);
+        category = e.target.elements[0].value;
+        liveChatSection.classList.toggle("active");
+        // createTicket();
+    }
+});
+
+liveChatSection.addEventListener('submit', e => {
+    e.preventDefault();
+    this.sendMessage();
+});
+
+ratingSection.addEventListener('submit', e => {
+    var starVal = 1;
+    e.preventDefault();
+
+    for ( i = 0; i < 5; i++ ) {
+        if (e.target.elements[i].value * e.target.elements[i].checked > starVal) {
+            starVal = e.target.elements[i].value;
+        }
+        if (e.target.elements[i].value == 1) {
+            e.target.elements[i].checked = true;
+        }
+    }
+    // const body = JSON.stringify({
+    //     ticketSession,
+    //     rating: starVal,
+    //     comment: e.target.elements[5].value
+    // });
+    e.target.elements[5].value = ""
+    
+    // localStorage.removeItem('ticketSession');
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("POST", "/customer-website/logged/store-rating");
+    // xhr.setRequestHeader("Content-Type", "application/json");
+    // xhr.send(body);
+    this.closeSection();
+});
+
+// Function Section
+
+function openCategory() {
+    var categorySection = document.getElementById("cust-live-chat-category-section");
+    var liveChatButton = document.querySelector(".live-chat");
+    categorySection.classList.toggle("active");
+    liveChatButton.classList.toggle("deactive");
+}
+
+function closeSection() {
+    var categorySection = document.getElementById("cust-live-chat-category-section");
+    var liveChatButton = document.querySelector(".live-chat");
+    categorySection.classList.toggle("active", false);
+    liveChatSection.classList.toggle("active", false);
+    ratingSection.classList.toggle("active", false);
+    liveChatButton.classList.toggle("deactive", false);
+}
+
+function sendMessage() {
+    const chatForm = document.querySelector('.cust-live-chat-input-section');
+    // ticketSession = localStorage.getItem('ticketSession');
+    const msg = chatForm.children.msg.value;
+    console.log(msg);
+    // console.log(chatForm.childNodes);
+
+    // socket.emit('user-message', {ticketSession, msg});
+    chatForm.children.msg.value = '';
+    chatForm.children.msg.focus();
+}
+
+
 // const chatForm = document.querySelector('.cust-live-chat-input-section');
 // const categoryForm = document.getElementById('cust-live-chat-category-section');
 // const chatSection = document.querySelector('.cust-live-chat-chat-section');
