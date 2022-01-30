@@ -11,7 +11,7 @@
 		<a onclick="closeSection()" class="cust-close-button fw-normal" style="cursor: pointer;">x</a>
 	</div>
 	<div class="log-form-lc">
-		<form action="#">
+		<form>
 			<select name="category" id="category" class="log-input" required>
 				<option value="-">---</option>
 				<option value="complaint">complaint</option>
@@ -35,12 +35,7 @@
 			<p class="cust-live-chat-header-log-text m-0">agent</p>
 		</div>
 	</div>
-	<div class="cust-live-chat-chat-section">
-		<div class="cust-live-chat-chat">Hi! How can i help you?</div>
-		<div class="cust-live-chat-chat agent-chat">Finish my CSSD task please.</div>
-		<div class="cust-live-chat-chat">Lorem ipsum, dolor sit.</div>
-		<div class="cust-live-chat-chat agent-chat">Lorem ipsum dolor sit amet consectetur adipisicing elit. In, quia.</div>
-	</div>
+	<div class="cust-live-chat-chat-section"></div>
 	<form action="" class="cust-live-chat-input-section">
 		<input id="msg" class="cust-live-chat-input" type="text" name="chat" placeholder="Your Message" required>
 		<a class="cust-live-chat-send-button bg-primary text-light fs-2" onclick="sendMessage()">
@@ -120,4 +115,5 @@
 	</div>
 </section>
 
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/cwl.js"></script>

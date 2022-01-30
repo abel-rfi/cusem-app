@@ -1,6 +1,17 @@
 const categoryForm = document.getElementById('cust-live-chat-category-section');
 const liveChatSection = document.getElementById('cust-live-chat-log');
 const ratingSection = document.getElementById('live-chat-rating');
+const chatMonitor = document.querySelector('.cust-live-chat-chat-section');
+const liveChatButton = document.querySelector(".live-chat");
+
+// Socket Section
+
+const socket = io();
+
+socket.on('user-message', msg => {
+    console.log(`'${msg}' <= Me`);
+    this.outputMessage(msg);
+})
 
 // Event Listener Section
 
@@ -10,8 +21,10 @@ categoryForm.addEventListener('submit', e => {
     if (e.target.elements[0].value != '-'){
         console.log(e.target.elements[0].value);
         category = e.target.elements[0].value;
-        liveChatSection.classList.toggle("active");
-        // createTicket();
+        var room = this.createUUID();
+        this.saveRoomId(room, 3);
+        console.log(room);
+        this.openLC();
     }
 });
 
@@ -32,220 +45,94 @@ ratingSection.addEventListener('submit', e => {
             e.target.elements[i].checked = true;
         }
     }
-    // const body = JSON.stringify({
-    //     ticketSession,
-    //     rating: starVal,
-    //     comment: e.target.elements[5].value
-    // });
+
     e.target.elements[5].value = ""
-    
-    // localStorage.removeItem('ticketSession');
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "/customer-website/logged/store-rating");
-    // xhr.setRequestHeader("Content-Type", "application/json");
-    // xhr.send(body);
     this.closeSection();
 });
 
 // Function Section
 
 function openCategory() {
-    var categorySection = document.getElementById("cust-live-chat-category-section");
-    var liveChatButton = document.querySelector(".live-chat");
-    categorySection.classList.toggle("active");
-    liveChatButton.classList.toggle("deactive");
+    const roomId = this.getRoomId();
+    if (roomId == ""){
+        liveChatButton.classList.toggle("deactive", true);
+        categoryForm.classList.toggle("active", true);
+    } else {
+        this.openLC();
+    }
+}
+
+function openLC() {
+    liveChatButton.classList.toggle("deactive", true);
+    liveChatSection.classList.toggle("active", true);
+}
+
+function openRating() {
+    liveChatButton.classList.toggle("deactive", true);
+    ratingSection.classList.toggle("active", true)
 }
 
 function closeSection() {
-    var categorySection = document.getElementById("cust-live-chat-category-section");
-    var liveChatButton = document.querySelector(".live-chat");
-    categorySection.classList.toggle("active", false);
+    categoryForm.classList.toggle("active", false);
     liveChatSection.classList.toggle("active", false);
     ratingSection.classList.toggle("active", false);
     liveChatButton.classList.toggle("deactive", false);
 }
 
+function createUUID() {
+    // http://www.ietf.org/rfc/rfc4122.txt
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    }
+    s[14] = "4";
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+    s[8] = s[13] = s[18] = s[23] = "-";
+
+    var uuid = s.join("");
+    return uuid;
+}
+
+function saveRoomId(value, h) {
+    const day = new Date();
+    day.setTime(day.getTime() + (h * 60 * 60 * 1000));
+    let expires = "expires=" + day.toUTCString();
+
+    document.cookie = `roomId = ${value}; ${expires}; path=/`;
+}
+
+function getRoomId() {
+    let cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        let [key, value] = cookies[i].split('=');
+        if (key == "roomId") {
+            return value;
+        }
+    }
+}
+
+function removeRoomId() {
+    document.cookie = `roomId = ; path=/`;
+}
+
 function sendMessage() {
     const chatForm = document.querySelector('.cust-live-chat-input-section');
-    // ticketSession = localStorage.getItem('ticketSession');
     const msg = chatForm.children.msg.value;
-    console.log(msg);
-    // console.log(chatForm.childNodes);
+    
+    console.log(`Me => '${msg}'`);
+    const roomId = this.getRoomId();
+    console.log(roomId);
+    // socket.emit('user-message', {roomId, msg});
 
-    // socket.emit('user-message', {ticketSession, msg});
     chatForm.children.msg.value = '';
     chatForm.children.msg.focus();
 }
 
+function outputMessage(msg) {
+    const div = document.createElement('div');
+    div.classList.add("cust-live-chat-chat");
+    div.innerHTML = `${msg}`;
 
-// const chatForm = document.querySelector('.cust-live-chat-input-section');
-// const categoryForm = document.getElementById('cust-live-chat-category-section');
-// const chatSection = document.querySelector('.cust-live-chat-chat-section');
-// const ratingForm = document.querySelector('.rating-form');
-
-// var i;
-// var starVal = 1;
-
-// // get query
-// const queryString = location.search;
-// const query = new URLSearchParams(queryString);
-// const token = query.get('token');
-// localStorage.setItem('token', token);
-
-// let ticketSession = localStorage.getItem('ticketSession');
-// let category;
-
-// function logOut() {
-// 	localStorage.clear();
-// 	location.replace('/customer-website');
-// }
-
-// const socket = io();
-
-// if (ticketSession) {
-// 	// console.log('test')
-// 	socket.emit('joinTicket', {id: token, ticket: ticketSession, role: 'user'});
-// 	// console.log('socket-id:', socket.id);
-// }
-
-// // Listen msg from server
-// socket.on('user-message', message => {
-// 	// console.log(message);
-// 	outputMessage(message);
-
-// 	// scroll down
-// 	chatSection.scrollTop = chatSection.scrollHeight;
-// });
-
-// // Listen msg from server
-// socket.on('agent-message', message => {
-// 	outputMessageA(message);
-
-// 	// scroll down
-// 	chatSection.scrollTop = chatSection.scrollHeight;
-// });
-
-// // Listen msg from server
-// socket.on('ticket-session', ticketSession => {
-// 	localStorage.setItem('ticketSession', ticketSession);
-// });
-
-// // Listen msg from server
-// socket.on('agent-accept', ({name}) => {
-// 	changeAgentName(name);
-// });
-
-// socket.on('close-session', currenTicket => {
-// 	// console.log('close session', currenTicket);
-// 	location.href = '#live-chat-rating'
-// });
-
-// // Listen msg from server (Experimental)
-// // socket.on('message', id => {
-// // 	localStorage.setItem('currentUserId', id);
-// // });
-
-// // Listen msg from server
-// socket.on('session-expired', msg => {
-// 	console.log(msg);
-// 	localStorage.removeItem('ticketSession');
-// 	// localStorage.removeItem('currentUserId');
-// 	location.replace(' ');
-// })
-
-// // Get msg from input & send it to the server
-// chatForm.addEventListener('submit', (e) => {
-// 	e.preventDefault();
-// 	ticketSession = localStorage.getItem('ticketSession');
-// 	const msg = e.target.elements.msg.value;
-
-// 	socket.emit('user-message', {ticketSession, msg});
-// 	// console.log(msg, ticketSession);
-
-// 	// clear msg
-// 	e.target.elements.msg.value = '';
-// 	e.target.elements.msg.focus();
-// });
-
-// // rating listener
-// ratingForm.addEventListener('submit', e => {
-// 	e.preventDefault();
-// 	// console.log(e.target.elements);
-// 	for ( i = 0; i < 5; i++ ) {
-// 		if (e.target.elements[i].value * e.target.elements[i].checked > starVal) {
-// 			starVal = e.target.elements[i].value;
-// 		}
-// 		if (e.target.elements[i].value == 1) {
-// 			e.target.elements[i].checked = true;
-// 		}
-// 	}
-
-// 	const body = JSON.stringify({
-// 		ticketSession,
-// 		rating: starVal,
-// 		comment: e.target.elements[5].value
-// 	});
-// 	e.target.elements[5].value = ""
-	
-// 	localStorage.removeItem('ticketSession');
-// 	var xhr = new XMLHttpRequest();
-// 	xhr.open("POST", "/customer-website/logged/store-rating");
-// 	xhr.setRequestHeader("Content-Type", "application/json");
-//     xhr.send(body);
-// 	location.href = '#';
-// });
-
-// categoryForm.addEventListener('submit', e => {
-// 	e.preventDefault();
-
-// 	if (e.target.elements[0].value != '-'){
-// 		category = e.target.elements[0].value;
-// 		location.href = '#cust-live-chat-log';
-// 		createTicket();
-// 	}
-// })
-
-// function checkTicket() {
-// 	ticketSession = localStorage.getItem('ticketSession');
-// 	if (ticketSession === null) {
-// 		location.href = '#cust-live-chat-category-section';
-// 	} else {
-// 		location.href = '#cust-live-chat-log';
-// 	}
-// }
-
-// function createTicket() {
-// 	ticketSession = localStorage.getItem('ticketSession');
-// 	if (ticketSession == null){
-// 		socket.emit('createTicket', {id: token, category});
-// 	} else {
-// 		socket.emit('joinTicket', {id: token, ticket: ticketSession, role: 'user'});
-// 	}
-// }
-
-// function outputMessage(message) {
-// 	const div = document.createElement('div');
-// 	div.classList.add('cust-live-chat-chat');
-// 	div.innerHTML = `${message}`;
-
-// 	document.querySelector('.cust-live-chat-chat-section').appendChild(div);
-// }
-
-// function outputMessageA(message) {
-// 	const div = document.createElement('div');
-// 	div.classList.add('cust-live-chat-chat');
-// 	div.classList.add('agent-chat');
-// 	div.innerHTML = `${message}`;
-
-// 	document.querySelector('.cust-live-chat-chat-section').appendChild(div);
-// }
-
-// function changeAgentName(name) {
-// 	document.getElementById('live-chat-agent-name').innerHTML = name;
-// }
-
-// function finishTicketSession() {
-// 	localStorage.removeItem('ticketSession');
-// 	// localStorage.removeItem('currentUserId')
-// 	// harus buat tiket statusnya jika blm closed jdi cancelled.
-// }
+    chatMonitor.appendChild(div);
+}
