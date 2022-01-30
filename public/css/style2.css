@@ -1,0 +1,26 @@
+/* New Live Chat Start */
+
+.card-head {
+	padding-bottom: 0;
+}
+
+.live-chat-monitor {
+	min-height: 350px;
+	max-height: 350px;
+	overflow: hidden auto;
+}
+
+.live-chat-monitor .chat {
+	box-sizing: border-box;
+	max-width: 40%;
+	padding: 10px;
+	margin: 0 0 10px 0;
+	border-radius: 10px;
+}
+
+.live-chat-monitor .chat.chat-client {
+	margin-left: calc(100% - 40%);
+	margin-right: 0;
+}
+
+/* New Live Chat End */
