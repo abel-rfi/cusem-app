@@ -8,6 +8,7 @@ const { VerifyToken, CreateToken } = require('../middlewares/auth');
 
 const models = require('../models');
 const User = models.User;
+const Ticket = models.Ticket;
 
 // Function Section
 
@@ -72,6 +73,28 @@ exports.logout = async (req, res) => {
 	try {
 		res.clearCookie('token');
 		return res.redirect('/customer-website');
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+exports.createTicket = async (req, res) => {
+	try {
+		const {email, userId:id} = req.body.decoded;
+		const user = await User.findOne({raw: true, where: {id, email}});
+		const ticket = {
+			custId: user.id,
+			complaintStatus: "Open",
+			complaintCategory: req.body.complaintCategory,
+			ticketType: "Live Chat",
+			passedFor: 0,
+			passedTo: null,
+			passedFrom: null,
+			roomName: req.body.roomId
+		};
+		Ticket.create(ticket);
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);

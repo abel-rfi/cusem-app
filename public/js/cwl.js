@@ -11,7 +11,16 @@ const socket = io();
 socket.on('user-message', msg => {
     console.log(`'${msg}' <= Me`);
     this.outputMessage(msg);
-})
+});
+
+socket.on('server-message', msg => {
+    console.log(`'${msg}' <= Server`);
+    this.outputMessageServer(msg);
+});
+
+socket.on("connect_error", (err) => {  
+    console.log(`connect_error due to ${err.message}`);
+});
 
 // Event Listener Section
 
@@ -20,10 +29,28 @@ categoryForm.addEventListener('submit', e => {
 
     if (e.target.elements[0].value != '-'){
         console.log(e.target.elements[0].value);
-        category = e.target.elements[0].value;
+        var category = e.target.elements[0].value;
+
+        // Generate Room Id
         var room = this.createUUID();
+        // Save Room Id in Web Cookie
         this.saveRoomId(room, 3);
         console.log(room);
+
+        // Create LC Ticket
+        const body = JSON.stringify({
+            roomId: room,
+            complaintCategory: category
+        });
+
+        console.log(body);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/customer-website/logged/create-ticket");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(body);
+
+        socket.emit('join-ticket', {room});
         this.openLC();
     }
 });
@@ -54,11 +81,12 @@ ratingSection.addEventListener('submit', e => {
 
 function openCategory() {
     const roomId = this.getRoomId();
-    if (roomId == ""){
+    if (roomId == "" || roomId == undefined){
         liveChatButton.classList.toggle("deactive", true);
         categoryForm.classList.toggle("active", true);
     } else {
         this.openLC();
+        socket.emit('join-ticket', {roomId});
     }
 }
 
@@ -122,8 +150,8 @@ function sendMessage() {
     
     console.log(`Me => '${msg}'`);
     const roomId = this.getRoomId();
-    console.log(roomId);
-    // socket.emit('user-message', {roomId, msg});
+    // console.log(roomId);
+    socket.emit('user-message', {roomId, msg});
 
     chatForm.children.msg.value = '';
     chatForm.children.msg.focus();
@@ -132,6 +160,15 @@ function sendMessage() {
 function outputMessage(msg) {
     const div = document.createElement('div');
     div.classList.add("cust-live-chat-chat");
+    div.innerHTML = `${msg}`;
+
+    chatMonitor.appendChild(div);
+}
+
+function outputMessageServer(msg) {
+    const div = document.createElement('div');
+    div.classList.add("cust-live-chat-chat");
+    div.classList.add("server-chat");
     div.innerHTML = `${msg}`;
 
     chatMonitor.appendChild(div);

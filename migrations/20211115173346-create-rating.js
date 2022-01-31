@@ -9,7 +9,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       ticketId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       score: {
         type: Sequelize.INTEGER

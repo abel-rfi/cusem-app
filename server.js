@@ -15,8 +15,16 @@ const { saveChat, getChat } = require('./middlewares/chat');
 io.on('connection', socket => {
 	console.log('New WS connection')
 
-	socket.on('user-message', msg => {
-		io.emit('user-message', msg);
+	socket.on('join-ticket', roomId => {
+		// console.log(roomId);
+		socket.join(roomId); // User join into the room
+		io.to(roomId).emit('server-message', "a user connected into the server");
+	});
+
+	socket.on('user-message', ({roomId, msg}) => {
+		console.log(`MSG = ${msg}`);
+		socket.join(roomId);
+		io.to(roomId).emit('user-message', msg);
 	});
 });
 

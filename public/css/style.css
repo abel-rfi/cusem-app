@@ -350,6 +350,16 @@ textarea[name="message"]{
 	background-color: royalblue;
 }
 
+.server-chat {
+	margin: 0 auto 10px auto;
+	background-color: rgb(80, 80, 80);
+	border-radius: 20px;
+	color: white;
+	font-size: .6em;
+	font-weight: bold;
+	text-align: center;
+}
+
 .cust-live-chat-input-section {
 	display: flex;
 	box-sizing: border-box;

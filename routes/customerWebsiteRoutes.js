@@ -12,6 +12,6 @@ router.post('/sign-in', Controller.login);
 // With Authorization
 router.use(auth.checkToken);
 router.get('/logged', Controller.renderLog);
-
+router.post('/logged/create-ticket', Controller.createTicket);
 
 module.exports = router

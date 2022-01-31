@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: false
     },
-    ticketId: DataTypes.INTEGER,
+    ticketId: DataTypes.UUID,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     message: DataTypes.TEXT,

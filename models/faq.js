@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       autoIncrement: false
     },
-    ticketId: DataTypes.INTEGER,
+    ticketId: DataTypes.UUID,
     question: DataTypes.TEXT,
     solution: DataTypes.TEXT,
     probCategory: DataTypes.STRING

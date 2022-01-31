@@ -9,10 +9,10 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       emplId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       custId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       complaintStatus: {
         type: Sequelize.STRING
