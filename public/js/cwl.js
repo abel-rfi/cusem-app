@@ -4,6 +4,9 @@ const ratingSection = document.getElementById('live-chat-rating');
 const chatMonitor = document.querySelector('.cust-live-chat-chat-section');
 const liveChatButton = document.querySelector(".live-chat");
 
+// Global Variable
+const client = document.querySelector('.client-name').innerHTML;
+
 // Socket Section
 
 const socket = io();
@@ -43,14 +46,12 @@ categoryForm.addEventListener('submit', e => {
             complaintCategory: category
         });
 
-        console.log(body);
-
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/customer-website/logged/create-ticket");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(body);
-
-        socket.emit('join-ticket', {room});
+        
+        socket.emit('join-ticket', {room, user: client});
         this.openLC();
     }
 });
@@ -86,7 +87,7 @@ function openCategory() {
         categoryForm.classList.toggle("active", true);
     } else {
         this.openLC();
-        socket.emit('join-ticket', {roomId});
+        socket.emit('join-ticket', {roomId, user: client});
     }
 }
 
@@ -150,8 +151,18 @@ function sendMessage() {
     
     console.log(`Me => '${msg}'`);
     const roomId = this.getRoomId();
-    // console.log(roomId);
     socket.emit('user-message', {roomId, msg});
+
+    // Create LC Ticket
+    const body = JSON.stringify({
+        roomId,
+        msg
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/customer-website/logged/save-chat");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
 
     chatForm.children.msg.value = '';
     chatForm.children.msg.focus();

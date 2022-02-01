@@ -351,6 +351,7 @@ textarea[name="message"]{
 }
 
 .server-chat {
+	width: 80%;
 	margin: 0 auto 10px auto;
 	background-color: rgb(80, 80, 80);
 	border-radius: 20px;

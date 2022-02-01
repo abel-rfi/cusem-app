@@ -9,22 +9,20 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 // Middlewares
-const { createTicket, joinTicket, sendAgentName, updateTickets } = require('./middlewares/ticket');
-const { saveChat, getChat } = require('./middlewares/chat');
+// const { createTicket, joinTicket, sendAgentName, updateTickets } = require('./middlewares/ticket');
+// const { saveChat, getChat } = require('./middlewares/chat');
 
 io.on('connection', socket => {
 	console.log('New WS connection')
 
-	socket.on('join-ticket', roomId => {
-		// console.log(roomId);
+	socket.on('join-ticket', ({roomId, user}) => {
 		socket.join(roomId); // User join into the room
-		io.to(roomId).emit('server-message', "a user connected into the server");
+		// console.log(typeof roomId)
+		io.to(roomId).emit('server-message', `${user} connected into the server`);
 	});
 
 	socket.on('user-message', ({roomId, msg}) => {
-		console.log(`MSG = ${msg}`);
-		socket.join(roomId);
-		io.to(roomId).emit('user-message', msg);
+		io.to(roomId.toString()).emit('user-message', msg);
 	});
 });
 

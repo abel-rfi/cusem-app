@@ -13,5 +13,6 @@ router.post('/sign-in', Controller.login);
 router.use(auth.checkToken);
 router.get('/logged', Controller.renderLog);
 router.post('/logged/create-ticket', Controller.createTicket);
+router.post('/logged/save-chat', Controller.saveChat);
 
 module.exports = router

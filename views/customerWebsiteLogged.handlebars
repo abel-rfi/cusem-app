@@ -35,7 +35,16 @@
 			<p class="cust-live-chat-header-log-text m-0">agent</p>
 		</div>
 	</div>
-	<div class="cust-live-chat-chat-section"></div>
+	<div class="cust-live-chat-chat-section">
+		{{#each chats}}
+			{{#ifEquals sender 'user'}}
+				<div class="cust-live-chat-chat">{{message}}</div>
+			{{/ifEquals}}
+			{{#ifEquals sender 'agent'}}
+				<div class="cust-live-chat-chat agent-chat">{{message}}</div>
+			{{/ifEquals}}
+		{{/each}}
+	</div>
 	<form action="" class="cust-live-chat-input-section">
 		<input id="msg" class="cust-live-chat-input" type="text" name="chat" placeholder="Your Message" required>
 		<a class="cust-live-chat-send-button bg-primary text-light fs-2" onclick="sendMessage()">

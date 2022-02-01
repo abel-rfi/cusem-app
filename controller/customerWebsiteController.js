@@ -9,6 +9,7 @@ const { VerifyToken, CreateToken } = require('../middlewares/auth');
 const models = require('../models');
 const User = models.User;
 const Ticket = models.Ticket;
+const Chat = models.Chat;
 
 // Function Section
 
@@ -102,6 +103,32 @@ exports.createTicket = async (req, res) => {
 	}
 }
 
+exports.saveChat = async (req, res) => {
+	try {
+		const {email, userId:id} = req.body.decoded;
+		const {roomId, msg} = req.body;
+
+		let condition = {
+			custId:id, 
+			roomName: roomId, 
+			ticketType: "Live Chat"
+		};
+		const ticket = await Ticket.findOne({raw: true, where: condition});
+
+		const chat = {
+			ticketId: ticket.id,
+			sender: "user",
+			message: msg
+		};
+
+		Chat.create(chat);
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
 // Render Section
 
 exports.renderNoLog = async (req, res) => {
@@ -117,8 +144,20 @@ exports.renderNoLog = async (req, res) => {
 exports.renderLog = async (req, res) => {
 	try {
 		const {email, userId:id} = req.body.decoded;
+		const {roomId} = req.cookies;
+		let condition = {
+			custId: id, 
+			roomName: roomId, 
+			ticketType: "Live Chat"
+		};
 		const user = await User.findOne({raw: true, where: {id, email}});
-		res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}});
+		const ticket = await Ticket.findOne({raw: true, where: condition});
+		if (ticket != null){
+			const chats = await Chat.findAll({raw: true, where: {ticketId: ticket.id}});
+			return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}, chats});
+		} else{
+			return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}});
+		}
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
