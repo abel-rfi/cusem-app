@@ -138,27 +138,32 @@
                                         <h4 class="text-center">Customer #1</h4>
                                     </div>
                                     <div class="card-body">
+                                        <div class="container border rounded mb-1 p-1 text-white live-chat-monitor">
+                                            <div class="chat left bg-primary">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti, fuga.
+                                            </div>
+                                            <div class="chat right chat-client bg-light text-dark">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                            </div>
+                                            <div class="chat left bg-primary">
+                                                Lorem ipsum dolor sit.
+                                            </div>
+                                            <div class="chat left bg-primary">
+                                                Lorem ipsum, dolor sit amet, consectetur adipisicing elit.
+                                            </div>
+                                            <div class="chat right chat-client bg-light text-dark">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, perferendis!
+                                            </div>
+                                        </div>
                                         <form action="#" class="form">
                                             <div class="form-body">
-                                                <div class="form-group row d-flex justify-content-between px-1">
-                                                    <div class="live-chat-monitor form-control" rows="1">
-                                                        <p class="chat bg-primary">Lorem, ipsum.</p>
-                                                        <p class="chat chat-client bg-light">Lorem ipsum dolor sit.</p>
-                                                        <p class="chat bg-primary">Lorem.</p>
-                                                        <p class="chat chat-client bg-light">Lorem, ipsum, dolor.</p>
-                                                        <p class="chat bg-primary">Lorem ipsum dolor sit amet.</p>
-                                                        <p class="chat chat-client bg-light">Lor</p>
-                                                        <p class="chat bg-primary">Lorem, ipsum.</p>
-                                                        <p class="chat chat-client bg-light">Lorem ipsum dolor sit.</p>
-                                                        <p class="chat bg-primary">Lorem.</p>
-                                                        <p class="chat chat-client bg-light">Lorem, ipsum, dolor.</p>
-                                                        <p class="chat bg-primary">Lorem ipsum dolor sit amet.</p>
-                                                        <p class="chat chat-client bg-light">Lor</p>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Enter test">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary btn-icon" type="button" id="button-addon2">
+                                                            <i class='bx bx-send'></i>
+                                                        </button>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row d-flex justify-content-between px-1">
-                                                    <input id="msg" type="text" class="form-control col-9" placeholder="Enter your message here" name="msg">
-                                                    <button class="btn btn-icon btn-info col-2"><i class='bx bx-send'></i></button>
                                                 </div>
                                             </div>                                            
                                         </form>
@@ -172,11 +177,42 @@
                                     <div class="card-body card-head">
                                         <h4 class="text-center">Customer Data</h4>
                                         <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-xl-7 col-lg-12 btn-group">
+                                                        <button class="btn btn-min-width btn-success d-flex" style="justify-content: space-evenly; width: 100%;" data-toggle="modal" data-target="#exampleModal">
+                                                            Forward Inbox 
+                                                            <span class="d-flex justify-content-center align-items-center rounded-circle bg-danger" style="width: 1.6em; height: 1.6em;">1</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-12 mt-xl-0 mt-1 btn-group">
+                                                        <button type="button" class="btn btn-min-width btn-info" style="width: 100%;">Passed To</button>
+                                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        </button>
+                                                        <div class="dropdown-menu" style="max-height: 200px; overflow: hidden auto;">
+                                                            <a class="dropdown-item" href="#">Agent 1</a>
+                                                            <a class="dropdown-item" href="#">Agent 2</a>
+                                                            <a class="dropdown-item" href="#">Agent 3</a>
+                                                            <a class="dropdown-item" href="#">Agent 4</a>
+                                                            <a class="dropdown-item" href="#">Agent 5</a>
+                                                            <a class="dropdown-item" href="#">Agent 6</a>
+                                                            <a class="dropdown-item" href="#">Agent 7</a>
+                                                            <a class="dropdown-item" href="#">Agent 8</a>
+                                                            <a class="dropdown-item" href="#">Agent 9</a>
+                                                            <a class="dropdown-item" href="#">Agent 10</a>
+                                                            <a class="dropdown-item" href="#">Agent 11</a>
+                                                            <a class="dropdown-item" href="#">Agent 12</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
                                             <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
                                             <li class="list-group-item">Lorem ipsum, dolor sit amet.</li>
                                             <li class="list-group-item">Lorem ipsum, dolor sit amet.</li>
                                             <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
-                                            <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
+                                            <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
+                                            <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
+                                            <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -188,6 +224,73 @@
         </div>
     </div>
     <!-- Content End -->
+
+    <!-- Modal Start -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Forward Inbox</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8 d-flex align-items-center">User#211 From Agent#10</div>
+                                <div class="col-4">
+                                    <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8 d-flex align-items-center">User#12 From Agent#4</div>
+                                <div class="col-4">
+                                    <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8 d-flex align-items-center">User#50 From Agent#8</div>
+                                <div class="col-4">
+                                    <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8 d-flex align-items-center">User#60 From Agent#3</div>
+                                <div class="col-4">
+                                    <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8 d-flex align-items-center">User#81 From Agent#7</div>
+                                <div class="col-4">
+                                    <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
+                                    <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
 
     <footer class="footer footer-static footer-light navbar-border navbar-shadow">
       <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2018  &copy; Copyright <a class="text-bold-800 grey darken-2" href="https://themeselection.com" target="_blank">ThemeSelection</a></span>
