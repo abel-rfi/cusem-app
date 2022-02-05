@@ -26,10 +26,12 @@ app.use(cookieParser());
 // Routes
 const cwRoute2 = require('./routes/customerWebsite');
 const cwRoute = require('./routes/customerWebsiteRoutes');
-const elpRoute = require('./routes/employeeLoginPage');
+const elpRoute2 = require('./routes/employeeLoginPage');
+const elpRoute = require('./routes/employeeLoginRoutes');
 const agLsRote = require('./routes/agentListPage');
 const usLsRote = require('./routes/userListPage');
-const adRoute = require('./routes/agentDashboard');
+const adRoute2 = require('./routes/agentDashboard');
+const adRoute = require('./routes/agentDashboardRoutes');
 const FAQlRoute = require('./routes/FAQlist');
 const EmailRoute = require('./routes/agentEmail');
 const LCHRoute = require('./routes/liveChatHisto');
@@ -40,9 +42,11 @@ app.use(bodyParser.json());
 // set Routes
 app.use('/customer-website2', cwRoute2);
 app.use('/customer-website', cwRoute);
+app.use('/employee-login-page2', elpRoute2);
 app.use('/employee-login-page', elpRoute);
 app.use('/agent-list-page', agLsRote);
 app.use('/user-list-page', usLsRote);
+app.use('/agent-dashboard2', adRoute2);
 app.use('/agent-dashboard', adRoute);
 app.use('/faq-list-page', FAQlRoute);
 app.use('/email-page', EmailRoute);
