@@ -1,0 +1,263 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #5A5050;
+}
+
+.done-txt {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 10px 10px;
+    color: #000000;
+    background: #6ce080;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+}
+.top-place {
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.name-pls {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #C4C4C4;
+}
+
+.agent-name {
+    display: flex;
+    padding: 10px 50px;
+    font-size: 50px;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.agent-id {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+    border-right: 1px solid;
+    /* border-left: 5px dotted; */
+    padding: 20px 20px;
+}
+
+.bank-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    font-weight: 700;
+    font-size: 55px;
+}
+
+.form-header {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid;
+    justify-content: center;
+    background-color: #5A5050;
+    align-items: center;
+}
+
+.borrder-info {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    background-color: #B5A8A8;
+    border: 1px solid black;
+    border-top: none;
+    /* padding: 20px; */
+    font-size: 30px;
+    font-weight: 600;
+    align-items: center;
+
+}
+
+.data-agent {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #5A5050;
+}
+
+.info-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 0; */
+    /* margin: 0; */
+}
+
+.field {
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.field label {
+    color: white;
+    font-weight: 400;
+}
+
+.field input {
+    outline: none;
+    border-radius: 5px;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.btn-pls {
+    /* width: 10%; */
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    justify-content: inherit;
+}
+
+.btn-pls button {
+        /* outline: none; */
+        background-color: #50f0b9;
+        border: 1px solid black;
+        font-size: 20px;
+        font-weight: 500;
+}
+
+.btn-pls a.exit{
+    border: 2px solid black;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    background-color: #c4c4c4;
+    font-size: 20px;
+    padding: 0 20px;
+    align-items: center;
+    font-weight: 600;
+}
+
+.btn-pls a.delete{
+    padding: 0 9px;
+    border: 2px solid black;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    background-color: #f82a2a;
+    font-size: 20px;
+    align-items: center;
+    font-weight: 600;
+}
+
+.btn-pls a.delete:hover {
+    cursor: pointer;
+}
+
+.footer {
+    height: 36vh;
+    border-top: 1px solid black;
+    margin-top: 40px;
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background-color: #c4c4c4;
+}
+
+.role {
+    display: flex;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.Role {
+    cursor: pointer;
+    height: 60px;
+    width: 40%;
+    padding: 5px;
+    font-size: 35px;
+    border-radius: 12px;
+}
+
+.Role option {
+    height: 60px;
+    width: 40%;
+    padding: 5px;
+    font-size: 35px;
+}
+
+.show {
+    position: absolute;
+    margin: 47px 0 0 300px;
+    color: gray;
+    cursor: pointer;
+}
+
+.show:hover {
+    color: rgb(75, 75, 75);
+}
+
+
+.live-chat-nav {
+	box-sizing: border-box;
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 42px;
+	background-color: black;
+}
+
+.nav-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	height: 100%;
+	width: calc(100% - 48px);
+}
+
+.live-chat-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50px;
+	height: 28px;
+	background-color: lightgray;
+	color: black;
+	text-decoration: none;
+	font-size: 1.2em;
+	padding: 5px 20px;
+	transition: .3s;
+}
+
+.nav-button-active {
+	padding: 5px 55px;
+	background-color: rgb(120, 120, 120);
+	color: white;
+	font-weight: bold;
+}
+
+.live-chat-logo:hover,
+.live-chat-button:hover {
+	background-color: darkgray;
+	color: white;
+}
+
+.nav-button-active:hover {
+	background-color: rgb(180, 180, 180);
+	color: black;
+}
+
+.agent-profile {
+	font-size: 38px;
+	color: rgb(100, 100, 100);
+	width: 28px;
+	height: 28px;
+	padding: 5px;
+}

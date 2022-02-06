@@ -1,0 +1,48 @@
+<div class="top-first">
+    <form method="post">
+        <div class="search-bar">
+            <input class="input-sear" name="term" type="search" placeholder="Search agents" >
+            <button class="button-sear" type="submit"> Search </button>
+        </div>
+    </form>
+    <div class="agent-status">
+        <div class="active-agent active">
+            <div class="number">{{emplo.length}}</div>
+            <label class="title">Agent List</label>
+        </div>
+    </div>
+</div>
+
+
+<div class="bottom-second">
+    <div class="row">
+        {{#each emplo}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"><a href="/agent-list-page/open-agent/{{id}}?id={{agentId}}&token={{ticket}}">{{name}}</a></div>
+                </div>
+                <div class="role">
+                    <div class="role">{{email}}</div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-6">
+            <div class="agent-pls">
+                <div class="agent-name">
+                    <div class="name"> Agennt not Found!</div>
+                </div>
+                <div class="role">
+                    <div class="role">-------</div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+  
+    <div class="add-btn">
+        <a href="/agent-list-page/create-agent?id={{emplo.[0].agentId}}&token={{emplo.[0].ticket}}">Create</a>
+    </div>
+</div>

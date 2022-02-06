@@ -1,0 +1,33 @@
+<header>BANK NAME</header>
+<div class='warper'>
+	<section class='form login'>
+		<form method="post">
+			{{#each errT}}
+				<div class='error-txt'>
+					{{text}}
+				</div>
+			{{/each}}
+			<div class='field input'>
+				<label>Email</label>
+				<input type='email' name="email" required></input>
+			</div>
+			<div class='field input'>
+				<label>Password</label>
+				<input type='password' id="password" name="password" required></input>
+				<div class="show" id="show" onclick="show()">hide</div>
+			</div>
+			<div class='field tag'>
+				<label>Role</label>
+				<select class="Role" id="Role" name="roles">
+					<option value="admin">Admin</option>
+					<option value="agent">Agent</option>
+				</select>
+			</div>
+			<div class='field button'>
+				<input type='submit' value='Login'></input>
+			</div>
+		</form>
+	</section>
+</div>
+<footer> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet
+	maximus.</footer>

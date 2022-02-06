@@ -1,0 +1,37 @@
+<!--Content of showing all emails-->
+<div class="live-chat-customer-selection-list">          
+    
+
+    {{#each email}}
+    <div class="customer-box-email">
+        <div class="current-date">Date: {{createdAt}}</div>
+        
+        <div class="top-box">
+            <div class="customer-image">
+                <i class='bx bxs-user' ></i>
+            </div>
+        
+            <div class="box-showed-data">
+                <!--conc: href needs to be from first-->
+                <p class="box-text-cs">From: <a href="email-page/open-email/{{id}}">{{name}}</a>, {{email}}</p>
+                <p class="box-text-cs">Category: {{complaintCategory}}</p>
+                <p class="box-text-cs">Message: {{message}}</p>
+            </div>
+        
+            </div>
+                {{#ifEquals complaintStatus 'open'}}
+                <div class="indcator-color indicator-open">
+                {{/ifEquals}}
+                {{#ifEquals complaintStatus 'on Progress'}}
+                <div class="indcator-color indicator-progress">
+                {{/ifEquals}}
+                {{#ifEquals complaintStatus 'on Hold'}}
+                <div class="indcator-color indicator-hold">
+                {{/ifEquals}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+</div>
+

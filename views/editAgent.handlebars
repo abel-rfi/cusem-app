@@ -1,0 +1,89 @@
+{{#each doneT}}
+<div class='done-txt'>
+    {{text}}
+</div>
+{{/each}}
+{{#each emplo}}
+<div class="top-place">
+    <div class="name-pls">
+        <div class="agent-name" name="agentName">
+            {{name}}
+        </div>
+        <div class="agent-id" name="id">
+            Agent Id: {{id}}
+        </div>
+        <div class="bank-name">
+            BANK NAME
+        </div>
+    </div>
+    <div class="form-header">
+        <div class="borrder-info">
+            Agent Information
+        </div>
+    </div>
+</div>
+
+<form class="data-agent" method="post">
+    <div class="info-side">
+        <div class='field input'>
+            <label>name</label>
+            <input type='text' name="name" value="{{name}}"></input>
+        </div>
+        <div class='field input'>
+            <label>email</label>
+            <input type="email" name="email" value="{{email}}"></input>
+        </div>
+        <div class='field input'>
+            <label>password</label>
+            <input type='password' id="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{6,}" 
+            title="Must contain at least one number and lowercase letter, and at least 6 or more characters" 
+            value="{{password}}" required></input>
+            <div class="show" id="show" onclick="show()">hide</div>
+        </div>
+    </div>
+
+    <div class="info-side">
+        <div class='field input'>
+            <label>phone</label>
+            <input type='text' name="phone" value="{{phone}}"></input>
+        </div>
+        <div class='field input'>
+            <label>address</label>
+            <input type='text' name="address" value="{{address}}"></input>
+        </div>
+    </div>
+
+    <div class="btn-pls">
+        <button type="submit"> update </button>
+        <a class="delete" data-id="{{id}}"> delete </a>
+        <script type="text/javascript">
+            const hapus = document.querySelector('a.delete');
+
+            hapus.addEventListener('click', (e) => {
+                const endpoint = '/agent-list-page//open-agent/'+{{id}}+'?id={{agentId}}&token={{ticket}}';
+                fetch(endpoint, {
+                    method: 'DELETE'
+
+                })
+                .then ((response) => response.json())
+                .then ((data) => window.location.href = "/agent-list-page?id={{agentId}}&token={{ticket}}")
+                .catch(err => console.log(err));
+            })
+        </script>
+
+        <a class="exit" href="/agent-list-page?id={{agentId}}&token={{ticket}}"> exit </a>
+    </div>
+</form>
+
+<div class="footer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vestibulum orci a sapien imperdiet
+    maximus.
+</div>
+
+{{else}}
+
+<div class="agent-name">
+    tidak ada agent dengan id
+</div>
+
+{{/each}}

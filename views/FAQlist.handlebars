@@ -1,0 +1,54 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-4"><strong>BANK LOGO</strong></h2>
+    </div>
+    <div class="container">
+        <h3 class="display-4">How can we help you?</h3>
+    </div>
+</div>
+<!--Section: FAQ-->
+<section>
+    <h3 class="text-center mb-4 pb-2 text-primary fw-bold">FAQ</h3>
+    <p class="text-center mb-5">
+        Find the answers for the most frequently asked questions below
+    </p>
+    {{!-- seacrh form --}}
+    <form class="scr-pls" action="/faq-list-page/search">
+        <div class="form-group">
+            <label for="exampleInputQuestion">Search Question</label>
+            <input type="text" class="form-control" id="exampleInputQuestion" aria-describedby="questionHelp"
+                placeholder="Enter Question" name="term">
+            <label for="exampleInputCategory">Select Category</label>
+            <select class="form-control" name="kategory">
+                <option value="">All</option>
+                <option value="question">Question</option>
+                <option value="complain">Complain</option>
+                <option value="other">Other</option>
+            </select>
+            <small id="questionHelp" class="form-text text-muted">We'll list all the related questions</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    {{!-- seacrh form --}}
+    <div class="row">
+        {{#each faqss}}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #0d6efd!important;">{{question}}</h5>
+                    <p class="card-text"><strong>Type: {{probCategory}}</strong> , {{solution}}</p>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <h3 class="mb-3 text-primary"><i class="far fa-paper-plane text-primary pe-2"></i> NO FAQ YET!</h3>
+            <p>
+                '---------------'
+            </p>
+        </div>
+        {{/each}}
+
+
+    </div>
+</section>

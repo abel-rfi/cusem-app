@@ -1,0 +1,26 @@
+<div class="top-first">
+    <div class="kategory">
+        Create New Question
+    </div>
+</div>
+
+<div class="last-second">
+    <form method="post">
+        <label style="font-size: 40px;">Question</label>
+        <textarea class="jawaban" name="question" rows="4" cols="50" required></textarea>
+        <label style="font-size: 40px;">Solution</label>
+        <textarea class="jawaban" name="solution" rows="4" cols="50" required></textarea>
+        <div class="create-btn">
+            <select class="optionCat" name="probCategory">
+                <option value="question">Question</option>
+                <option value="complain">Complain</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="submit" value="send" style="margin-bottom: 20px;" />
+        </div>
+
+    </form>
+</div>
+<div class="add-btn">
+    <a href="/agent-dashboard?id={{agentId}}&token={{ticket}}">Exit</a>
+</div>
