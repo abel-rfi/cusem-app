@@ -1,3 +1,5 @@
+// const uuid = require('uuid/v4');
+
 'use strict';
 const {
   Model
@@ -14,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   agentPermission.init({
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
     roles: DataTypes.STRING,
     customerCount: DataTypes.INTEGER
   }, {

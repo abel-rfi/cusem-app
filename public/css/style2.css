@@ -1,0 +1,85 @@
+/* New Live Chat Start */
+
+.card-head {
+	padding-bottom: 0;
+}
+
+.live-chat-monitor {
+	min-height: 350px;
+	max-height: 350px;
+	overflow: hidden auto;
+}
+
+.chat {
+	position: relative;
+	box-sizing: border-box;
+	max-width: 60%;
+	padding: 10px;
+	margin: 0 0 10px 10px;
+	border-radius: 12px;
+}
+
+.chat.chat-client {
+	margin-left: calc(40% - 10px);
+	margin-right: 0;
+}
+
+.left {
+  border-bottom-left-radius: 0;
+}
+
+.right {
+  border-bottom-right-radius: 0;
+}
+
+.chat::after {
+  content: '';
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  bottom: 0;
+}
+
+.left::after {
+  left: 0;
+  transform: translateX(-100%);
+  background: radial-gradient(circle at 0 0, transparent, transparent 72%, #6967ce 72%);
+}
+
+.right::after {
+  right: 0;
+  transform: translateX(100%);
+  background: radial-gradient(circle at 100% 0, transparent, transparent 72%, #babfc7 72%);
+}
+
+/* New Live Chat End */
+
+/* New Chat Start */
+
+.cust-live-chat-chat-section {
+	display: flex;
+	flex-flow: column;
+	box-sizing: border-box;
+	height: 215px;
+	width: calc(100% - 20px);
+	/*padding: 10px 0;*/
+	margin: 5px auto;
+	overflow: hidden auto;
+}
+
+.cust-live-chat-chat {
+	box-sizing: border-box;
+	width: 65%;
+	margin-bottom: 10px;
+	padding: 5px;
+	background-color: lightgray;
+	border-radius: 10px;
+	font-size: 20px;
+}
+
+.agent-chat {
+	margin-left: 35%;
+	background-color: royalblue;
+}
+
+/* New Chat End */

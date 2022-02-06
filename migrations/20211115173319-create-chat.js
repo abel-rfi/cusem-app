@@ -4,12 +4,12 @@ module.exports = {
     await queryInterface.createTable('Chats', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
       ticketId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       sender: {
         type: Sequelize.STRING

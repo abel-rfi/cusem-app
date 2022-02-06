@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Chat.init({
-    ticketId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
+    ticketId: DataTypes.UUID,
     sender: DataTypes.STRING,
     message: DataTypes.STRING
   }, {

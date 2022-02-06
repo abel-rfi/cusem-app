@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Rating.init({
-    ticketId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
+    ticketId: DataTypes.UUID,
     score: DataTypes.INTEGER,
     comment: DataTypes.TEXT
   }, {

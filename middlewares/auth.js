@@ -2,15 +2,23 @@ const jwt = require('jsonwebtoken');
 
 const secretKey = 'secret';
 
-function CreateToken (data, expired) {
+exports.CreateToken = function (data, expired) {
 	return jwt.sign(data, secretKey, { expiresIn: expired });
 }
 
-function VerifyToken (token) {
+exports.VerifyToken = function (token) {
 	return jwt.verify(token, secretKey);
 }
 
-module.exports = {
-	CreateToken,
-	VerifyToken
+exports.checkToken = async (req, res, next) => {
+	const { token } = req.cookies;
+	jwt.verify(token, secretKey, (err, decoded) => {
+		if (err) {
+			console.log("Error parsing token");
+			res.redirect('back');
+		} else {
+			req.body.decoded = decoded;
+			next();
+		}
+	});
 }

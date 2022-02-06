@@ -4,15 +4,15 @@ module.exports = {
     await queryInterface.createTable('Tickets', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
       emplId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       custId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       complaintStatus: {
         type: Sequelize.STRING

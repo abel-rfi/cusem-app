@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   FAQ.init({
-    ticketId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
+    ticketId: DataTypes.UUID,
     question: DataTypes.TEXT,
     solution: DataTypes.TEXT,
     probCategory: DataTypes.STRING

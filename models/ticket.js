@@ -14,8 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Ticket.init({
-    emplId: DataTypes.INTEGER,
-    custId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      autoIncrement: false
+    },
+    emplId: DataTypes.UUID,
+    custId: DataTypes.UUID,
     complaintStatus: DataTypes.STRING,
     complaintCategory: DataTypes.STRING,
     ticketType: DataTypes.STRING,
