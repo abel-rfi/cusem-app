@@ -19,6 +19,14 @@
 	border-radius: 12px;
 }
 
+.server-chat {
+	max-width: 80%;
+	border-radius: 20px;
+	text-align: center;
+	padding: 5px 10px;
+	margin: 0 auto 10px auto;
+}
+
 .chat.chat-client {
 	margin-left: calc(40% - 10px);
 	margin-right: 0;

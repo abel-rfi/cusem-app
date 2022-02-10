@@ -6,4 +6,6 @@ const router = express.Router();
 // Without Authorization
 router.get('/', Controller.render);
 
+// router.post('/create', Controller.);
+
 module.exports = router
