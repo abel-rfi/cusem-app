@@ -41,3 +41,15 @@ exports.renderEL = async (req, res) => {
 	}
 }
 // Employee List End
+
+// Employee Rating
+exports.renderER = async (req, res) => {
+	try {
+		return res.render('adminEmployeeRating', {layout: 'adminNav'})
+	} catch(err) {
+		console.log(`msg: ${err.message}`);
+		// return res.redirect('/employee-login-page');
+		return res.status(500).json({msg: err.message});
+	}
+}
+// Employee Rating End

@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', Controller.render);
 router.get('/customer-list', Controller.renderCL);
 router.get('/employee-list', Controller.renderEL);
+router.get('/employee-rating', Controller.renderER);
 // With Authorization
 
 module.exports = router
