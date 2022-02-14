@@ -1,6 +1,8 @@
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('cusem_super_key');
 
+const { VerifyToken, CreateToken } = require('../middlewares/auth');
+
 const models = require('../models');
 const Employee = models.Employee;
 
@@ -26,8 +28,30 @@ exports.createEmployee = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
+	let errT = [];
+
 	try {
-		console.log("Test");
+		const {email, password, roles} = req.body;
+		const employee = await Employee.findOne({where: {email, roles}});
+		if (employee == null) {
+			errT.push({text: `${roles} not found!`});
+			return res.render('employeeLoginPage', { errT, layout: 'normal'});
+		}
+		if (cryptr.decrypt(employee.password) == password) {
+			const token = await CreateToken({email, agentId: employee.id}, '1d');
+			const expires = new Date();
+			expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
+			res.cookie('agentToken', token, {
+				secure: true,
+				httpOnly: true,
+				sameSite: 'strict',
+				expires
+			});
+			return res.redirect(`/${roles}-dashboard`);
+		} else {
+			errT.push({text: 'Wrong Password!'});
+			return res.render('employeeLoginPage', { errT, layout: 'normal'});
+		}
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);

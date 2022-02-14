@@ -1,14 +1,14 @@
 const express = require('express');
 const Controller = require('../controller/agentDashboardController');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-// Without Authorization
+// With Authorization
+router.use(auth.checkTokenAgent);
 router.get('/', Controller.render);
 router.get('/ticket-archieve/', Controller.renderTA);
 router.get('/live-chat/', Controller.renderLC);
 router.get('/live-chat/:id', Controller.renderLC);
-
-// With Authorization
 
 module.exports = router

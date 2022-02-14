@@ -60,6 +60,30 @@
   background: radial-gradient(circle at 100% 0, transparent, transparent 72%, #babfc7 72%);
 }
 
+.cust-data {
+	font-weight: bold;
+}
+
+.status-taken {
+	color: red;
+	font-weight: bold;
+}
+
+.status-open {
+	color: green;
+	font-weight: bold;
+}
+
+.status-hold {
+	color: yellow;
+	font-weight: bold;
+}
+
+.status-none {
+	color: gray;
+	font-weight: bold;
+}
+
 /* New Live Chat End */
 
 /* New Chat Start */

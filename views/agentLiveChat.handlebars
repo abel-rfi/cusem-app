@@ -27,23 +27,22 @@
                                     <div class="row">
                                         <div class="col-9 btn-group">
                                             <button type="button" class="btn btn-min-width btn-dark" style="width: 100%;">
-                                                <h4 class="mb-0 text-white">Abraham</h4>
+                                                {{#each current}}
+                                                <h4 class="mb-0 text-white">{{'user.name'}}</h4>
+                                                {{/each}}
+                                                {{#unless current}}
+                                                    <h4 class="mb-0 text-white">None</h4>
+                                                {{/unless}}
                                             </button>
                                             <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </button>
                                             <div class="dropdown-menu" style="max-height: 200px; overflow: hidden auto;">
-                                                <a class="dropdown-item" href="#">Agent 1</a>
-                                                <a class="dropdown-item" href="#">Agent 2</a>
-                                                <a class="dropdown-item" href="#">Agent 3</a>
-                                                <a class="dropdown-item" href="#">Agent 4</a>
-                                                <a class="dropdown-item" href="#">Agent 5</a>
-                                                <a class="dropdown-item" href="#">Agent 6</a>
-                                                <a class="dropdown-item" href="#">Agent 7</a>
-                                                <a class="dropdown-item" href="#">Agent 8</a>
-                                                <a class="dropdown-item" href="#">Agent 9</a>
-                                                <a class="dropdown-item" href="#">Agent 10</a>
-                                                <a class="dropdown-item" href="#">Agent 11</a>
-                                                <a class="dropdown-item" href="#">Agent 12</a>
+                                                {{#each taken}}
+                                                    <a class="dropdown-item" href="/agent-dashboard/live-chat/{{id}}">{{'user.name'}}</a>
+                                                {{/each}}
+                                                {{#unless taken}}
+                                                    <a class="dropdown-item disabled">No Ticket Taken</a>
+                                                {{/unless}}
                                             </div>
                                         </div>
                                         <div class="col-3 btn-group">
@@ -99,29 +98,28 @@
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" style="max-height: 200px; overflow: hidden auto;">
-                                                        <a class="dropdown-item" href="#">Agent 1</a>
-                                                        <a class="dropdown-item" href="#">Agent 2</a>
-                                                        <a class="dropdown-item" href="#">Agent 3</a>
-                                                        <a class="dropdown-item" href="#">Agent 4</a>
-                                                        <a class="dropdown-item" href="#">Agent 5</a>
-                                                        <a class="dropdown-item" href="#">Agent 6</a>
-                                                        <a class="dropdown-item" href="#">Agent 7</a>
-                                                        <a class="dropdown-item" href="#">Agent 8</a>
-                                                        <a class="dropdown-item" href="#">Agent 9</a>
-                                                        <a class="dropdown-item" href="#">Agent 10</a>
-                                                        <a class="dropdown-item" href="#">Agent 11</a>
-                                                        <a class="dropdown-item" href="#">Agent 12</a>
+                                                        {{#each agents}}
+                                                            <a class="dropdown-item" href="#">{{name}}</a>
+                                                        {{/each}}
+                                                        {{#unless agents}}
+                                                            <a class="dropdown-item" href="#">No Agent</a>
+                                                        {{/unless}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
-                                        <li class="list-group-item">Lorem ipsum, dolor sit amet.</li>
-                                        <li class="list-group-item">Lorem ipsum, dolor sit amet.</li>
-                                        <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
-                                        <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
-                                        <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
-                                        <li class="list-group-item">Lorem ipsum dolor sit, amet.</li>
+                                        {{#each current}}
+                                            <li class="list-group-item"><span class="cust-data">Name:</span> {{'user.name'}}</li>
+                                            <li class="list-group-item"><span class="cust-data">Email:</span> {{'user.email'}}</li>
+                                            <li class="list-group-item"><span class="cust-data">Category:</span> {{complaintCategory}}</li>
+                                            <li class="list-group-item"><span class="cust-data">Current Status:</span> <span class="status-taken">{{complaintStatus}}</span></li>
+                                        {{/each}}
+                                        {{#unless current}}
+                                            <li class="list-group-item"><span class="fw-bold">Name:</span> Not Taken</li>
+                                            <li class="list-group-item"><span class="cust-data">Email:</span> Not Taken</li>
+                                            <li class="list-group-item"><span class="cust-data">Category:</span> Not Taken</li>
+                                            <li class="list-group-item"><span class="cust-data">Current Status:</span> <span class="status-none">Not Taken</span></li>
+                                        {{/unless}}
                                     </ul>
                                 </div>
                             </div>

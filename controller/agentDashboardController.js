@@ -1,4 +1,4 @@
-const Op = require('sequelize').Op;
+const {Op} = require('sequelize');
 
 const models = require('../models');
 const employee = models.Employee;
@@ -58,16 +58,33 @@ exports.renderTA = async (req, res) => {
 
 exports.renderLC = async (req, res) => {
 	try {
+		const { email, agentId:id } = req.body.decoded;
 		const openTickets = await Ticket.findAll({where: {complaintStatus: "Open"}});
-		const taken = await Ticket.findAll({where: {complaintStatus: "Taken", emplId: "f70b1996-87d9-4212-bdae-064805d93387"}});
+		const taken = await Ticket.findAll({raw: true, where: {complaintStatus: "Taken", emplId: id}, include: [
+			{
+				model: models.User,
+				as: 'user'
+			}
+		]});
+		// console.log(taken);
 		if (!req.params.id) {
 			if (taken.length > 0) {
 				return res.redirect(`/agent-dashboard/live-chat/${taken[0].id}`);
+			} else {
+				return res.render('agentLiveChat', {layout: 'newAgentNav'});
 			}
 		} else {
 			const chats = await Chat.findAll({raw: true, where: {ticketId: req.params.id}});
-
-			return res.render('agentLiveChat', {layout: 'newAgentNav', chats});
+			const current = await taken.filter(x => {
+				if (x.id == req.params.id) {
+					return x;
+				}
+			});
+			const agents = await employee.findAll({raw: true, where: {roles: 'agent', id: {
+				[Op.not]: id
+			}}});
+			// console.log(agents);
+			return res.render('agentLiveChat', {layout: 'newAgentNav', chats, taken, agents, current});
 		}
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
