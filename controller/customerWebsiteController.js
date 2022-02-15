@@ -23,11 +23,18 @@ exports.register = async (req, res) => {
 				const encryptedString = cryptr.encrypt(req.body.password);
 				req.body['password'] = encryptedString;
 				const result = await create(User, req.body);
-				const token = await CreateToken({ email: result.email, userId: result.id }, '10d');
+
+				// Create Token
+				const token = await CreateToken({ email: result.email, userId: result.id }, '1d');
+
+				// Create Cookie
+				let expires = new Date();
+				expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
 				res.cookie('token', token, {
 					secure: true,
 					httpOnly: true,
-					sameSite: 'strict'
+					sameSite: 'strict',
+					expires
 				});
 				// return res.status(200).json({ success: true, result })
 				return res.redirect(`logged`);
@@ -50,7 +57,9 @@ exports.login = async (req, res) => {
 			return res.status(404).json({ success: false, message: "email is not registered" });
 		} else {
 			if (cryptr.decrypt(regUser.password) == password){
-				const token = await CreateToken({ email, userId: regUser.id }, '10d');
+				const token = await CreateToken({ email, userId: regUser.id }, '1d');
+				let expires = new Date();
+				expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
 				res.cookie('token', token, {
 					secure: true,
 					httpOnly: true,

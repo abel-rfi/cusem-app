@@ -5,5 +5,6 @@ const router = express.Router();
 
 // Without Authorization
 router.get('/', Controller.render);
+router.post('/login', Controller.login);
 
 module.exports = router
