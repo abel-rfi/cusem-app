@@ -35,7 +35,7 @@ const adRoute = require('./routes/agentDashboardRoutes');
 const FAQlRoute = require('./routes/FAQlist');
 const EmailRoute = require('./routes/agentEmail');
 const LCHRoute = require('./routes/liveChatHisto');
-const admin = require('./routes/adminDashboard');
+const admin = require('./routes/adminDashboardRoutes');
 
 app.use(bodyParser.json());
 
