@@ -1,8 +1,9 @@
 const liveChatSection = document.getElementById('alc');
 const chatMonitor = document.querySelector('.live-chat-monitor');
+const statusToggler = document.querySelector('.status-toggler');
 
 // Global Variable
-const room = "roomx";
+const room = document.getElementById("roomName").value;
 const client = 'agent';
 
 // Socket Section
@@ -77,7 +78,22 @@ function sendMessage() {
 
 	console.log(`Agent => '${msg}'`);
 	socket.emit('agent-message', {roomId: room, msg});
+
+    // Create LC Ticket
+    const body = JSON.stringify({
+        room,
+        msg
+    });
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/agent-dashboard/live-chat/send");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
 	
 	lcInput.value = '';
 	lcInput.focus();
+}
+
+function toggleStatus() {
+    console.log(statusToggler.innerHTML);
 }

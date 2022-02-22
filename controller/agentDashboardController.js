@@ -7,26 +7,48 @@ const Chat = models.Chat;
 
 // Function Section
 
+exports.logout = async (req, res) => {
+	try {
+		res.cookie('agentToken', "");
+		return res.redirect(`/employee-login-page`);
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
 exports.saveChat = async (req, res) => {
 	try {
-		const agent = employee.findOne({where: {id: "f70b1996-87d9-4212-bdae-064805d93387"}});
-
-		const {roomId, msg} = req.body;
+		const { email, agentId:id } = req.body.decoded;
+		const {room, msg} = req.body;
 
 		let condition = {
-			emplId:agent.id, 
-			roomName: roomId, 
+			emplId:id, 
+			roomName: room, 
 			ticketType: "Live Chat"
 		};
 		const ticket = await Ticket.findOne({raw: true, where: condition});
 
 		const chat = {
 			ticketId: ticket.id,
-			sender: "user",
+			sender: "agent",
 			message: msg
 		};
-
+		
 		Chat.create(chat);
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+exports.getChat = async (req, res) => {
+	try {
+		const { id:ticketId } = req.query;
+		const chats = await Chat.findAll({raw: true, where: {ticketId}, order: [['createdAt', 'ASC']]});
+		return res.status(200).json(chats);
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);
@@ -48,7 +70,19 @@ exports.render = async (req, res) => {
 
 exports.renderTA = async (req, res) => {
 	try {
-		return res.render('ticketArchieve', {layout: 'newAgentNav'});
+		const { email, agentId:id } = req.body.decoded;
+		const myAgent = await employee.findOne({raw:true, where: {email, id}});
+		const Tickets = await Ticket.findAll({raw:true, include: [
+			{
+				model: models.User,
+				as: 'user'
+			}, {
+				model: models.Employee,
+				as: 'employee'
+			}
+		]});
+		// console.log(Tickets);
+		return res.render('ticketArchieve', {layout: 'newAgentNav', Tickets});
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
 		// return res.redirect('/employee-login-page');
@@ -60,6 +94,7 @@ exports.renderLC = async (req, res) => {
 	try {
 		const { email, agentId:id } = req.body.decoded;
 		const openTickets = await Ticket.findAll({where: {complaintStatus: "Open"}});
+		const myAgent = await employee.findOne({raw:true, where: {email, id}});
 		const taken = await Ticket.findAll({raw: true, where: {complaintStatus: "Taken", emplId: id}, include: [
 			{
 				model: models.User,
@@ -71,10 +106,10 @@ exports.renderLC = async (req, res) => {
 			if (taken.length > 0) {
 				return res.redirect(`/agent-dashboard/live-chat/${taken[0].id}`);
 			} else {
-				return res.render('agentLiveChat', {layout: 'newAgentNav'});
+				return res.render('agentLiveChat', {layout: 'newAgentNav', myAgent: [myAgent]});
 			}
 		} else {
-			const chats = await Chat.findAll({raw: true, where: {ticketId: req.params.id}});
+			const chats = await Chat.findAll({raw: true, where: {ticketId: req.params.id}, order: [['createdAt', 'ASC']]});
 			const current = await taken.filter(x => {
 				if (x.id == req.params.id) {
 					return x;
@@ -83,8 +118,9 @@ exports.renderLC = async (req, res) => {
 			const agents = await employee.findAll({raw: true, where: {roles: 'agent', id: {
 				[Op.not]: id
 			}}});
+
 			// console.log(agents);
-			return res.render('agentLiveChat', {layout: 'newAgentNav', chats, taken, agents, current});
+			return res.render('agentLiveChat', {layout: 'newAgentNav', chats, taken, agents, current, myAgent: [myAgent]});
 		}
 	} catch(err) {
 		console.log(`msg: ${err.message}`);

@@ -153,20 +153,21 @@ exports.renderNoLog = async (req, res) => {
 exports.renderLog = async (req, res) => {
 	try {
 		const {email, userId:id} = req.body.decoded;
-		const {roomId} = req.cookies;
-		let condition = {
-			custId: id, 
-			roomName: roomId, 
-			ticketType: "Live Chat"
-		};
 		const user = await User.findOne({raw: true, where: {id, email}});
-		const ticket = await Ticket.findOne({raw: true, where: condition});
-		if (ticket != null){
-			const chats = await Chat.findAll({raw: true, where: {ticketId: ticket.id}});
-			return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}, chats});
-		} else{
-			return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}});
+		if (req.cookies.roomId != undefined) {
+			const {roomId} = req.cookies;
+			let condition = {
+				custId: id, 
+				roomName: roomId, 
+				ticketType: "Live Chat"
+			};	
+			const ticket = await Ticket.findOne({raw: true, where: condition});
+			if (ticket != null){
+				const chats = await Chat.findAll({raw: true, where: {ticketId: ticket.id}, order: [['createdAt', 'ASC']]});
+				return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}, chats});
+			}
 		}
+		return res.render('customerWebsiteLogged', {layout: 'cwl', user:{user}});
 	}
 	catch (err) {
 		console.log(`msg: ${err.message}`);

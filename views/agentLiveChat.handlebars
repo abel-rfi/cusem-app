@@ -67,6 +67,9 @@
                                         <div class="form-body">
                                             <div class="input-group">
                                                 <input type="text" class="form-control lc-input" placeholder="Enter test">
+                                                {{#each current}}
+                                                <input type="hidden" value="{{roomName}}" id="roomName">
+                                                {{/each}}
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary btn-icon" type="button" id="button-addon2" onclick="sendMessage()">
                                                         <i class='bx bx-send'></i>
@@ -113,12 +116,43 @@
                                             <li class="list-group-item"><span class="cust-data">Email:</span> {{'user.email'}}</li>
                                             <li class="list-group-item"><span class="cust-data">Category:</span> {{complaintCategory}}</li>
                                             <li class="list-group-item"><span class="cust-data">Current Status:</span> <span class="status-taken">{{complaintStatus}}</span></li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        {{#ifEquals complaintStatus 'Open'}}
+                                                            <button class="btn btn-success status-toggler" onclick="toggleStatus()" style="width: 100%">Open</button>
+                                                        {{/ifEquals}}
+                                                        {{#ifEquals complaintStatus 'Taken'}}
+                                                            <button class="btn btn-primary status-toggler" onclick="toggleStatus()" style="width: 100%">On Progress</button>
+                                                        {{/ifEquals}}
+                                                        {{#ifEquals complaintStatus 'Hold'}}
+                                                            <button class="btn btn-warning status-toggler" onclick="toggleStatus()" style="width: 100%">On Hold</button>
+                                                        {{/ifEquals}}
+                                                        {{#ifEquals complaintStatus 'Closed'}}
+                                                            <button class="btn btn-danger status-toggler" onclick="toggleStatus()" style="width: 100%">Closed</button>
+                                                        {{/ifEquals}}
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button class="btn btn-danger" style="width: 100%">Close</button>
+                                                    </div>
+                                                </div>
+                                            </li>
                                         {{/each}}
                                         {{#unless current}}
                                             <li class="list-group-item"><span class="fw-bold">Name:</span> Not Taken</li>
                                             <li class="list-group-item"><span class="cust-data">Email:</span> Not Taken</li>
                                             <li class="list-group-item"><span class="cust-data">Category:</span> Not Taken</li>
                                             <li class="list-group-item"><span class="cust-data">Current Status:</span> <span class="status-none">Not Taken</span></li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button class="btn btn-success disabled status-toggler" style="width: 100%">Open</button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button class="btn btn-danger disabled status-toggler" style="width: 100%">Close</button>
+                                                    </div>
+                                                </div>
+                                            </li>
                                         {{/unless}}
                                     </ul>
                                 </div>
