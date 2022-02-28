@@ -56,6 +56,39 @@ exports.getChat = async (req, res) => {
 	}
 }
 
+exports.getOpenTicket = async (req, res) => {
+	try {
+		const Opens = await Ticket.findAll({raw: true, where: {complaintStatus: 'Open'}, include: [
+			{
+				model: models.User,
+				as: 'user'	
+			}
+		]});
+		return res.status(200).json(Opens);
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+exports.takeTicket = async (req, res) => {
+	try {
+		const { id } = req.query;
+		const {agentId:emplId} = req.body.decoded;
+		const ticket = await Ticket.findOne({raw: true, where: {id}});
+		if (ticket != null) {
+			const result = await Ticket.update({complaintStatus: "Taken", emplId}, {raw: true, where: {id}});
+			return res.status(200).json({success: true});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
 // Render Section
 
 exports.render = async (req, res) => {
@@ -115,6 +148,9 @@ exports.renderLC = async (req, res) => {
 					return x;
 				}
 			});
+			if (current.length == 0) {
+				return res.redirect('/agent-dashboard/live-chat');
+			}
 			const agents = await employee.findAll({raw: true, where: {roles: 'agent', id: {
 				[Op.not]: id
 			}}});
