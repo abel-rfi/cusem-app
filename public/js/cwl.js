@@ -16,6 +16,11 @@ socket.on('user-message', msg => {
     this.outputMessage(msg);
 });
 
+socket.on('agent-message', msg => {
+    console.log(`'${msg}' <= Agent`);
+    this.outputMessageAgent(msg);
+});
+
 socket.on('server-message', msg => {
     console.log(`'${msg}' <= Server`);
     this.outputMessageServer(msg);
@@ -171,6 +176,15 @@ function sendMessage() {
 function outputMessage(msg) {
     const div = document.createElement('div');
     div.classList.add("cust-live-chat-chat");
+    div.innerHTML = `${msg}`;
+
+    chatMonitor.appendChild(div);
+}
+
+function outputMessageAgent(msg) {
+    const div = document.createElement('div');
+    div.classList.add("cust-live-chat-chat");
+    div.classList.add("agent-chat");
     div.innerHTML = `${msg}`;
 
     chatMonitor.appendChild(div);

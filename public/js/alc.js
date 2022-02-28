@@ -1,27 +1,32 @@
 const liveChatSection = document.getElementById('alc');
 const chatMonitor = document.querySelector('.live-chat-monitor');
+const statusToggler = document.querySelector('.status-toggler');
 
 // Global Variable
-const room = "roomx";
+const roomElement = document.getElementById("roomName");
 const client = 'agent';
+let room;
 
 // Socket Section
 
 const socket = io();
 
-socket.emit('join-ticket', {roomId: room, user: client});
+if (roomElement != null) {
+    room = roomElement.value;
+    socket.emit('join-ticket', {roomId: room, user: client});
 
-socket.on('user-message', msg => {
-    this.outputMessage(msg);
-});
+    socket.on('user-message', msg => {
+        this.outputMessage(msg);
+    });
 
-socket.on('agent-message', msg => {
-    this.outputMessageAgent(msg);
-});
+    socket.on('agent-message', msg => {
+        this.outputMessageAgent(msg);
+    });
 
-socket.on('server-message', msg => {
-    this.outputMessageServer(msg);
-});
+    socket.on('server-message', msg => {
+        this.outputMessageServer(msg);
+    });
+}
 
 // Event Listener Section
 
@@ -31,6 +36,70 @@ liveChatSection.addEventListener('submit', e => {
 });
 
 // Function Section
+
+function getOpenTicket() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        const openList = document.getElementById("open-list");
+        const checkButton = document.querySelector(".accept-button");
+        openList.innerHTML = '';
+        let tickets = JSON.parse(this.responseText);
+        for (var i = 0; i < tickets.length; i++) {
+            const li = document.createElement('li');
+            li.classList.add("list-group-item");
+            const row = document.createElement('div');
+            row.classList.add("row");
+            const col9 = document.createElement('div');
+            col9.classList.add("col-9");
+            col9.classList.add("d-flex");
+            col9.classList.add("align-items-center");
+            col9.innerHTML = tickets[i]["user.name"];
+            const col2 = document.createElement('div');
+            col2.classList.add("col-2");
+            const check = checkButton.cloneNode(true);
+            check.classList.add("take-ticket");
+            check.id = tickets[i].id;
+            // console.log(check);
+            col2.appendChild(check);
+            row.appendChild(col9);
+            row.appendChild(col2);
+            li.appendChild(row);
+            openList.appendChild(li);
+        }
+        ticketListener();
+    }
+    xhttp.open("POST", `/agent-dashboard/live-chat/get-open`);
+    xhttp.send();
+}
+
+function ticketListener() {
+    const checks = document.querySelectorAll(".take-ticket");
+    for (var i = 0; i < checks.length; i++) {
+        checks[i].addEventListener('click', e => {
+            e.preventDefault();
+
+            if (e.target.id != '') {
+                var id = e.target.id;
+                // console.log(id);
+                this.takeTicket(id);
+            }
+        });
+    }
+}
+
+function takeTicket(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        let result = JSON.parse(this.responseText);
+        if (result.success){
+            document.location = `live-chat/${id}`;
+        }
+    }
+
+    xhr.open("POST", `/agent-dashboard/live-chat/take-ticket?id=${id}`);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();    
+}
 
 function outputMessageAgent(msg) {
 	console.log(`'${msg}' <= Me`);
@@ -77,7 +146,22 @@ function sendMessage() {
 
 	console.log(`Agent => '${msg}'`);
 	socket.emit('agent-message', {roomId: room, msg});
+
+    // Create LC Ticket
+    const body = JSON.stringify({
+        room,
+        msg
+    });
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/agent-dashboard/live-chat/send");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(body);
 	
 	lcInput.value = '';
 	lcInput.focus();
+}
+
+function toggleStatus() {
+    console.log(statusToggler.innerHTML);
 }
