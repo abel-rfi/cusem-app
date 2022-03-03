@@ -14,6 +14,10 @@ router.get('/live-chat/:id', Controller.renderLC);
 router.post('/live-chat/send', Controller.saveChat);
 router.post('/live-chat/get-open', Controller.getOpenTicket);
 router.post('/live-chat/take-ticket', Controller.takeTicket);
+router.post('/live-chat/change-ticket-status', Controller.changeTicketStatus);
+router.post('/live-chat/forward-ticket', Controller.forwardTicket);
+router.post('/live-chat/get-forward-request', Controller.getForwardRequest);
+router.post('/live-chat/forward-request-decision', Controller.requestDecision);
 router.get('/logout', Controller.logout);
 
 module.exports = router

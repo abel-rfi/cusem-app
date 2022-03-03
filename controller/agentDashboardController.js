@@ -89,6 +89,83 @@ exports.takeTicket = async (req, res) => {
 	}
 }
 
+exports.changeTicketStatus = async (req, res) => {
+	try {
+		const { id, complaintStatus } = req.body;
+		const { agentId:emplId } = req.body.decoded;
+		const check = await Ticket.findOne({raw: true, where: {id, emplId}});
+		// console.log(id, complaintStatus);
+		if (check != null) {
+			const result = await Ticket.update({complaintStatus}, {where: {id, emplId}});
+			return res.status(200).json({success: true});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
+exports.forwardTicket = async (req, res) => {
+	try {
+		const { recv, ticket:id } = req.query;
+		const { agentId:emplId } = req.body.decoded;
+		const check = await Ticket.findOne({raw: true, where: {id, emplId}});
+		if (check != null) {
+			const result = await Ticket.update({passedFrom: emplId, passedTo: recv, emplId: null, complaintStatus: "Hold"}, {where: {id, emplId}});
+			return res.status(200).json({success: true});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
+exports.getForwardRequest = async (req, res) => {
+	try {
+		const { agentId:id } = req.body.decoded;
+		const forwardRequest = await Ticket.findAll({raw: true, where: {passedTo: id}, include: [
+			{
+				model: models.Employee,
+				as: 'employeeRecv'
+			}, {
+				model: models.User,
+				as: 'user'
+			}
+		]});
+		return res.status(200).json({success: true, forwardRequest});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
+exports.requestDecision = async (req, res) => {
+	try {
+		const { agentId:emplId } = req.body.decoded;
+		const {id, decision} = req.query;
+		// Check Ticket
+		const check = await Ticket.findOne({raw: true, where: {id, passedTo: emplId}});
+		if (check != null){
+			if (decision == "Accept") {
+				const result = await Ticket.update({emplId, passedTo: null, passedFrom: null, passedFor: check.passedFor+1, complaintStatus: "Taken"}, {where: {id, passedTo: emplId}});
+			} else {
+				const result = await Ticket.update({emplId: check.passedFrom, passedTo: null, passedFrom: null, complaintStatus: "Taken"}, {where: {id, passedTo: emplId}});
+			}
+			return res.status(200).json({success: true});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
 // Render Section
 
 exports.render = async (req, res) => {
@@ -126,9 +203,21 @@ exports.renderTA = async (req, res) => {
 exports.renderLC = async (req, res) => {
 	try {
 		const { email, agentId:id } = req.body.decoded;
+		const forwardRequest = await Ticket.findAll({raw: true, where: {passedTo: id}, include: [
+			{
+				model: models.Employee,
+				as: 'employeeRecv'
+			}, {
+				model: models.User,
+				as: 'user'
+			}
+		]});
+		// console.log(forwardRequest);
 		const openTickets = await Ticket.findAll({where: {complaintStatus: "Open"}});
 		const myAgent = await employee.findOne({raw:true, where: {email, id}});
-		const taken = await Ticket.findAll({raw: true, where: {complaintStatus: "Taken", emplId: id}, include: [
+		const taken = await Ticket.findAll({raw: true, where: {complaintStatus: {
+			[Op.or]: ['Taken', 'Hold']
+		}, emplId: id}, include: [
 			{
 				model: models.User,
 				as: 'user'
@@ -139,7 +228,7 @@ exports.renderLC = async (req, res) => {
 			if (taken.length > 0) {
 				return res.redirect(`/agent-dashboard/live-chat/${taken[0].id}`);
 			} else {
-				return res.render('agentLiveChat', {layout: 'newAgentNav', myAgent: [myAgent]});
+				return res.render('agentLiveChat', {layout: 'newAgentNav', myAgent: [myAgent], forwardRequest, forwardRequestSize: [forwardRequest.length]});
 			}
 		} else {
 			const chats = await Chat.findAll({raw: true, where: {ticketId: req.params.id}, order: [['createdAt', 'ASC']]});
@@ -156,7 +245,7 @@ exports.renderLC = async (req, res) => {
 			}}});
 
 			// console.log(agents);
-			return res.render('agentLiveChat', {layout: 'newAgentNav', chats, taken, agents, current, myAgent: [myAgent]});
+			return res.render('agentLiveChat', {layout: 'newAgentNav', chats, taken, agents, current, myAgent: [myAgent], forwardRequest, forwardRequestSize: [forwardRequest.length]});
 		}
 	} catch(err) {
 		console.log(`msg: ${err.message}`);

@@ -79,6 +79,11 @@
 	font-weight: bold;
 }
 
+.status-closed {
+	color: royalblue;
+	font-weight: bold;
+}
+
 .status-none {
 	color: gray;
 	font-weight: bold;

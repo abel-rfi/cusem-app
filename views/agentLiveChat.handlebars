@@ -91,18 +91,20 @@
                                         <li class="list-group-item">
                                             <div class="row">
                                                 <div class="col-xl-7 col-lg-12 btn-group">
-                                                    <button class="btn btn-min-width btn-success d-flex" style="justify-content: space-evenly; width: 100%;" data-toggle="modal" data-target="#forwardModal">
+                                                    {{#each forwardRequestSize}}
+                                                    <button class="btn btn-min-width btn-success d-flex" onclick="getForwardRequest()" style="justify-content: space-evenly; width: 100%;" data-toggle="modal" data-target="#forwardModal">
                                                         Forward Inbox 
-                                                        <span class="d-flex justify-content-center align-items-center rounded-circle bg-danger" style="width: 1.6em; height: 1.6em;">1</span>
+                                                        <span class="d-flex justify-content-center align-items-center rounded-circle bg-danger" style="width: 1.6em; height: 1.6em;">{{.}}</span>
                                                     </button>
+                                                    {{/each}}
                                                 </div>
                                                 <div class="col-xl-5 col-lg-12 mt-xl-0 mt-1 btn-group">
-                                                    <button type="button" class="btn btn-min-width btn-info" style="width: 100%;">Passed To</button>
+                                                    <button type="button" class="btn btn-min-width btn-info passed-agent" onclick="sendRequest(this)" style="width: 100%;">Passed To</button>
                                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" style="max-height: 200px; overflow: hidden auto;">
                                                         {{#each agents}}
-                                                            <a class="dropdown-item" href="#">{{name}}</a>
+                                                            <a id={{id}} class="dropdown-item" onclick="setPassedTo(this)">{{name}}</a>
                                                         {{/each}}
                                                         {{#unless agents}}
                                                             <a class="dropdown-item" href="#">No Agent</a>
@@ -115,25 +117,32 @@
                                             <li class="list-group-item"><span class="cust-data">Name:</span> {{'user.name'}}</li>
                                             <li class="list-group-item"><span class="cust-data">Email:</span> {{'user.email'}}</li>
                                             <li class="list-group-item"><span class="cust-data">Category:</span> {{complaintCategory}}</li>
-                                            <li class="list-group-item"><span class="cust-data">Current Status:</span> <span class="status-taken">{{complaintStatus}}</span></li>
+                                            <li class="list-group-item">
+                                                {{#ifEquals complaintStatus 'Open'}}
+                                                <span class="cust-data">Current Status:</span> <span id="text-status" class="status-open">{{complaintStatus}}</span>
+                                                {{/ifEquals}}
+                                                {{#ifEquals complaintStatus 'Taken'}}
+                                                <span class="cust-data">Current Status:</span> <span id="text-status" class="status-taken">{{complaintStatus}}</span>
+                                                {{/ifEquals}}
+                                                {{#ifEquals complaintStatus 'Hold'}}
+                                                <span class="cust-data">Current Status:</span> <span id="text-status" class="status-hold">{{complaintStatus}}</span>
+                                                {{/ifEquals}}
+                                            </li>
                                             <li class="list-group-item">
                                                 <div class="row">
                                                     <div class="col-6">
                                                         {{#ifEquals complaintStatus 'Open'}}
-                                                            <button class="btn btn-success status-toggler" onclick="toggleStatus()" style="width: 100%">Open</button>
+                                                            <button id={{id}} class="btn btn-success status-toggler" onclick="toggleStatus()" style="width: 100%">Open</button>
                                                         {{/ifEquals}}
                                                         {{#ifEquals complaintStatus 'Taken'}}
-                                                            <button class="btn btn-primary status-toggler" onclick="toggleStatus()" style="width: 100%">On Progress</button>
+                                                            <button id={{id}} class="btn btn-primary status-toggler" onclick="toggleStatus()" style="width: 100%">On Progress</button>
                                                         {{/ifEquals}}
                                                         {{#ifEquals complaintStatus 'Hold'}}
-                                                            <button class="btn btn-warning status-toggler" onclick="toggleStatus()" style="width: 100%">On Hold</button>
-                                                        {{/ifEquals}}
-                                                        {{#ifEquals complaintStatus 'Closed'}}
-                                                            <button class="btn btn-danger status-toggler" onclick="toggleStatus()" style="width: 100%">Closed</button>
+                                                            <button id={{id}} class="btn btn-warning status-toggler" onclick="toggleStatus()" style="width: 100%">On Hold</button>
                                                         {{/ifEquals}}
                                                     </div>
                                                     <div class="col-6">
-                                                        <button class="btn btn-danger" style="width: 100%">Close</button>
+                                                        <button class="btn btn-danger" style="width: 100%" onclick="closeTicket()">Close</button>
                                                     </div>
                                                 </div>
                                             </li>
@@ -178,48 +187,12 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+                    <li id="forwardRequestList" class="list-group-item">
                         <div class="row">
-                            <div class="col-8 d-flex align-items-center">User#211 From Agent#10</div>
+                            <div class="col-8 d-flex align-items-center">Test From agent</div>
                             <div class="col-4">
-                                <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
-                                <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-8 d-flex align-items-center">User#12 From Agent#4</div>
-                            <div class="col-4">
-                                <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
-                                <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-8 d-flex align-items-center">User#50 From Agent#8</div>
-                            <div class="col-4">
-                                <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
-                                <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-8 d-flex align-items-center">User#60 From Agent#3</div>
-                            <div class="col-4">
-                                <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
-                                <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-8 d-flex align-items-center">User#81 From Agent#7</div>
-                            <div class="col-4">
-                                <button class="btn btn-icon btn-success"><i class='bx bx-check'></i></button>
-                                <button class="btn btn-icon btn-danger"><i class='bx bx-block' ></i></button>
+                                <button class="btn btn-icon btn-success accept-req"><i class='bx bx-check'></i></button>
+                                <button class="btn btn-icon btn-danger refuse-req"><i class='bx bx-block' ></i></button>
                             </div>
                         </div>
                     </li>

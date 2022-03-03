@@ -46,8 +46,13 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     Ticket.belongsTo(models.Employee, {
+      foreignKey: 'passedTo',
+      as: 'employeeRecv'
+    })
+
+    Ticket.belongsTo(models.Employee, {
       foreignKey: 'passedFrom',
-      as: 'employeeForward'
+      as: 'employeeReq'
     })
   }
   return Ticket;
