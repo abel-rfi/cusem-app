@@ -7,6 +7,9 @@ const router = express.Router();
 // With Authorization
 router.use(auth.checkTokenAgent);
 router.get('/', Controller.render);
+router.get('/edit-profile', Controller.renderEP);
+router.post('/edit-profile/fill-data', Controller.fillData);
+router.post('/edit-profile/change-password', Controller.changePassword);
 router.get('/ticket-archieve/', Controller.renderTA);
 router.post('/ticket-archieve/get-chat', Controller.getChat);
 router.get('/live-chat/', Controller.renderLC);

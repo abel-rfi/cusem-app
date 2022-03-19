@@ -1,0 +1,137 @@
+<!-- Content Start -->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-wrapper-before"></div>
+        <div class="content-header row">
+            <div class="content-header-left col-md-4 col-12 mb-2">
+                <h3 class="content-header-title">Edit Profile</h3>
+            </div>
+            <div class="content-header-right col-md-8 col-12">
+                <div class="breadcrumbs-top float-md-right">
+                    <div class="breadcrumb-wrapper mr-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Edit</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <section id="header-footer">
+                <div class="row match-height justify-content-center">
+                    <div class="col-xl-6 col-md-6 col-md-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body card-head">
+                                    <h4 class="mb-0">Fill Your Personal Data</h4>
+                                </div>
+                                <div class="card-body">
+                                    {{#each myAgent}}
+                                    <form id="editProfile" action="/agent-dashboard/edit-profile/fill-data" method="POST">
+                                        <div class="mb-1">
+                                            <label for="agentName" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="agentName" value="{{name}}">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentAddress" class="form-label">Address</label>
+                                            <textarea class="form-control" id="agentAddress" rows="3">{{address}}</textarea>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentPhone" class="form-label">Phone</label>
+                                            <input type="text" class="form-control" id="agentPhone" value="{{phone}}" placeholder="021-0122-1233">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                    {{/each}}
+                                    {{#unless myAgent}}
+                                    <form id="editProfile" action="">
+                                        <div class="mb-1">
+                                            <label for="agentName" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="agentName">
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentAddress" class="form-label">Address</label>
+                                            <textarea class="form-control" id="agentAddress" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentPhone" class="form-label">Phone</label>
+                                            <input type="text" class="form-control" id="agentPhone" placeholder="021-0122-1233">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                    {{/unless}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-md-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body card-head">
+                                    <h4 class="mb-0">Change Password</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form id="changePassword" action="/agent-dashboard/edit-profile/change-password" method="POST">
+                                        <div class="mb-1">
+                                            <label for="agentPassword" class="form-label">Old Password*</label>
+                                            <div class="position-relative">
+                                                <input type="password" class="form-control" id="oldAgentPassword" required>
+                                                <i id="opass" class="togglePassword position-absolute bi bi-eye-slash" style="top: calc(50% - 10px); right: 15px; cursor: pointer;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentPassword" class="form-label">Password*</label>
+                                            <div class="position-relative">
+                                                <input type="password" class="form-control" id="agentPassword" pattern="(?=.*\d)(?=.*[a-z]).{6,}" required>
+                                                <i id="pass" class="togglePassword position-absolute bi bi-eye-slash" style="top: calc(50% - 10px); right: 15px; cursor: pointer;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label for="agentConfirmPassword" class="form-label">Confirm Password*</label>
+                                            <div class="position-relative">
+                                                <input type="password" class="form-control" id="agentConfirmPassword" pattern="(?=.*\d)(?=.*[a-z]).{6,}" required>
+                                                <i id="cpass" class="togglePassword position-absolute bi bi-eye-slash" style="top: calc(50% - 10px); right: 15px; cursor: pointer;"></i>
+                                            </div>
+                                            <!-- <i class="bi bi-eye"></i> -->
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- Content End -->
+
+<!-- BEGIN VENDOR JS-->
+<script src="/theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+<script src="/theme-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
+<!-- END VENDOR JS-->
+<!-- Custom Script Start -->
+<script>
+    const toggles = document.querySelectorAll(".togglePassword");
+
+    for (var i = 0; i < toggles.length; i++) {
+        toggles[i].addEventListener('click', e => {
+            e.preventDefault();
+            let c;
+            if (e.target.id == "pass") {
+                c = document.getElementById("agentPassword");
+            } else if (e.target.id == "cpass") {
+                c = document.getElementById("agentConfirmPassword");
+            } else {
+                c = document.getElementById("oldAgentPassword");
+            }
+            const type = c.type == "password" ? "text" : "password";
+            c.type = type;
+            e.target.classList.toggle("bi-eye");
+        });
+    }
+</script>
+<script src="/js/editUser.js" type="text/javascript"></script>
+<!-- Custom Script End -->

@@ -1,4 +1,7 @@
 const {Op} = require('sequelize');
+const Cryptr = require('cryptr');
+
+const cryptr = new Cryptr('cusem_super_key');
 
 const models = require('../models');
 const employee = models.Employee;
@@ -166,11 +169,48 @@ exports.requestDecision = async (req, res) => {
 	}
 }
 
+exports.fillData = async (req, res) => {
+	try {
+		const { agentId:id, email } = req.body.decoded;
+		const check = await employee.findOne({raw: true, where: {id, email}});
+		if (check != null){
+			const result = await employee.update({"name": req.body.agentName, "address": req.body.agentAddress, "phone": req.body.agentPhone}, {where: {id, email}});
+			return res.status(200).json({success: true, result});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
+exports.changePassword = async (req, res) => {
+	try {
+		const { agentId:id, email } = req.body.decoded;
+		const check = await employee.findOne({raw: true, where: {id, email}});
+		// console.log(req.body);
+		if (check != null){
+			const encryptedString = await cryptr.encrypt(req.body.password);
+			const result = await employee.update({"password": encryptedString}, {where: {id, email}});
+			return res.status(200).json({success: true, result});
+		}
+		return res.status(404).json({success: false});
+	}
+	catch (err) {
+		console.log(`msg: ${err.message}`);
+		return res.status(500).json({success: false, msg: err.message});
+	}
+}
+
 // Render Section
 
 exports.render = async (req, res) => {
 	try {
-		return res.render('agentDashboard', {layout: 'newAgentNav'});
+		const { email, agentId:id } = req.body.decoded;
+		const myAgent = await employee.findOne({raw:true, where: {email, id}});
+		// console.log(myAgent);
+		return res.render('agentDashboard', {layout: 'newAgentNav', myAgent: [myAgent]});
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
 		// return res.redirect('/employee-login-page');
@@ -182,6 +222,7 @@ exports.renderTA = async (req, res) => {
 	try {
 		const { email, agentId:id } = req.body.decoded;
 		const myAgent = await employee.findOne({raw:true, where: {email, id}});
+		// console.log(myAgent);
 		const Tickets = await Ticket.findAll({raw:true, include: [
 			{
 				model: models.User,
@@ -192,7 +233,7 @@ exports.renderTA = async (req, res) => {
 			}
 		]});
 		// console.log(Tickets);
-		return res.render('ticketArchieve', {layout: 'newAgentNav', Tickets});
+		return res.render('ticketArchieve', {layout: 'newAgentNav', Tickets, myAgent: [myAgent]});
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
 		// return res.redirect('/employee-login-page');
@@ -250,6 +291,18 @@ exports.renderLC = async (req, res) => {
 	} catch(err) {
 		console.log(`msg: ${err.message}`);
 		// return res.redirect('/employee-login-page');
+		return res.status(500).json({msg: err.message});
+	}
+}
+
+exports.renderEP = async (req, res) => {
+	try {
+		const { email, agentId:id } = req.body.decoded;
+		const myAgent = await employee.findOne({raw:true, where: {email, id}});
+		// console.log(myAgent);
+		return res.render('agentEditProfile', {layout: 'newAgentNav', myAgent: [myAgent]});
+	} catch(err) {
+		console.log(`msg: ${err.message}`);
 		return res.status(500).json({msg: err.message});
 	}
 }
